@@ -1,5 +1,9 @@
 package fundamentals;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.naming.spi.DirStateFactory;
+
 /**
  * @author G
  */
@@ -25,29 +29,88 @@ public class Fundamental {
         for (int i = 0; i < original.length(); i++) {
             char actualChar = original.charAt(i);
             if (Character.isUpperCase(actualChar)) {
-                result = actualChar + result;
+                result = result + Character.toLowerCase(actualChar);
             } else if (Character.isLowerCase(actualChar)) {
-                result = actualChar + result;
+                result = result + Character.toUpperCase(actualChar);
             }
         }
+//        System.out.println(result);
         return result;
     }
 
     public static String orderChars(String unorderedText) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        char[] charArray = unorderedText.toCharArray();
+        String result = "";
+        for (int i = 0; i < charArray.length - 1; i++) {
+            for (int j = i + 1; j < charArray.length; j++) {
+                if (charArray[i] > charArray[j]) {
+                    char temp = charArray[i];
+                    charArray[i] = charArray[j];
+                    charArray[j] = temp;
+
+                }
+            }
+
+        }
+        for (int i = 0; i < charArray.length; i++) {
+            result += charArray[i];
+
+        }
+
+//        System.out.println(result);
+        return result;
     }
 
     public static int countDifferentChars(String ordered) {
-        throw new UnsupportedOperationException("Not supported yet.");
+// nem orderedre:
+//        int counter = 0;
+//        List temp = new ArrayList<Character>();
+//        for (int i = 0; i < ordered.length(); i++) {
+//            if (!temp.contains(ordered.charAt(i))) {
+//                counter++;
+//                temp.add(ordered.charAt(i));
+//            }
+//        }
+//        System.out.println(counter);
+//        return counter;
+
+// orderedre:
+        int counter;
+        if (ordered.isEmpty()) {
+            counter = 0;
+        }
+        counter = 1;
+        for (int i = 0; i < ordered.length() - 1; i++) {
+            if (ordered.charAt(i) != ordered.charAt(i + 1)) {
+                counter++;
+            }
+        }
+        System.out.println(counter);
+        return counter;
     }
 
     public static boolean containsCertainDigit(int number, int digit) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int abs = Math.abs(number);
+        boolean result = false;
+        int temp;
+        if (number == 0 && digit == 0) {
+            result = true;
+        }
+        while (abs > 0 && result == false) {
+            temp = abs % 10;
+
+            if (temp == digit) {
+                result = true;
+            }
+            abs /= 10;
+        }
+//        System.out.println(result);
+        return result;
     }
 
     public static String replaceUnderscores(
             String original, String... swapChars) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
 }
