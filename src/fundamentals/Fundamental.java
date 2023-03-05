@@ -21,7 +21,16 @@ public class Fundamental {
     }
 
     public static String invertCase(String original) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String result = "";
+        for (int i = 0; i < original.length(); i++) {
+            char actualChar = original.charAt(i);
+            if (Character.isUpperCase(actualChar)) {
+                result = actualChar + result;
+            } else if (Character.isLowerCase(actualChar)) {
+                result = actualChar + result;
+            }
+        }
+        return result;
     }
 
     public static String orderChars(String unorderedText) {
