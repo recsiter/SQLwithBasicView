@@ -1,0 +1,189 @@
+
+package oop.persistance.controller;
+
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import oop.persistance.PerishableProducts;
+import oop.persistance.StateSalesTax;
+import oop.persistance.exceptions.NonexistentEntityException;
+import oop.persistance.exceptions.PreexistingEntityException;
+
+/**
+ * @author G
+ */
+public class PerishableProductsJpaController implements Serializable {
+
+    public PerishableProductsJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(PerishableProducts perishableProducts) throws PreexistingEntityException, Exception {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().
+                    begin();
+            StateSalesTax taxId = perishableProducts.getTaxId();
+            if (taxId != null) {
+                taxId = em.getReference(taxId.getClass(), taxId.getTaxKey());
+                perishableProducts.setTaxId(taxId);
+            }
+            em.persist(perishableProducts);
+            if (taxId != null) {
+                taxId.getPerishableProductsCollection().
+                        add(perishableProducts);
+                taxId = em.merge(taxId);
+            }
+            em.getTransaction().
+                    commit();
+        } catch (Exception ex) {
+            if (findPerishableProducts(perishableProducts.getArticleNumber()) != null) {
+                throw new PreexistingEntityException("PerishableProducts " + perishableProducts + " already exists.",
+                        ex);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(PerishableProducts perishableProducts) throws NonexistentEntityException, Exception {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().
+                    begin();
+            PerishableProducts persistentPerishableProducts
+                    = em.find(PerishableProducts.class,
+                    perishableProducts.getArticleNumber());
+            StateSalesTax taxIdOld = persistentPerishableProducts.getTaxId();
+            StateSalesTax taxIdNew = perishableProducts.getTaxId();
+            if (taxIdNew != null) {
+                taxIdNew
+                        = em.getReference(taxIdNew.getClass(),
+                        taxIdNew.getTaxKey());
+                perishableProducts.setTaxId(taxIdNew);
+            }
+            perishableProducts = em.merge(perishableProducts);
+            if (taxIdOld != null && !taxIdOld.equals(taxIdNew)) {
+                taxIdOld.getPerishableProductsCollection().
+                        remove(perishableProducts);
+                taxIdOld = em.merge(taxIdOld);
+            }
+            if (taxIdNew != null && !taxIdNew.equals(taxIdOld)) {
+                taxIdNew.getPerishableProductsCollection().
+                        add(perishableProducts);
+                taxIdNew = em.merge(taxIdNew);
+            }
+            em.getTransaction().
+                    commit();
+        } catch (Exception ex) {
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                String id = perishableProducts.getArticleNumber();
+                if (findPerishableProducts(id) == null) {
+                    throw new NonexistentEntityException("The perishableProducts with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(String id) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().
+                    begin();
+            PerishableProducts perishableProducts;
+            try {
+                perishableProducts
+                        = em.getReference(PerishableProducts.class, id);
+                perishableProducts.getArticleNumber();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The perishableProducts with id " + id + " no longer exists.",
+                        enfe);
+            }
+            StateSalesTax taxId = perishableProducts.getTaxId();
+            if (taxId != null) {
+                taxId.getPerishableProductsCollection().
+                        remove(perishableProducts);
+                taxId = em.merge(taxId);
+            }
+            em.remove(perishableProducts);
+            em.getTransaction().
+                    commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<PerishableProducts> findPerishableProductsEntities() {
+        return findPerishableProductsEntities(true, -1, -1);
+    }
+
+    public List<PerishableProducts> findPerishableProductsEntities(
+            int maxResults, int firstResult) {
+        return findPerishableProductsEntities(false, maxResults, firstResult);
+    }
+
+    private List<PerishableProducts> findPerishableProductsEntities(boolean all,
+            int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder(). createQuery();
+            cq.select(cq.from(PerishableProducts.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public PerishableProducts findPerishableProducts(String id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(PerishableProducts.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getPerishableProductsCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder(). createQuery();
+            Root<PerishableProducts> rt = cq.from(PerishableProducts.class);
+            cq.select(em.getCriteriaBuilder().
+                    count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+
+}
