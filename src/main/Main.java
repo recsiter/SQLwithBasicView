@@ -1,6 +1,7 @@
 package main;
 
 import fundamentals.Fundamental;
+import static fundamentals.Fundamental.replaceUnderscores;
 
 /**
  * @author --G--
@@ -12,7 +13,10 @@ public class Main {
         System.out.println("Omnem dimittite spem, o vos intrantes!");
         //you can use this to test your solutions
         //        Fundamental.testMySolutions();
-        Fundamental.containsCertainDigit(10, 0);
+        String changed = replaceUnderscores(
+                "Szer_tem___kihívásokat_és_a_vizsgákat.", "e", " ", "a", " ");
+        System.out.println(
+                replaceUnderscores("fe_e_e_ku__a", " "));
     }
 
 }

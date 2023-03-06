@@ -110,7 +110,22 @@ public class Fundamental {
 
     public static String replaceUnderscores(
             String original, String... swapChars) {
-
+        String temp = original;
+        String[] stringArray = temp.split("");
+        int counter = 0;
+        for (int i = 0; i < stringArray.length; i++) {
+            if (stringArray[i].equals("_")) {
+                stringArray[i] = swapChars[counter];
+                if (counter < swapChars.length - 1) {
+                    counter++;
+                }
+            }
+        }
+        String result = "";
+        for (int i = 0; i < stringArray.length; i++) {
+            result += stringArray[i];
+        }
+        return result;
     }
 
 }
