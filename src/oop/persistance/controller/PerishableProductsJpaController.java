@@ -1,4 +1,3 @@
-
 package oop.persistance.controller;
 
 import java.io.Serializable;
@@ -9,8 +8,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import oop.persistance.PerishableProducts;
-import oop.persistance.StateSalesTax;
+import entities.PerishableProducts;
+import entities.StateSalesTax;
 import oop.persistance.exceptions.NonexistentEntityException;
 import oop.persistance.exceptions.PreexistingEntityException;
 
@@ -49,7 +48,8 @@ public class PerishableProductsJpaController implements Serializable {
                     commit();
         } catch (Exception ex) {
             if (findPerishableProducts(perishableProducts.getArticleNumber()) != null) {
-                throw new PreexistingEntityException("PerishableProducts " + perishableProducts + " already exists.",
+                throw new PreexistingEntityException(
+                        "PerishableProducts " + perishableProducts + " already exists.",
                         ex);
             }
             throw ex;
@@ -68,13 +68,13 @@ public class PerishableProductsJpaController implements Serializable {
                     begin();
             PerishableProducts persistentPerishableProducts
                     = em.find(PerishableProducts.class,
-                    perishableProducts.getArticleNumber());
+                            perishableProducts.getArticleNumber());
             StateSalesTax taxIdOld = persistentPerishableProducts.getTaxId();
             StateSalesTax taxIdNew = perishableProducts.getTaxId();
             if (taxIdNew != null) {
                 taxIdNew
                         = em.getReference(taxIdNew.getClass(),
-                        taxIdNew.getTaxKey());
+                                taxIdNew.getTaxKey());
                 perishableProducts.setTaxId(taxIdNew);
             }
             perishableProducts = em.merge(perishableProducts);
@@ -95,7 +95,8 @@ public class PerishableProductsJpaController implements Serializable {
             if (msg == null || msg.length() == 0) {
                 String id = perishableProducts.getArticleNumber();
                 if (findPerishableProducts(id) == null) {
-                    throw new NonexistentEntityException("The perishableProducts with id " + id + " no longer exists.");
+                    throw new NonexistentEntityException(
+                            "The perishableProducts with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -118,7 +119,8 @@ public class PerishableProductsJpaController implements Serializable {
                         = em.getReference(PerishableProducts.class, id);
                 perishableProducts.getArticleNumber();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The perishableProducts with id " + id + " no longer exists.",
+                throw new NonexistentEntityException(
+                        "The perishableProducts with id " + id + " no longer exists.",
                         enfe);
             }
             StateSalesTax taxId = perishableProducts.getTaxId();
@@ -150,7 +152,8 @@ public class PerishableProductsJpaController implements Serializable {
             int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder(). createQuery();
+            CriteriaQuery cq = em.getCriteriaBuilder().
+                    createQuery();
             cq.select(cq.from(PerishableProducts.class));
             Query q = em.createQuery(cq);
             if (!all) {
@@ -175,7 +178,8 @@ public class PerishableProductsJpaController implements Serializable {
     public int getPerishableProductsCount() {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder(). createQuery();
+            CriteriaQuery cq = em.getCriteriaBuilder().
+                    createQuery();
             Root<PerishableProducts> rt = cq.from(PerishableProducts.class);
             cq.select(em.getCriteriaBuilder().
                     count(rt));

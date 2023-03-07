@@ -1,5 +1,4 @@
-
-package oop.persistance;
+package entities;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -69,7 +68,11 @@ public class StateSalesTax implements Serializable {
     }
 
     public void setTaxKey(Integer taxKey) {
-        this.taxKey = taxKey;
+        if (taxKey >= 0 && taxKey <= 100) {
+            this.taxKey = taxKey;
+        } else {
+            throw new IllegalArgumentException("Tax key must between 0 and 100!");
+        }
     }
 
     public String getDescription() {
@@ -120,7 +123,8 @@ public class StateSalesTax implements Serializable {
             return false;
         }
         StateSalesTax other = (StateSalesTax) object;
-        if ((this.taxKey == null && other.taxKey != null) || (this.taxKey != null && !this.taxKey.equals(other.taxKey))) {
+        if ((this.taxKey == null && other.taxKey != null) || (this.taxKey != null && !this.taxKey.
+                equals(other.taxKey))) {
             return false;
         }
         return true;

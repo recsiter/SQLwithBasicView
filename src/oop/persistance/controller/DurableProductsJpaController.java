@@ -9,8 +9,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import oop.persistance.DurableProducts;
-import oop.persistance.StateSalesTax;
+import entities.DurableProducts;
+import entities.StateSalesTax;
 import oop.persistance.exceptions.NonexistentEntityException;
 import oop.persistance.exceptions.PreexistingEntityException;
 

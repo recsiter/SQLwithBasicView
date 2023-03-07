@@ -1,8 +1,7 @@
-
-package oop.persistance;
+package entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,48 +12,46 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * @author G
  */
 @Entity
-@Table(name = "perishable_products")
+@Table(name = "durable_products")
 @NamedQueries({
-    @NamedQuery(name = "PerishableProducts.findAll", query
-            = "SELECT p FROM PerishableProducts p"),
+    @NamedQuery(name = "DurableProducts.findAll", query
+            = "SELECT d FROM DurableProducts d"),
     @NamedQuery(name
-            = "PerishableProducts.findByArticleNumber", query
-            = "SELECT p FROM PerishableProducts p WHERE p.articleNumber = :articleNumber"),
+            = "DurableProducts.findByArticleNumber", query
+            = "SELECT d FROM DurableProducts d WHERE d.articleNumber = :articleNumber"),
     @NamedQuery(name
-            = "PerishableProducts.findByName", query
-            = "SELECT p FROM PerishableProducts p WHERE p.name = :name"),
+            = "DurableProducts.findByName", query
+            = "SELECT d FROM DurableProducts d WHERE d.name = :name"),
     @NamedQuery(name
-            = "PerishableProducts.findByBrand", query
-            = "SELECT p FROM PerishableProducts p WHERE p.brand = :brand"),
+            = "DurableProducts.findByBrand", query
+            = "SELECT d FROM DurableProducts d WHERE d.brand = :brand"),
     @NamedQuery(name
-            = "PerishableProducts.findByFamily", query
-            = "SELECT p FROM PerishableProducts p WHERE p.family = :family"),
+            = "DurableProducts.findByFamily", query
+            = "SELECT d FROM DurableProducts d WHERE d.family = :family"),
     @NamedQuery(name
-            = "PerishableProducts.findByNettoPrice", query
-            = "SELECT p FROM PerishableProducts p WHERE p.nettoPrice = :nettoPrice"),
+            = "DurableProducts.findByNettoPrice", query
+            = "SELECT d FROM DurableProducts d WHERE d.nettoPrice = :nettoPrice"),
     @NamedQuery(name
-            = "PerishableProducts.findByQuantity", query
-            = "SELECT p FROM PerishableProducts p WHERE p.quantity = :quantity"),
+            = "DurableProducts.findByQuantity", query
+            = "SELECT d FROM DurableProducts d WHERE d.quantity = :quantity"),
     @NamedQuery(name
-            = "PerishableProducts.findByAmountUnits", query
-            = "SELECT p FROM PerishableProducts p WHERE p.amountUnits = :amountUnits"),
+            = "DurableProducts.findByAmountUnits", query
+            = "SELECT d FROM DurableProducts d WHERE d.amountUnits = :amountUnits"),
     @NamedQuery(name
-            = "PerishableProducts.findByCriticalQuantity", query
-            = "SELECT p FROM PerishableProducts p WHERE p.criticalQuantity = :criticalQuantity"),
+            = "DurableProducts.findByCriticalQuantity", query
+            = "SELECT d FROM DurableProducts d WHERE d.criticalQuantity = :criticalQuantity"),
     @NamedQuery(name
-            = "PerishableProducts.findByExpirationDate", query
-            = "SELECT p FROM PerishableProducts p WHERE p.expirationDate = :expirationDate"),
+            = "DurableProducts.findByWarantyPeriod", query
+            = "SELECT d FROM DurableProducts d WHERE d.warantyPeriod = :warantyPeriod"),
     @NamedQuery(name
-            = "PerishableProducts.findByProductionDate", query
-            = "SELECT p FROM PerishableProducts p WHERE p.productionDate = :productionDate")})
-public class PerishableProducts implements Serializable {
+            = "DurableProducts.findByGrossWeight", query
+            = "SELECT d FROM DurableProducts d WHERE d.grossWeight = :grossWeight")})
+public class DurableProducts implements Serializable, GrossPriceCalculator, ProductEntity {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -82,27 +79,26 @@ public class PerishableProducts implements Serializable {
     @Column(name = "critical_quantity")
     private int criticalQuantity;
     @Basic(optional = false)
-    @Column(name = "expiration_date")
-    @Temporal(TemporalType.DATE)
-    private Date expirationDate;
+    @Column(name = "waranty_period")
+    private int warantyPeriod;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @Column(name = "production_date")
-    @Temporal(TemporalType.DATE)
-    private Date productionDate;
+    @Column(name = "gross_weight")
+    private BigDecimal grossWeight;
     @JoinColumn(name = "tax_id", referencedColumnName = "tax_key")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private StateSalesTax taxId;
 
-    public PerishableProducts() {
+    public DurableProducts() {
     }
 
-    public PerishableProducts(String articleNumber) {
+    public DurableProducts(String articleNumber) {
         this.articleNumber = articleNumber;
     }
 
-    public PerishableProducts(String articleNumber, String name, String family,
+    public DurableProducts(String articleNumber, String name, String family,
             int nettoPrice, int quantity, String amountUnits,
-            int criticalQuantity, Date expirationDate, Date productionDate) {
+            int criticalQuantity, int warantyPeriod, BigDecimal grossWeight) {
         this.articleNumber = articleNumber;
         this.name = name;
         this.family = family;
@@ -110,8 +106,8 @@ public class PerishableProducts implements Serializable {
         this.quantity = quantity;
         this.amountUnits = amountUnits;
         this.criticalQuantity = criticalQuantity;
-        this.expirationDate = expirationDate;
-        this.productionDate = productionDate;
+        this.warantyPeriod = warantyPeriod;
+        this.grossWeight = grossWeight;
     }
 
     public String getArticleNumber() {
@@ -178,20 +174,20 @@ public class PerishableProducts implements Serializable {
         this.criticalQuantity = criticalQuantity;
     }
 
-    public Date getExpirationDate() {
-        return expirationDate;
+    public int getWarantyPeriod() {
+        return warantyPeriod;
     }
 
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setWarantyPeriod(int warantyPeriod) {
+        this.warantyPeriod = warantyPeriod;
     }
 
-    public Date getProductionDate() {
-        return productionDate;
+    public BigDecimal getGrossWeight() {
+        return grossWeight;
     }
 
-    public void setProductionDate(Date productionDate) {
-        this.productionDate = productionDate;
+    public void setGrossWeight(BigDecimal grossWeight) {
+        this.grossWeight = grossWeight;
     }
 
     public StateSalesTax getTaxId() {
@@ -212,11 +208,12 @@ public class PerishableProducts implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PerishableProducts)) {
+        if (!(object instanceof DurableProducts)) {
             return false;
         }
-        PerishableProducts other = (PerishableProducts) object;
-        if ((this.articleNumber == null && other.articleNumber != null) || (this.articleNumber != null && !this.articleNumber.equals(other.articleNumber))) {
+        DurableProducts other = (DurableProducts) object;
+        if ((this.articleNumber == null && other.articleNumber != null) || (this.articleNumber != null && !this.articleNumber.
+                equals(other.articleNumber))) {
             return false;
         }
         return true;
@@ -224,7 +221,13 @@ public class PerishableProducts implements Serializable {
 
     @Override
     public String toString() {
-        return "oop.persistance.PerishableProducts[ articleNumber=" + articleNumber + " ]";
+        return "oop.persistance.DurableProducts[ articleNumber=" + articleNumber + " ]";
+    }
+
+    @Override
+    public double calculateGrossPrice() {
+        return this.getNettoPrice() * this.getTaxId().
+                getMultiplier();
     }
 
 }
