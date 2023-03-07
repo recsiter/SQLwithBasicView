@@ -1,6 +1,7 @@
 package main;
 
 import entities.DurableProducts;
+import entities.GroupByTaxId;
 import fundamentals.Fundamental;
 import static fundamentals.Fundamental.replaceUnderscores;
 import java.time.LocalDate;
@@ -57,8 +58,14 @@ public class Main {
 //        DP.createAndMakeFK(product, 27);
 //        System.out.println(DP.searchByIdPart("k").
 //                get(0));
-        System.out.println(PP.searchByIdPart("sdf").
-                get(0));
+//        System.out.println(PP.searchByIdPart("sdf").
+//                get(0));
+        List<GroupByTaxId> group = PP.groupingByTaxId();
+
+        for (GroupByTaxId g : group) {
+            System.out.println(g.toString());
+
+        }
 
     }
 

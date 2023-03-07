@@ -58,7 +58,10 @@ import javax.persistence.TemporalType;
             = "PerishableProducts.findByProductionDate", query
             = "SELECT p FROM PerishableProducts p WHERE p.productionDate = :productionDate"),
     @NamedQuery(name = "PerishableProducts.searchByNamePart", query
-            = "SELECT p FROM PerishableProducts p WHERE p.name LIKE CONCAT('%',:namePart,'%')")
+            = "SELECT p FROM PerishableProducts p WHERE p.name LIKE CONCAT('%',:namePart,'%')"),
+    @NamedQuery(name = "PerishableProducts.groupingByTaxId", query
+            = "SELECT new entities.GroupByTaxId(SUM(p.nettoPrice), SUM(p.taxId.multiplier*p.nettoPrice), "
+            + "AVG(p.nettoPrice), SUM(p.quantity)) FROM PerishableProducts p GROUP BY p.taxId")
 })
 public class PerishableProducts implements Serializable, GrossPriceCalculator, ProductEntity {
 

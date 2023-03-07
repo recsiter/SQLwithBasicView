@@ -1,5 +1,6 @@
 package oop.persistance.controller;
 
+import entities.GroupByTaxId;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -197,6 +198,14 @@ public class PerishableProductsJpaController implements Serializable, CreateAble
                 createNamedQuery("PerishableProducts.searchByNamePart");
         query.setParameter("namePart", namePart);
         return query.getResultList();
+    }
+
+    public List<GroupByTaxId> groupingByTaxId() {
+        Query query = getEntityManager().
+                createNamedQuery("PerishableProducts.groupingByTaxId");
+        List<GroupByTaxId> result = (List<GroupByTaxId>) query.
+                getResultList();
+        return result;
     }
 
     @Override
