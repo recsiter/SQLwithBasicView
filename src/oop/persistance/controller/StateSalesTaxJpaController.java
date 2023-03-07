@@ -1,4 +1,3 @@
-
 package oop.persistance.controller;
 
 import java.io.Serializable;
@@ -21,7 +20,7 @@ import oop.persistance.exceptions.PreexistingEntityException;
 /**
  * @author G
  */
-public class StateSalesTaxJpaController implements Serializable {
+public class StateSalesTaxJpaController implements Serializable, Controller {
 
     public StateSalesTaxJpaController(EntityManagerFactory emf) {
         this.emf = emf;
@@ -34,10 +33,12 @@ public class StateSalesTaxJpaController implements Serializable {
 
     public void create(StateSalesTax stateSalesTax) throws PreexistingEntityException, Exception {
         if (stateSalesTax.getPerishableProductsCollection() == null) {
-            stateSalesTax.setPerishableProductsCollection(new ArrayList<PerishableProducts>());
+            stateSalesTax.setPerishableProductsCollection(
+                    new ArrayList<PerishableProducts>());
         }
         if (stateSalesTax.getDurableProductsCollection() == null) {
-            stateSalesTax.setDurableProductsCollection(new ArrayList<DurableProducts>());
+            stateSalesTax.setDurableProductsCollection(
+                    new ArrayList<DurableProducts>());
         }
         EntityManager em = null;
         try {
@@ -46,54 +47,76 @@ public class StateSalesTaxJpaController implements Serializable {
                     begin();
             Collection<PerishableProducts> attachedPerishableProductsCollection
                     = new ArrayList<PerishableProducts>();
-            for (PerishableProducts perishableProductsCollectionPerishableProductsToAttach : stateSalesTax.getPerishableProductsCollection()) {
+            for (PerishableProducts perishableProductsCollectionPerishableProductsToAttach : stateSalesTax.
+                    getPerishableProductsCollection()) {
                 perishableProductsCollectionPerishableProductsToAttach
-                        = em.getReference(perishableProductsCollectionPerishableProductsToAttach.getClass(),
-                        perishableProductsCollectionPerishableProductsToAttach.getArticleNumber());
-                attachedPerishableProductsCollection.add(perishableProductsCollectionPerishableProductsToAttach);
+                        = em.getReference(
+                                perishableProductsCollectionPerishableProductsToAttach.
+                                        getClass(),
+                                perishableProductsCollectionPerishableProductsToAttach.
+                                        getArticleNumber());
+                attachedPerishableProductsCollection.add(
+                        perishableProductsCollectionPerishableProductsToAttach);
             }
-            stateSalesTax.setPerishableProductsCollection(attachedPerishableProductsCollection);
+            stateSalesTax.setPerishableProductsCollection(
+                    attachedPerishableProductsCollection);
             Collection<DurableProducts> attachedDurableProductsCollection
                     = new ArrayList<DurableProducts>();
-            for (DurableProducts durableProductsCollectionDurableProductsToAttach : stateSalesTax.getDurableProductsCollection()) {
+            for (DurableProducts durableProductsCollectionDurableProductsToAttach : stateSalesTax.
+                    getDurableProductsCollection()) {
                 durableProductsCollectionDurableProductsToAttach
-                        = em.getReference(durableProductsCollectionDurableProductsToAttach.getClass(),
-                        durableProductsCollectionDurableProductsToAttach.getArticleNumber());
-                attachedDurableProductsCollection.add(durableProductsCollectionDurableProductsToAttach);
+                        = em.getReference(
+                                durableProductsCollectionDurableProductsToAttach.
+                                        getClass(),
+                                durableProductsCollectionDurableProductsToAttach.
+                                        getArticleNumber());
+                attachedDurableProductsCollection.add(
+                        durableProductsCollectionDurableProductsToAttach);
             }
-            stateSalesTax.setDurableProductsCollection(attachedDurableProductsCollection);
+            stateSalesTax.setDurableProductsCollection(
+                    attachedDurableProductsCollection);
             em.persist(stateSalesTax);
-            for (PerishableProducts perishableProductsCollectionPerishableProducts : stateSalesTax.getPerishableProductsCollection()) {
+            for (PerishableProducts perishableProductsCollectionPerishableProducts : stateSalesTax.
+                    getPerishableProductsCollection()) {
                 StateSalesTax oldTaxIdOfPerishableProductsCollectionPerishableProducts
-                        = perishableProductsCollectionPerishableProducts.getTaxId();
-                perishableProductsCollectionPerishableProducts.setTaxId(stateSalesTax);
+                        = perishableProductsCollectionPerishableProducts.
+                                getTaxId();
+                perishableProductsCollectionPerishableProducts.setTaxId(
+                        stateSalesTax);
                 perishableProductsCollectionPerishableProducts
-                        = em.merge(perishableProductsCollectionPerishableProducts);
+                        = em.merge(
+                                perishableProductsCollectionPerishableProducts);
                 if (oldTaxIdOfPerishableProductsCollectionPerishableProducts != null) {
-                    oldTaxIdOfPerishableProductsCollectionPerishableProducts.getPerishableProductsCollection().
+                    oldTaxIdOfPerishableProductsCollectionPerishableProducts.
+                            getPerishableProductsCollection().
                             remove(perishableProductsCollectionPerishableProducts);
                     oldTaxIdOfPerishableProductsCollectionPerishableProducts
-                            = em.merge(oldTaxIdOfPerishableProductsCollectionPerishableProducts);
+                            = em.merge(
+                                    oldTaxIdOfPerishableProductsCollectionPerishableProducts);
                 }
             }
-            for (DurableProducts durableProductsCollectionDurableProducts : stateSalesTax.getDurableProductsCollection()) {
+            for (DurableProducts durableProductsCollectionDurableProducts : stateSalesTax.
+                    getDurableProductsCollection()) {
                 StateSalesTax oldTaxIdOfDurableProductsCollectionDurableProducts
                         = durableProductsCollectionDurableProducts.getTaxId();
                 durableProductsCollectionDurableProducts.setTaxId(stateSalesTax);
                 durableProductsCollectionDurableProducts
                         = em.merge(durableProductsCollectionDurableProducts);
                 if (oldTaxIdOfDurableProductsCollectionDurableProducts != null) {
-                    oldTaxIdOfDurableProductsCollectionDurableProducts.getDurableProductsCollection().
+                    oldTaxIdOfDurableProductsCollectionDurableProducts.
+                            getDurableProductsCollection().
                             remove(durableProductsCollectionDurableProducts);
                     oldTaxIdOfDurableProductsCollectionDurableProducts
-                            = em.merge(oldTaxIdOfDurableProductsCollectionDurableProducts);
+                            = em.merge(
+                                    oldTaxIdOfDurableProductsCollectionDurableProducts);
                 }
             }
             em.getTransaction().
                     commit();
         } catch (Exception ex) {
             if (findStateSalesTax(stateSalesTax.getTaxKey()) != null) {
-                throw new PreexistingEntityException("StateSalesTax " + stateSalesTax + " already exists.",
+                throw new PreexistingEntityException(
+                        "StateSalesTax " + stateSalesTax + " already exists.",
                         ex);
             }
             throw ex;
@@ -122,19 +145,23 @@ public class StateSalesTaxJpaController implements Serializable {
                     = stateSalesTax.getDurableProductsCollection();
             List<String> illegalOrphanMessages = null;
             for (PerishableProducts perishableProductsCollectionOldPerishableProducts : perishableProductsCollectionOld) {
-                if (!perishableProductsCollectionNew.contains(perishableProductsCollectionOldPerishableProducts)) {
+                if (!perishableProductsCollectionNew.contains(
+                        perishableProductsCollectionOldPerishableProducts)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain PerishableProducts " + perishableProductsCollectionOldPerishableProducts + " since its taxId field is not nullable.");
+                    illegalOrphanMessages.add(
+                            "You must retain PerishableProducts " + perishableProductsCollectionOldPerishableProducts + " since its taxId field is not nullable.");
                 }
             }
             for (DurableProducts durableProductsCollectionOldDurableProducts : durableProductsCollectionOld) {
-                if (!durableProductsCollectionNew.contains(durableProductsCollectionOldDurableProducts)) {
+                if (!durableProductsCollectionNew.contains(
+                        durableProductsCollectionOldDurableProducts)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain DurableProducts " + durableProductsCollectionOldDurableProducts + " since its taxId field is not nullable.");
+                    illegalOrphanMessages.add(
+                            "You must retain DurableProducts " + durableProductsCollectionOldDurableProducts + " since its taxId field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -144,51 +171,75 @@ public class StateSalesTaxJpaController implements Serializable {
                     = new ArrayList<PerishableProducts>();
             for (PerishableProducts perishableProductsCollectionNewPerishableProductsToAttach : perishableProductsCollectionNew) {
                 perishableProductsCollectionNewPerishableProductsToAttach
-                        = em.getReference(perishableProductsCollectionNewPerishableProductsToAttach.getClass(),
-                        perishableProductsCollectionNewPerishableProductsToAttach.getArticleNumber());
-                attachedPerishableProductsCollectionNew.add(perishableProductsCollectionNewPerishableProductsToAttach);
+                        = em.getReference(
+                                perishableProductsCollectionNewPerishableProductsToAttach.
+                                        getClass(),
+                                perishableProductsCollectionNewPerishableProductsToAttach.
+                                        getArticleNumber());
+                attachedPerishableProductsCollectionNew.add(
+                        perishableProductsCollectionNewPerishableProductsToAttach);
             }
             perishableProductsCollectionNew
                     = attachedPerishableProductsCollectionNew;
-            stateSalesTax.setPerishableProductsCollection(perishableProductsCollectionNew);
+            stateSalesTax.setPerishableProductsCollection(
+                    perishableProductsCollectionNew);
             Collection<DurableProducts> attachedDurableProductsCollectionNew
                     = new ArrayList<DurableProducts>();
             for (DurableProducts durableProductsCollectionNewDurableProductsToAttach : durableProductsCollectionNew) {
                 durableProductsCollectionNewDurableProductsToAttach
-                        = em.getReference(durableProductsCollectionNewDurableProductsToAttach.getClass(),
-                        durableProductsCollectionNewDurableProductsToAttach.getArticleNumber());
-                attachedDurableProductsCollectionNew.add(durableProductsCollectionNewDurableProductsToAttach);
+                        = em.getReference(
+                                durableProductsCollectionNewDurableProductsToAttach.
+                                        getClass(),
+                                durableProductsCollectionNewDurableProductsToAttach.
+                                        getArticleNumber());
+                attachedDurableProductsCollectionNew.add(
+                        durableProductsCollectionNewDurableProductsToAttach);
             }
             durableProductsCollectionNew = attachedDurableProductsCollectionNew;
-            stateSalesTax.setDurableProductsCollection(durableProductsCollectionNew);
+            stateSalesTax.setDurableProductsCollection(
+                    durableProductsCollectionNew);
             stateSalesTax = em.merge(stateSalesTax);
             for (PerishableProducts perishableProductsCollectionNewPerishableProducts : perishableProductsCollectionNew) {
-                if (!perishableProductsCollectionOld.contains(perishableProductsCollectionNewPerishableProducts)) {
+                if (!perishableProductsCollectionOld.contains(
+                        perishableProductsCollectionNewPerishableProducts)) {
                     StateSalesTax oldTaxIdOfPerishableProductsCollectionNewPerishableProducts
-                            = perishableProductsCollectionNewPerishableProducts.getTaxId();
-                    perishableProductsCollectionNewPerishableProducts.setTaxId(stateSalesTax);
+                            = perishableProductsCollectionNewPerishableProducts.
+                                    getTaxId();
+                    perishableProductsCollectionNewPerishableProducts.setTaxId(
+                            stateSalesTax);
                     perishableProductsCollectionNewPerishableProducts
-                            = em.merge(perishableProductsCollectionNewPerishableProducts);
-                    if (oldTaxIdOfPerishableProductsCollectionNewPerishableProducts != null && !oldTaxIdOfPerishableProductsCollectionNewPerishableProducts.equals(stateSalesTax)) {
-                        oldTaxIdOfPerishableProductsCollectionNewPerishableProducts.getPerishableProductsCollection().
+                            = em.merge(
+                                    perishableProductsCollectionNewPerishableProducts);
+                    if (oldTaxIdOfPerishableProductsCollectionNewPerishableProducts != null && !oldTaxIdOfPerishableProductsCollectionNewPerishableProducts.
+                            equals(stateSalesTax)) {
+                        oldTaxIdOfPerishableProductsCollectionNewPerishableProducts.
+                                getPerishableProductsCollection().
                                 remove(perishableProductsCollectionNewPerishableProducts);
                         oldTaxIdOfPerishableProductsCollectionNewPerishableProducts
-                                = em.merge(oldTaxIdOfPerishableProductsCollectionNewPerishableProducts);
+                                = em.merge(
+                                        oldTaxIdOfPerishableProductsCollectionNewPerishableProducts);
                     }
                 }
             }
             for (DurableProducts durableProductsCollectionNewDurableProducts : durableProductsCollectionNew) {
-                if (!durableProductsCollectionOld.contains(durableProductsCollectionNewDurableProducts)) {
+                if (!durableProductsCollectionOld.contains(
+                        durableProductsCollectionNewDurableProducts)) {
                     StateSalesTax oldTaxIdOfDurableProductsCollectionNewDurableProducts
-                            = durableProductsCollectionNewDurableProducts.getTaxId();
-                    durableProductsCollectionNewDurableProducts.setTaxId(stateSalesTax);
+                            = durableProductsCollectionNewDurableProducts.
+                                    getTaxId();
+                    durableProductsCollectionNewDurableProducts.setTaxId(
+                            stateSalesTax);
                     durableProductsCollectionNewDurableProducts
-                            = em.merge(durableProductsCollectionNewDurableProducts);
-                    if (oldTaxIdOfDurableProductsCollectionNewDurableProducts != null && !oldTaxIdOfDurableProductsCollectionNewDurableProducts.equals(stateSalesTax)) {
-                        oldTaxIdOfDurableProductsCollectionNewDurableProducts.getDurableProductsCollection().
+                            = em.merge(
+                                    durableProductsCollectionNewDurableProducts);
+                    if (oldTaxIdOfDurableProductsCollectionNewDurableProducts != null && !oldTaxIdOfDurableProductsCollectionNewDurableProducts.
+                            equals(stateSalesTax)) {
+                        oldTaxIdOfDurableProductsCollectionNewDurableProducts.
+                                getDurableProductsCollection().
                                 remove(durableProductsCollectionNewDurableProducts);
                         oldTaxIdOfDurableProductsCollectionNewDurableProducts
-                                = em.merge(oldTaxIdOfDurableProductsCollectionNewDurableProducts);
+                                = em.merge(
+                                        oldTaxIdOfDurableProductsCollectionNewDurableProducts);
                     }
                 }
             }
@@ -199,7 +250,8 @@ public class StateSalesTaxJpaController implements Serializable {
             if (msg == null || msg.length() == 0) {
                 Integer id = stateSalesTax.getTaxKey();
                 if (findStateSalesTax(id) == null) {
-                    throw new NonexistentEntityException("The stateSalesTax with id " + id + " no longer exists.");
+                    throw new NonexistentEntityException(
+                            "The stateSalesTax with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -221,7 +273,8 @@ public class StateSalesTaxJpaController implements Serializable {
                 stateSalesTax = em.getReference(StateSalesTax.class, id);
                 stateSalesTax.getTaxKey();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The stateSalesTax with id " + id + " no longer exists.",
+                throw new NonexistentEntityException(
+                        "The stateSalesTax with id " + id + " no longer exists.",
                         enfe);
             }
             List<String> illegalOrphanMessages = null;
@@ -231,7 +284,8 @@ public class StateSalesTaxJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This StateSalesTax (" + stateSalesTax + ") cannot be destroyed since the PerishableProducts " + perishableProductsCollectionOrphanCheckPerishableProducts + " in its perishableProductsCollection field has a non-nullable taxId field.");
+                illegalOrphanMessages.add(
+                        "This StateSalesTax (" + stateSalesTax + ") cannot be destroyed since the PerishableProducts " + perishableProductsCollectionOrphanCheckPerishableProducts + " in its perishableProductsCollection field has a non-nullable taxId field.");
             }
             Collection<DurableProducts> durableProductsCollectionOrphanCheck
                     = stateSalesTax.getDurableProductsCollection();
@@ -239,7 +293,8 @@ public class StateSalesTaxJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This StateSalesTax (" + stateSalesTax + ") cannot be destroyed since the DurableProducts " + durableProductsCollectionOrphanCheckDurableProducts + " in its durableProductsCollection field has a non-nullable taxId field.");
+                illegalOrphanMessages.add(
+                        "This StateSalesTax (" + stateSalesTax + ") cannot be destroyed since the DurableProducts " + durableProductsCollectionOrphanCheckDurableProducts + " in its durableProductsCollection field has a non-nullable taxId field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
@@ -267,7 +322,8 @@ public class StateSalesTaxJpaController implements Serializable {
             int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder(). createQuery();
+            CriteriaQuery cq = em.getCriteriaBuilder().
+                    createQuery();
             cq.select(cq.from(StateSalesTax.class));
             Query q = em.createQuery(cq);
             if (!all) {
@@ -292,7 +348,8 @@ public class StateSalesTaxJpaController implements Serializable {
     public int getStateSalesTaxCount() {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder(). createQuery();
+            CriteriaQuery cq = em.getCriteriaBuilder().
+                    createQuery();
             Root<StateSalesTax> rt = cq.from(StateSalesTax.class);
             cq.select(em.getCriteriaBuilder().
                     count(rt));

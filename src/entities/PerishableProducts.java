@@ -56,7 +56,10 @@ import javax.persistence.TemporalType;
             = "SELECT p FROM PerishableProducts p WHERE p.expirationDate = :expirationDate"),
     @NamedQuery(name
             = "PerishableProducts.findByProductionDate", query
-            = "SELECT p FROM PerishableProducts p WHERE p.productionDate = :productionDate")})
+            = "SELECT p FROM PerishableProducts p WHERE p.productionDate = :productionDate"),
+    @NamedQuery(name = "PerishableProducts.searchByNamePart", query
+            = "SELECT p FROM PerishableProducts p WHERE p.name LIKE CONCAT('%',:namePart,'%')")
+})
 public class PerishableProducts implements Serializable, GrossPriceCalculator, ProductEntity {
 
     private static final long serialVersionUID = 1L;

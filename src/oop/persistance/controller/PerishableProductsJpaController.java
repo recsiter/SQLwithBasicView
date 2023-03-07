@@ -10,13 +10,15 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import entities.PerishableProducts;
 import entities.StateSalesTax;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oop.persistance.exceptions.NonexistentEntityException;
 import oop.persistance.exceptions.PreexistingEntityException;
 
 /**
  * @author G
  */
-public class PerishableProductsJpaController implements Serializable {
+public class PerishableProductsJpaController implements Serializable, CreateAble<PerishableProducts>, Controller {
 
     public PerishableProductsJpaController(EntityManagerFactory emf) {
         this.emf = emf;
@@ -187,6 +189,45 @@ public class PerishableProductsJpaController implements Serializable {
             return ((Long) q.getSingleResult()).intValue();
         } finally {
             em.close();
+        }
+    }
+
+    public List<PerishableProducts> searchByIdPart(String namePart) {
+        Query query = getEntityManager().
+                createNamedQuery("PerishableProducts.searchByNamePart");
+        query.setParameter("namePart", namePart);
+        return query.getResultList();
+    }
+
+    @Override
+    public void createAndMakeFK(PerishableProducts product, int tax) {
+        StateSalesTaxJpaController sstc = new StateSalesTaxJpaController(emf);
+//        Controller sstc = (StateSalesTaxJpaController) ControllerFactory.
+//                createController(ControllerName.StateSales);
+        if (sstc.findStateSalesTax(tax) != null) {
+            try {
+                product.setTaxId(sstc.findStateSalesTax(tax));
+                create(product);
+            } catch (Exception ex) {
+                Logger.
+                        getLogger(PerishableProductsJpaController.class.
+                                getName()).
+                        log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            try {
+                sstc.create(new StateSalesTax(tax, String.valueOf(tax) + "%",
+                        (tax / 100.0) + 1));
+                product.setTaxId(sstc.findStateSalesTax(tax));
+                create(product);
+            } catch (Exception ex) {
+                Logger.
+                        getLogger(PerishableProductsJpaController.class.
+                                getName()).
+                        log(Level.SEVERE, null, ex);
+            }
+
         }
     }
 

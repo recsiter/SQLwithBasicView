@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.List;
+
 /**
  *
  * @author --G--

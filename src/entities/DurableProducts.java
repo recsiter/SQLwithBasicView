@@ -50,7 +50,10 @@ import javax.persistence.Table;
             = "SELECT d FROM DurableProducts d WHERE d.warantyPeriod = :warantyPeriod"),
     @NamedQuery(name
             = "DurableProducts.findByGrossWeight", query
-            = "SELECT d FROM DurableProducts d WHERE d.grossWeight = :grossWeight")})
+            = "SELECT d FROM DurableProducts d WHERE d.grossWeight = :grossWeight"),
+    @NamedQuery(name = "DurableProducts.searchByIdPart", query
+            = "SELECT d FROM DurableProducts d WHERE d.articleNumber LIKE CONCAT('%',:wordPiece,'%')")
+})
 public class DurableProducts implements Serializable, GrossPriceCalculator, ProductEntity {
 
     private static final long serialVersionUID = 1L;

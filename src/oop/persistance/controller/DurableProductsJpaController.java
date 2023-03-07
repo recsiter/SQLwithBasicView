@@ -1,4 +1,3 @@
-
 package oop.persistance.controller;
 
 import java.io.Serializable;
@@ -11,13 +10,15 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import entities.DurableProducts;
 import entities.StateSalesTax;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oop.persistance.exceptions.NonexistentEntityException;
 import oop.persistance.exceptions.PreexistingEntityException;
 
 /**
  * @author G
  */
-public class DurableProductsJpaController implements Serializable {
+public class DurableProductsJpaController implements Serializable, CreateAble<DurableProducts>, Controller {
 
     public DurableProductsJpaController(EntityManagerFactory emf) {
         this.emf = emf;
@@ -49,7 +50,8 @@ public class DurableProductsJpaController implements Serializable {
                     commit();
         } catch (Exception ex) {
             if (findDurableProducts(durableProducts.getArticleNumber()) != null) {
-                throw new PreexistingEntityException("DurableProducts " + durableProducts + " already exists.",
+                throw new PreexistingEntityException(
+                        "DurableProducts " + durableProducts + " already exists.",
                         ex);
             }
             throw ex;
@@ -68,13 +70,13 @@ public class DurableProductsJpaController implements Serializable {
                     begin();
             DurableProducts persistentDurableProducts
                     = em.find(DurableProducts.class,
-                    durableProducts.getArticleNumber());
+                            durableProducts.getArticleNumber());
             StateSalesTax taxIdOld = persistentDurableProducts.getTaxId();
             StateSalesTax taxIdNew = durableProducts.getTaxId();
             if (taxIdNew != null) {
                 taxIdNew
                         = em.getReference(taxIdNew.getClass(),
-                        taxIdNew.getTaxKey());
+                                taxIdNew.getTaxKey());
                 durableProducts.setTaxId(taxIdNew);
             }
             durableProducts = em.merge(durableProducts);
@@ -95,7 +97,8 @@ public class DurableProductsJpaController implements Serializable {
             if (msg == null || msg.length() == 0) {
                 String id = durableProducts.getArticleNumber();
                 if (findDurableProducts(id) == null) {
-                    throw new NonexistentEntityException("The durableProducts with id " + id + " no longer exists.");
+                    throw new NonexistentEntityException(
+                            "The durableProducts with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -117,7 +120,8 @@ public class DurableProductsJpaController implements Serializable {
                 durableProducts = em.getReference(DurableProducts.class, id);
                 durableProducts.getArticleNumber();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The durableProducts with id " + id + " no longer exists.",
+                throw new NonexistentEntityException(
+                        "The durableProducts with id " + id + " no longer exists.",
                         enfe);
             }
             StateSalesTax taxId = durableProducts.getTaxId();
@@ -149,7 +153,8 @@ public class DurableProductsJpaController implements Serializable {
             int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder(). createQuery();
+            CriteriaQuery cq = em.getCriteriaBuilder().
+                    createQuery();
             cq.select(cq.from(DurableProducts.class));
             Query q = em.createQuery(cq);
             if (!all) {
@@ -174,7 +179,8 @@ public class DurableProductsJpaController implements Serializable {
     public int getDurableProductsCount() {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder(). createQuery();
+            CriteriaQuery cq = em.getCriteriaBuilder().
+                    createQuery();
             Root<DurableProducts> rt = cq.from(DurableProducts.class);
             cq.select(em.getCriteriaBuilder().
                     count(rt));
@@ -183,6 +189,45 @@ public class DurableProductsJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+
+    @Override
+    public void createAndMakeFK(DurableProducts product, int tax) {
+        StateSalesTaxJpaController sstc = new StateSalesTaxJpaController(emf);
+//       Controller sstc= (StateSalesTaxJpaController)ControllerFactory.createController(ControllerName.StateSales);
+        if (sstc.findStateSalesTax(tax) != null) {
+            try {
+                product.setTaxId(sstc.findStateSalesTax(tax));
+                create(product);
+            } catch (Exception ex) {
+                Logger.
+                        getLogger(DurableProductsJpaController.class.
+                                getName()).
+                        log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            try {
+                sstc.create(new StateSalesTax(tax, String.valueOf(tax) + "%",
+                        (tax / 100.0) + 1));
+                product.setTaxId(sstc.findStateSalesTax(tax));
+                create(product);
+            } catch (Exception ex) {
+                Logger.
+                        getLogger(DurableProductsJpaController.class.
+                                getName()).
+                        log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+    }
+
+    public List<DurableProducts> searchByIdPart(String idPart) {
+        Query query = getEntityManager().
+                createNamedQuery("DurableProducts.searchByIdPart");
+        query.setParameter("wordPiece", idPart);
+        return query.getResultList();
     }
 
 }
