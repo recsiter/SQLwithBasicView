@@ -5,13 +5,15 @@ package entities;
  */
 public class GroupByTaxId {
 
+    public final int taxId;
     public final long nettoSum;
     public final double bruttoSum;
     public final double avgNetto;
     public final long quantitySum;
 
-    public GroupByTaxId(long nettoSum, double bruttoSum, double avgNetto,
-            long quantitySum) {
+    public GroupByTaxId(int taxId, long nettoSum, double bruttoSum,
+            double avgNetto, long quantitySum) {
+        this.taxId = taxId;
         this.nettoSum = nettoSum;
         this.bruttoSum = bruttoSum;
         this.avgNetto = avgNetto;
@@ -20,7 +22,7 @@ public class GroupByTaxId {
 
     @Override
     public String toString() {
-        return "nettoSum=" + nettoSum + ", bruttoSum=" + bruttoSum + ", avgNetto=" + avgNetto + ", quantitySum=" + quantitySum + '}';
+        return "taxId=" + taxId + ", nettoSum=" + nettoSum + ", bruttoSum=" + bruttoSum + ", avgNetto=" + avgNetto + ", quantitySum=" + quantitySum + '}';
     }
 
 }
