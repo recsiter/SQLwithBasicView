@@ -5,6 +5,7 @@ import entities.PerishableProducts;
 import entities.SelectByCriticalQuantity;
 import java.nio.channels.Pipe;
 import java.util.List;
+import javax.swing.table.AbstractTableModel;
 import oop.persistance.controller.Controller;
 import oop.persistance.controller.ControllerFactory;
 import oop.persistance.controller.ControllerName;
@@ -22,6 +23,8 @@ public class MainForm extends javax.swing.JFrame {
     static DurableHandler DH;
     private List<PerishableProducts> perishableList;
     private List<DurableProducts> dureableList;
+    private AbstractTableModel perishableTable;
+    private AbstractTableModel dureableTable;
 
     static {
         PH = (PerishableHandler) HandlerFactory.createHandler(
@@ -37,6 +40,8 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         perishableList = PH.findAll();
         dureableList = DH.findAll();
+        perishableTable = new PerishableTableModel(perishableList);
+
         criticalQantityCheck();
     }
 
