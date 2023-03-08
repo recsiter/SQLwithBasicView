@@ -9,7 +9,7 @@ import oop.persistance.controller.DurableHandler;
  * @author --G--
  */
 public class SearchFormDP extends javax.swing.JFrame {
-    
+
     private DurableTableModel table;
 
     /**
@@ -34,6 +34,7 @@ public class SearchFormDP extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Durable search by artifical number part");
 
         btSearch.setText("Search");
         btSearch.addActionListener(new java.awt.event.ActionListener() {

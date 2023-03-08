@@ -37,6 +37,16 @@ public class PerishableHandler implements Handler {
         }
     }
 
+    public static void update(PerishableProducts product) {
+        try {
+            PP.edit(product);
+        } catch (Exception ex) {
+            Logger.getLogger(PerishableHandler.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public static void statsByTax() {
         PP.groupingByTaxId();
     }

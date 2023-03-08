@@ -66,6 +66,7 @@ public class SaveFormDP extends javax.swing.JFrame {
         jtWaranty = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Durable save");
         setResizable(false);
 
         jtGrossWeight.setText("40.32");

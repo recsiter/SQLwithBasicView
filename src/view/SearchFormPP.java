@@ -9,7 +9,7 @@ import oop.persistance.controller.PerishableHandler;
  * @author --G--
  */
 public class SearchFormPP extends javax.swing.JFrame {
-    
+
     private PerishableTableModel table;
 
     /**
@@ -34,6 +34,7 @@ public class SearchFormPP extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Perishable search by name part");
         setResizable(false);
 
         btSearch.setText("Search");

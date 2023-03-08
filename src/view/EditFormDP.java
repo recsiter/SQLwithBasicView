@@ -33,6 +33,7 @@ public class EditFormDP extends javax.swing.JFrame {
         jTAddAmount1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Dureable products editor");
 
         btIncrease.setText("+ Increase Quantity");
 

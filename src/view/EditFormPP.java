@@ -3,13 +3,16 @@ package view;
 import entities.PerishableProducts;
 import java.util.ArrayList;
 import java.util.List;
+import oop.persistance.controller.ControllerName;
+import oop.persistance.controller.HandlerFactory;
+import oop.persistance.controller.PerishableHandler;
 
 /**
  *
  * @author --G--
  */
 public class EditFormPP extends javax.swing.JFrame {
-
+    
     private List<ProductQuantityChangeListener> listeners;
     private PerishableProducts product;
 
@@ -22,17 +25,17 @@ public class EditFormPP extends javax.swing.JFrame {
         jTProductField.setText(product.toString());
         listeners = new ArrayList<>();
     }
-
+    
     private EditFormPP() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     private void notifyListeners(PerishableProducts product) {
         for (ProductQuantityChangeListener listener : listeners) {
             listener.changeQuantity(product);
         }
     }
-
+    
     public void addListener(ProductQuantityChangeListener listener) {
         listeners.add(listener);
     }
@@ -49,7 +52,7 @@ public class EditFormPP extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTProductField = new javax.swing.JTextPane();
         btIncrease = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btDecrease = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTBruttoPrice = new javax.swing.JTextPane();
         jLabel1 = new javax.swing.JLabel();
@@ -60,6 +63,7 @@ public class EditFormPP extends javax.swing.JFrame {
         jTDayToPerish = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Perishable product editor");
 
         jScrollPane1.setViewportView(jTProductField);
 
@@ -70,10 +74,10 @@ public class EditFormPP extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("- Decrease Quantity");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btDecrease.setText("- Decrease Quantity");
+        btDecrease.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btDecreaseActionPerformed(evt);
             }
         });
 
@@ -109,7 +113,7 @@ public class EditFormPP extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jtSubstractAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton2))
+                                .addComponent(btDecrease))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(61, Short.MAX_VALUE))
@@ -134,7 +138,7 @@ public class EditFormPP extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btIncrease)
-                    .addComponent(jButton2))
+                    .addComponent(btDecrease))
                 .addGap(35, 35, 35))
         );
 
@@ -142,16 +146,24 @@ public class EditFormPP extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btIncreaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncreaseActionPerformed
-        product.quantityAdd(Integer.parseInt(jTAddAmount.getText()));
         jTProductField.setText(product.toString());
+        PerishableHandler handler = (PerishableHandler) HandlerFactory.
+                createHandler(ControllerName.Perishable);
+        product.quantityAdd(Integer.parseInt(jTAddAmount.getText()));
+        handler.update(product);
+        notifyListeners(product);
         this.dispose();
     }//GEN-LAST:event_btIncreaseActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        product.quantitySubstract(Integer.parseInt(jtSubstractAmount.getText()));
+    
+    private void btDecreaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDecreaseActionPerformed
         jTProductField.setText(product.toString());
+        PerishableHandler handler = (PerishableHandler) HandlerFactory.
+                createHandler(ControllerName.Perishable);
+        product.quantitySubstract(Integer.parseInt(jtSubstractAmount.getText()));
+        handler.update(product);
+        notifyListeners(product);
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btDecreaseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,8 +207,8 @@ public class EditFormPP extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btDecrease;
     private javax.swing.JButton btIncrease;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

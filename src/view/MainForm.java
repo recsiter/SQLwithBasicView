@@ -26,13 +26,15 @@ public class MainForm extends javax.swing.JFrame {
     static DurableHandler DH;
     private List<PerishableProducts> perishableList;
     private List<DurableProducts> dureableList;
-    private AbstractTableModel perishableTable;
-    private AbstractTableModel durableTable;
+    private AbstractTableModel perishableTableAbs;
+    private AbstractTableModel durableTableAbs;
     private ProductCreateEventListener Plistener;
     private ProductCreateEventListener Dlistener;
     private ProductQuantityChangeListener PQlistener;
     private SaveFormPP PerishableSaveForm;
     private SaveFormDP DurableSaveForm;
+    private EditFormDP DpEditorForm;
+    private EditFormPP PpEditorForm;
 
     static {
         PH = (PerishableHandler) HandlerFactory.createHandler(
@@ -49,12 +51,13 @@ public class MainForm extends javax.swing.JFrame {
         criticalQantityCheck();
         perishableList = PH.findAll();
         dureableList = DH.findAll();
-        perishableTable = new PerishableTableModel(perishableList);
-        durableTable = new DurableTableModel(dureableList);
-        tbPerishable.setModel(perishableTable);
-        tbDurable.setModel(durableTable);
+        perishableTableAbs = new PerishableTableModel(perishableList);
+        durableTableAbs = new DurableTableModel(dureableList);
+        tbPerishable.setModel(perishableTableAbs);
+        tbDurable.setModel(durableTableAbs);
         Plistener = new PerishableListener();
         Dlistener = new DurableListener();
+        PQlistener = new PerishableQuantityChangeListener();
     }
 
     /**
@@ -242,10 +245,11 @@ public class MainForm extends javax.swing.JFrame {
     private void tbPerishableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPerishableMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() > 1) {
             int index = tbPerishable.getSelectedRow();
-            EditFormPP form = new EditFormPP(perishableList.get(index));
-            form.setVisible(true);
-            form.setAlwaysOnTop(true);
-            form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            PpEditorForm = new EditFormPP(perishableList.get(index));
+            PpEditorForm.addListener(PQlistener);
+            PpEditorForm.setVisible(true);
+            PpEditorForm.setAlwaysOnTop(true);
+            PpEditorForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
     }//GEN-LAST:event_tbPerishableMouseClicked
 
@@ -316,7 +320,7 @@ public class MainForm extends javax.swing.JFrame {
         public void productCreated(PerishableProducts product) {
             if (!perishableList.contains(product)) {
                 perishableList.add(product);
-                perishableTable.fireTableDataChanged();
+                perishableTableAbs.fireTableDataChanged();
             }
         }
 
@@ -329,7 +333,7 @@ public class MainForm extends javax.swing.JFrame {
             if (!dureableList.contains(product)) {
                 dureableList.add(product);
             }
-            durableTable.fireTableDataChanged();
+            durableTableAbs.fireTableDataChanged();
         }
 
     }
@@ -338,7 +342,15 @@ public class MainForm extends javax.swing.JFrame {
 
         @Override
         public void changeQuantity(PerishableProducts product) {
+            int counter = 0;
+            while (product != perishableList.get(counter) && counter < perishableList.
+                    size()) {
+                counter++;
 
+            }
+            System.out.println("lefut");
+            perishableList.set(counter, product);
+            perishableTableAbs.fireTableDataChanged();
         }
 
     }

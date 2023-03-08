@@ -3,6 +3,7 @@ package oop.persistance.controller;
 import oop.persistance.controller.Handler;
 import entities.DurableProducts;
 import entities.DurableProducts;
+import entities.PerishableProducts;
 import entities.SelectByCriticalQuantity;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,6 +13,7 @@ import oop.persistance.controller.Controller;
 import oop.persistance.controller.ControllerFactory;
 import oop.persistance.controller.ControllerName;
 import oop.persistance.controller.DurableProductsJpaController;
+import static oop.persistance.controller.PerishableHandler.PP;
 
 /**
  * @author G
@@ -35,6 +37,16 @@ public class DurableHandler implements Handler {
             Logger.getLogger(DurableHandler.class.getName()).
                     log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static void update(DurableProducts product) {
+        try {
+            DP.edit(product);
+        } catch (Exception ex) {
+            Logger.getLogger(PerishableHandler.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public static List<DurableProducts> searchByIdPart(String idPart) {

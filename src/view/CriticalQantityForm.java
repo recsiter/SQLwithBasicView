@@ -2,6 +2,7 @@ package view;
 
 import entities.SelectByCriticalQuantity;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -9,17 +10,18 @@ import javax.swing.table.AbstractTableModel;
  * @author --G--
  */
 public class CriticalQantityForm extends javax.swing.JFrame {
-
+    
     private List<SelectByCriticalQuantity> list;
     private AbstractTableModel underCriticalTable;
-
+    
     public CriticalQantityForm(List<SelectByCriticalQuantity> list) {
         initComponents();
         this.list = list;
-
+        
         underCriticalTable = new CriticalQuantityTable(list);
         jTable.setModel(underCriticalTable);
-
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
     }
 
     /**

@@ -62,6 +62,7 @@ public class SaveFormPP extends javax.swing.JFrame {
         btSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Perishable save");
         setResizable(false);
 
         jtArticleNum.setText("PP12345678");
