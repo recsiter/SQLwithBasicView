@@ -1,16 +1,41 @@
 package view;
 
+import entities.PerishableProducts;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import oop.persistance.controller.ControllerName;
+import oop.persistance.controller.HandlerFactory;
+import oop.persistance.controller.PerishableHandler;
+
 /**
  *
  * @author --G--
  */
 public class SaveFormPP extends javax.swing.JFrame {
 
+    List<ProductEventListener> listeners;
+
     /**
      * Creates new form SaveForm
      */
     public SaveFormPP() {
         initComponents();
+        listeners = new ArrayList<>();
+    }
+
+    private void notifyListeners(PerishableProducts product) {
+        for (ProductEventListener listener : listeners) {
+            listener.productCreated(product);
+        }
+    }
+
+    public void addListener(ProductEventListener listener) {
+        listeners.add(listener);
     }
 
     /**
@@ -37,29 +62,34 @@ public class SaveFormPP extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jtArticleNum.setText("ArticleNumber: PP12345678");
+        jtArticleNum.setText("PP12345678");
 
-        jtName.setText("Name");
+        jtName.setText("Kolbász");
 
-        jtBrand.setText("Brand");
+        jtBrand.setText("Gyulai");
 
-        jtFamily.setText("Family");
+        jtFamily.setText("Hentesáru");
 
-        jtNettoPrice.setText("NettoPrice: >0");
+        jtNettoPrice.setText("2300");
 
-        jtTaxId.setText("TaxId");
+        jtTaxId.setText("29");
 
-        jtQantity.setText("Quantity:>0");
+        jtQantity.setText("24");
 
-        jtAmountUnit.setText("AmountUnits: kg,l...");
+        jtAmountUnit.setText("kg");
 
-        jtCriticalQuantity.setText("CriticalQantity");
+        jtCriticalQuantity.setText("4");
 
-        jtExpDate.setText("ExpirationDate: 2020-10-10");
+        jtExpDate.setText("2023-06-20");
 
-        jtProdDate.setText("ProductDate: 2020-10-10");
+        jtProdDate.setText("2023-03-10");
 
         btSave.setText("Save");
+        btSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,6 +149,20 @@ public class SaveFormPP extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
+        try {
+            PerishableHandler handler = (PerishableHandler) HandlerFactory.
+                    createHandler(ControllerName.Perishable);
+            PerishableProducts product = productcreator();
+            handler.create(product, Integer.parseInt(jtTaxId.getText()));
+            notifyListeners(product);
+        } catch (ParseException ex) {
+            Logger.getLogger(SaveFormPP.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+        this.dispose();
+    }//GEN-LAST:event_btSaveActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -176,4 +220,21 @@ public class SaveFormPP extends javax.swing.JFrame {
     private javax.swing.JTextField jtQantity;
     private javax.swing.JTextField jtTaxId;
     // End of variables declaration//GEN-END:variables
+
+    private PerishableProducts productcreator() throws ParseException {
+        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date expDate = formatter1.parse(jtExpDate.getText());
+        Date prodDate = formatter1.parse(jtProdDate.getText());
+
+        PerishableProducts result = new PerishableProducts(jtArticleNum.
+                getText(), jtName.getText(),
+                jtFamily.getText(), Integer.parseInt(jtNettoPrice.getText()),
+                Integer.parseInt(jtTaxId.getText()), jtAmountUnit.getText(),
+                Integer.parseInt(jtCriticalQuantity.getText()),
+                expDate, prodDate);
+        result.setBrand(jtBrand.getText());
+
+        return result;
+    }
 }

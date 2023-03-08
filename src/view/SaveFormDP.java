@@ -1,16 +1,45 @@
 package view;
 
+import entities.DurableProducts;
+import entities.PerishableProducts;
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import oop.persistance.controller.ControllerName;
+import oop.persistance.controller.DurableHandler;
+import oop.persistance.controller.HandlerFactory;
+import oop.persistance.controller.PerishableHandler;
+
 /**
  *
  * @author --G--
  */
 public class SaveFormDP extends javax.swing.JFrame {
 
+    List<ProductEventListener> listeners;
+
     /**
      * Creates new form SaveFormDP
      */
     public SaveFormDP() {
         initComponents();
+        listeners = new ArrayList<>();
+
+    }
+
+    private void notifyListeners(DurableProducts product) {
+        for (ProductEventListener listener : listeners) {
+            listener.productCreated(product);
+        }
+    }
+
+    public void addListener(ProductEventListener listener) {
+        listeners.add(listener);
     }
 
     /**
@@ -22,7 +51,7 @@ public class SaveFormDP extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jtProdDate = new javax.swing.JTextField();
+        jtGrossWeight = new javax.swing.JTextField();
         jtArticleNum = new javax.swing.JTextField();
         btSave = new javax.swing.JButton();
         jtName = new javax.swing.JTextField();
@@ -33,33 +62,38 @@ public class SaveFormDP extends javax.swing.JFrame {
         jtQantity = new javax.swing.JTextField();
         jtAmountUnit = new javax.swing.JTextField();
         jtCriticalQuantity = new javax.swing.JTextField();
-        jtExpDate = new javax.swing.JTextField();
+        jtWaranty = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jtProdDate.setText("GrossWeight");
+        jtGrossWeight.setText("40.32");
 
-        jtArticleNum.setText("ArticleNumber: DP12345678");
+        jtArticleNum.setText("DP12345678");
 
         btSave.setText("Save");
+        btSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSaveActionPerformed(evt);
+            }
+        });
 
-        jtName.setText("Name");
+        jtName.setText("Liszt");
 
-        jtBrand.setText("Brand");
+        jtBrand.setText("Nagyi");
 
-        jtFamily.setText("Family");
+        jtFamily.setText("Gabona");
 
-        jtNettoPrice.setText("NettoPrice: >0");
+        jtNettoPrice.setText("960");
 
-        jtTaxId.setText("TaxId");
+        jtTaxId.setText("27");
 
-        jtQantity.setText("Quantity:>0");
+        jtQantity.setText("40");
 
-        jtAmountUnit.setText("AmountUnits: kg,l...");
+        jtAmountUnit.setText("kg");
 
-        jtCriticalQuantity.setText("CriticalQantity");
+        jtCriticalQuantity.setText("10");
 
-        jtExpDate.setText("WarantyPeriod: Number of month");
+        jtWaranty.setText("12");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,8 +110,8 @@ public class SaveFormDP extends javax.swing.JFrame {
                     .addComponent(jtQantity, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtAmountUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtCriticalQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtExpDate, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtProdDate, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtWaranty, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtGrossWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtArticleNum, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
@@ -106,9 +140,9 @@ public class SaveFormDP extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jtCriticalQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jtExpDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtWaranty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jtProdDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtGrossWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(btSave)
                 .addContainerGap(61, Short.MAX_VALUE))
@@ -116,6 +150,16 @@ public class SaveFormDP extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
+
+        DurableHandler handler = (DurableHandler) HandlerFactory.
+                createHandler(ControllerName.Durable);
+        DurableProducts product = productcreator();
+        handler.create(product, Integer.parseInt(jtTaxId.getText()));
+        notifyListeners(product);
+        this.dispose();
+    }//GEN-LAST:event_btSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,19 +176,27 @@ public class SaveFormDP extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SaveFormDP.class.getName()).
+            java.util.logging.Logger.getLogger(SaveFormDP.class
+                    .getName()).
                     log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SaveFormDP.class.getName()).
+            java.util.logging.Logger.getLogger(SaveFormDP.class
+                    .getName()).
                     log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SaveFormDP.class.getName()).
+            java.util.logging.Logger.getLogger(SaveFormDP.class
+                    .getName()).
                     log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SaveFormDP.class.getName()).
+            java.util.logging.Logger.getLogger(SaveFormDP.class
+                    .getName()).
                     log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -163,12 +215,25 @@ public class SaveFormDP extends javax.swing.JFrame {
     private javax.swing.JTextField jtArticleNum;
     private javax.swing.JTextField jtBrand;
     private javax.swing.JTextField jtCriticalQuantity;
-    private javax.swing.JTextField jtExpDate;
     private javax.swing.JTextField jtFamily;
+    private javax.swing.JTextField jtGrossWeight;
     private javax.swing.JTextField jtName;
     private javax.swing.JTextField jtNettoPrice;
-    private javax.swing.JTextField jtProdDate;
     private javax.swing.JTextField jtQantity;
     private javax.swing.JTextField jtTaxId;
+    private javax.swing.JTextField jtWaranty;
     // End of variables declaration//GEN-END:variables
+
+    private DurableProducts productcreator() {
+        DurableProducts result = new DurableProducts(jtArticleNum.
+                getText(), jtName.getText(),
+                jtFamily.getText(), Integer.parseInt(jtNettoPrice.getText()),
+                Integer.parseInt(jtTaxId.getText()), jtAmountUnit.getText(),
+                Integer.parseInt(jtCriticalQuantity.getText()), Integer.
+                parseInt(jtWaranty.getText()),
+                BigDecimal.valueOf(Double.parseDouble(jtGrossWeight.getText())));
+        result.setBrand(jtBrand.getText());
+
+        return result;
+    }
 }

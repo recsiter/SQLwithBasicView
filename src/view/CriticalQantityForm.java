@@ -2,20 +2,24 @@ package view;
 
 import entities.SelectByCriticalQuantity;
 import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author --G--
  */
 public class CriticalQantityForm extends javax.swing.JFrame {
-
-    private List<SelectByCriticalQuantity> listPP;
-    private List<SelectByCriticalQuantity> listDP;
-
-    public CriticalQantityForm(List<SelectByCriticalQuantity> listPP,
-            List<SelectByCriticalQuantity> listDP) {
-        this.listPP = listPP;
-        this.listDP = listDP;
+    
+    private List<SelectByCriticalQuantity> list;
+    private AbstractTableModel underCriticalTable;
+    
+    public CriticalQantityForm(List<SelectByCriticalQuantity> list) {
+        initComponents();
+        this.list = list;
+        
+        underCriticalTable = new CriticalQuantityTable(list);
+        jTable.setModel(underCriticalTable);
+        
     }
 
     /**
@@ -34,14 +38,13 @@ public class CriticalQantityForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbPP = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbDP = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("!CRITICAL QUANTITY!");
 
-        tbPP.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -52,39 +55,22 @@ public class CriticalQantityForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tbPP);
-
-        tbDP.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(tbDP);
+        jScrollPane2.setViewportView(jTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -137,9 +123,7 @@ public class CriticalQantityForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tbDP;
-    private javax.swing.JTable tbPP;
+    private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
 }

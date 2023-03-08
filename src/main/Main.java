@@ -14,8 +14,7 @@ import entities.PerishableProducts;
 import entities.SelectByCriticalQuantity;
 import java.math.BigDecimal;
 import java.util.Date;
-import oop.persistance.controller.DurableProductsJpaController;
-import oop.persistance.controller.PerishableProductsJpaController;
+
 import oop.persistance.controller.StateSalesTaxJpaController;
 
 /**
@@ -37,8 +36,7 @@ public class Main {
 //        System.out.println(getDaysTillPerishing(exp));
         EntityManagerFactory factory = Persistence.createEntityManagerFactory(
                 "Exam2023-03-06PU");
-        PerishableProductsJpaController PP
-                = new PerishableProductsJpaController(factory);
+
 //        List<PerishableProduct> employees = PP.findPerishableProductsEntities();
 //        employees.forEach(e -> {
 //            System.out.println(e.calculateGrossPrice());
@@ -51,8 +49,6 @@ public class Main {
 //        StateSalesTaxJpaController sstc
 //                = new StateSalesTaxJpaController(factory);
 //        PP.createAndMakeFK(product, 28);
-        DurableProductsJpaController DP = new DurableProductsJpaController(
-                factory);
 //        DurableProducts product
 //                = new DurableProducts("DP00000000", "Babkonzerv", "konzerv",
 //                        2100, 20, "kg", 4, 23, new BigDecimal(2.3));
@@ -71,10 +67,10 @@ public class Main {
 //        for (SelectByCriticalQuantity selectByC : cq) {
 //            System.out.println(selectByC);
 //        }
-        List<SelectByCriticalQuantity> list = DP.selectByCriticalQuantity();
-        for (SelectByCriticalQuantity selectByCr : list) {
-            System.out.println(selectByCr);
-        }
+//        List<SelectByCriticalQuantity> list = DP.selectByCriticalQuantity();
+//        for (SelectByCriticalQuantity selectByCr : list) {
+//            System.out.println(selectByCr);
+//        }
     }
 
     public static int getDaysTillPerishing(LocalDate exp) {

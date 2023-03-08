@@ -16,6 +16,18 @@ public class SelectByCriticalQuantity {
         this.quantity = quantity;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public int getCriticalQuantity() {
+        return criticalQuantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
     @Override
     public String toString() {
         return "SelectByCriticalQuantity{" + "id=" + id + ", criticalQuantity=" + criticalQuantity + ", quantity=" + quantity + '}';

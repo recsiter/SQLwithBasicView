@@ -18,14 +18,18 @@ import oop.persistance.controller.PerishableHandler;
  * @author --G--
  */
 public class MainForm extends javax.swing.JFrame {
-
+    
     static PerishableHandler PH;
     static DurableHandler DH;
     private List<PerishableProducts> perishableList;
     private List<DurableProducts> dureableList;
     private AbstractTableModel perishableTable;
-    private AbstractTableModel dureableTable;
-
+    private AbstractTableModel durableTable;
+    private ProductEventListener Plistener;
+    private ProductEventListener Dlistener;
+    private SaveFormPP PerishableSaveForm;
+    private SaveFormDP DurableSaveForm;
+    
     static {
         PH = (PerishableHandler) HandlerFactory.createHandler(
                 ControllerName.Perishable);
@@ -38,11 +42,15 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();
+        criticalQantityCheck();
         perishableList = PH.findAll();
         dureableList = DH.findAll();
         perishableTable = new PerishableTableModel(perishableList);
-
-        criticalQantityCheck();
+        durableTable = new DurableTableModel(dureableList);
+        tbPerishable.setModel(perishableTable);
+        tbDurable.setModel(durableTable);
+        Plistener = new PerishableListener();
+        Dlistener = new DurableListener();
     }
 
     /**
@@ -67,6 +75,7 @@ public class MainForm extends javax.swing.JFrame {
         btSearch1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Storage");
 
         tbPerishable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,7 +90,7 @@ public class MainForm extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tbPerishable);
 
-        jTabbedPane3.addTab("tab1", jScrollPane3);
+        jTabbedPane3.addTab("Perishables", jScrollPane3);
 
         tbDurable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -98,15 +107,25 @@ public class MainForm extends javax.swing.JFrame {
 
         jTabbedPane4.addTab("tab1", jScrollPane4);
 
-        jTabbedPane3.addTab("tab2", jTabbedPane4);
+        jTabbedPane3.addTab("Durables", jTabbedPane4);
 
         btAddPP.setText("Add to Perishable");
+        btAddPP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddPPActionPerformed(evt);
+            }
+        });
 
         btSearch.setText("Search in Perishable");
 
         btStat.setText("Statistics by id in Parishable");
 
         btAddDP.setText("Add to Durable");
+        btAddDP.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentMoved(java.awt.event.ComponentEvent evt) {
+                btAddDPComponentMoved(evt);
+            }
+        });
 
         btSearch1.setText("Search in Perishable");
 
@@ -114,23 +133,25 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btStat)
+                .addGap(361, 361, 361))
             .addGroup(layout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(93, 93, 93)
                         .addComponent(btAddPP, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
                         .addComponent(btAddDP, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(55, 55, 55)
                         .addComponent(btSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(79, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btStat)
-                .addGap(361, 361, 361))
+                        .addGap(28, 28, 28)
+                        .addComponent(btSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 869, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,6 +171,21 @@ public class MainForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btAddPPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddPPActionPerformed
+        PerishableSaveForm = new SaveFormPP();
+        PerishableSaveForm.addListener(Plistener);
+        PerishableSaveForm.setVisible(true);
+        PerishableSaveForm.setAlwaysOnTop(true);
+    }//GEN-LAST:event_btAddPPActionPerformed
+    
+    private void btAddDPComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_btAddDPComponentMoved
+        DurableSaveForm = new SaveFormDP();
+        DurableSaveForm.addListener(Dlistener);
+        DurableSaveForm.setVisible(true);
+        DurableSaveForm.setAlwaysOnTop(true);
+        
+    }//GEN-LAST:event_btAddDPComponentMoved
 
     /**
      * @param args the command line arguments
@@ -189,18 +225,43 @@ public class MainForm extends javax.swing.JFrame {
                 new MainForm().setVisible(true);
             }
         });
-
+        
     }
-
+    
     private void criticalQantityCheck() {
         List<SelectByCriticalQuantity> critQuant
                 = (List<SelectByCriticalQuantity>) PH.selectByCriticalQuantity();
         List<SelectByCriticalQuantity> critQuant1
                 = (List<SelectByCriticalQuantity>) DH.selectByCriticalQuantity();
         if (critQuant1.size() > 0 || critQuant.size() > 0) {
-            CriticalQantityForm critForm = new CriticalQantityForm(critQuant,
-                    critQuant1);
+            critQuant.addAll(critQuant1);
+            CriticalQantityForm critForm = new CriticalQantityForm(critQuant);
+            critForm.setVisible(true);
+            critForm.setAlwaysOnTop(true);
+            critForm.getContentPane().
+                    requestFocus();
+            
         }
+    }
+    
+    private class PerishableListener implements ProductEventListener<PerishableProducts> {
+        
+        @Override
+        public void productCreated(PerishableProducts product) {
+            perishableList.add(product);
+            perishableTable.fireTableDataChanged();
+        }
+        
+    }
+
+    private class DurableListener implements ProductEventListener<DurableProducts> {
+        
+        @Override
+        public void productCreated(DurableProducts product) {
+            dureableList.add(product);
+            durableTable.fireTableDataChanged();
+        }
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
