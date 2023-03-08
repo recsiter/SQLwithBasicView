@@ -258,7 +258,7 @@ public class PerishableProducts implements Serializable, GrossPriceCalculator, P
 
     @Override
     public String toString() {
-        return "oop.persistance.PerishableProducts[ articleNumber=" + articleNumber + " ]";
+        return " articleNumber=" + articleNumber + "quantity= " + quantity;
     }
 
     @Override

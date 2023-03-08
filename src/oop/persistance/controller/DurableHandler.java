@@ -37,8 +37,8 @@ public class DurableHandler implements Handler {
         }
     }
 
-    public static void searchByIdPart(String idPart) {
-        DP.searchByIdPart(idPart);
+    public static List<DurableProducts> searchByIdPart(String idPart) {
+        return DP.searchByIdPart(idPart);
     }
 
     public static List<SelectByCriticalQuantity> selectByCriticalQuantity() {

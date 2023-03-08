@@ -22,7 +22,7 @@ import oop.persistance.controller.PerishableHandler;
  */
 public class SaveFormDP extends javax.swing.JFrame {
 
-    List<ProductEventListener> listeners;
+    List<ProductCreateEventListener> listeners;
 
     /**
      * Creates new form SaveFormDP
@@ -34,12 +34,12 @@ public class SaveFormDP extends javax.swing.JFrame {
     }
 
     private void notifyListeners(DurableProducts product) {
-        for (ProductEventListener listener : listeners) {
+        for (ProductCreateEventListener listener : listeners) {
             listener.productCreated(product);
         }
     }
 
-    public void addListener(ProductEventListener listener) {
+    public void addListener(ProductCreateEventListener listener) {
         listeners.add(listener);
     }
 

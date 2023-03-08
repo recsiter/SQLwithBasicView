@@ -6,7 +6,7 @@ import entities.ProductEntity;
  *
  * @author --G--
  */
-public interface ProductEventListener<T extends ProductEntity> {
+public interface ProductCreateEventListener<T extends ProductEntity> {
 
     void productCreated(T product);
 

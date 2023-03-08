@@ -32,7 +32,7 @@
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="jLabel1" min="-2" pref="156" max="-2" attributes="0"/>
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jTAddAmount1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTAddAmount" alignment="0" max="32767" attributes="0"/>
                                   <Component id="btIncrease" alignment="0" pref="144" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -71,7 +71,7 @@
               <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jtSubstractAmount" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTAddAmount1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTAddAmount" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -99,11 +99,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="+ Increase Quantity"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btIncreaseActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
         <Property name="text" type="java.lang.String" value="- Decrease Quantity"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>
@@ -126,7 +132,7 @@
         <Property name="text" type="java.lang.String" value="- Amount"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTAddAmount1">
+    <Component class="javax.swing.JTextField" name="jTAddAmount">
       <Properties>
         <Property name="text" type="java.lang.String" value="+ Amount"/>
       </Properties>

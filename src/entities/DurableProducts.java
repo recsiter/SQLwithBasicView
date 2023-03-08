@@ -226,7 +226,7 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
 
     @Override
     public String toString() {
-        return "oop.persistance.DurableProducts[ articleNumber=" + articleNumber + " ]";
+        return "articleNumber=" + articleNumber + "quantity= " + quantity;
     }
 
     @Override
