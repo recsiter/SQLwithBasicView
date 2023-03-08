@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jtName" min="-2" pref="229" max="-2" attributes="0"/>
+                          <Component id="jtBrand" min="-2" pref="229" max="-2" attributes="0"/>
+                          <Component id="jtFamily" min="-2" pref="229" max="-2" attributes="0"/>
+                          <Component id="jtNettoPrice" min="-2" pref="229" max="-2" attributes="0"/>
+                          <Component id="jtTaxId" min="-2" pref="229" max="-2" attributes="0"/>
+                          <Component id="jtQantity" min="-2" pref="229" max="-2" attributes="0"/>
+                          <Component id="jtAmountUnit" min="-2" pref="229" max="-2" attributes="0"/>
+                          <Component id="jtCriticalQuantity" min="-2" pref="229" max="-2" attributes="0"/>
+                          <Component id="jtExpDate" min="-2" pref="229" max="-2" attributes="0"/>
+                          <Component id="jtProdDate" min="-2" pref="229" max="-2" attributes="0"/>
+                          <Component id="jtArticleNum" min="-2" pref="229" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
+                      <Component id="btSave" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="175" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace pref="19" max="32767" attributes="0"/>
+              <Component id="jtArticleNum" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jtName" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jtBrand" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jtFamily" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jtNettoPrice" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jtTaxId" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jtQantity" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jtAmountUnit" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jtCriticalQuantity" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jtExpDate" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jtProdDate" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <Component id="btSave" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JTextField" name="jtArticleNum">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ArticleNumber: PP12345678"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtName">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Name"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtBrand">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Brand"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtFamily">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Family"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtNettoPrice">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="NettoPrice: &gt;0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtTaxId">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="TaxId"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtQantity">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Quantity:&gt;0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtAmountUnit">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="AmountUnits: kg,l..."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtCriticalQuantity">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="CriticalQantity"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtExpDate">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ExpirationDate: 2020-10-10"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtProdDate">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ProductDate: 2020-10-10"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btSave">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Save"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>
