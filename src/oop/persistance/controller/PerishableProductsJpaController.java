@@ -10,6 +10,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import entities.PerishableProducts;
+import entities.SelectByCriticalQuantity;
 import entities.StateSalesTax;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -205,6 +206,15 @@ public class PerishableProductsJpaController implements Serializable, CreateAble
                 createNamedQuery("PerishableProducts.groupingByTaxId");
         List<GroupByTaxId> result = (List<GroupByTaxId>) query.
                 getResultList();
+        return result;
+    }
+
+    public List<SelectByCriticalQuantity> selectByCriticalQuantity() {
+        Query query = getEntityManager().
+                createNamedQuery("PerishableProducts.selectByCriticalQuantity");
+        List<SelectByCriticalQuantity> result
+                = (List<SelectByCriticalQuantity>) query.
+                        getResultList();
         return result;
     }
 

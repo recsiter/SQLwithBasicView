@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import entities.PerishableProducts;
+import entities.SelectByCriticalQuantity;
 import java.math.BigDecimal;
 import java.util.Date;
 import oop.persistance.controller.DurableProductsJpaController;
@@ -60,13 +61,20 @@ public class Main {
 //                get(0));
 //        System.out.println(PP.searchByIdPart("sdf").
 //                get(0));
-        List<GroupByTaxId> group = PP.groupingByTaxId();
-
-        for (GroupByTaxId g : group) {
-            System.out.println(g.toString());
-
+//        List<GroupByTaxId> group = PP.groupingByTaxId();
+//
+//        for (GroupByTaxId g : group) {
+//            System.out.println(g.toString());
+//
+//        }
+//        List<SelectByCriticalQuantity> cq = PP.selectByCriticalQuantity();
+//        for (SelectByCriticalQuantity selectByC : cq) {
+//            System.out.println(selectByC);
+//        }
+        List<SelectByCriticalQuantity> list = DP.selectByCriticalQuantity();
+        for (SelectByCriticalQuantity selectByCr : list) {
+            System.out.println(selectByCr);
         }
-
     }
 
     public static int getDaysTillPerishing(LocalDate exp) {

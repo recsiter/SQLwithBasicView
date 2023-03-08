@@ -18,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import oop.persistance.controller.quantityEditAble;
 
 /**
  * @author G
@@ -61,9 +62,11 @@ import javax.persistence.TemporalType;
             = "SELECT p FROM PerishableProducts p WHERE p.name LIKE CONCAT('%',:namePart,'%')"),
     @NamedQuery(name = "PerishableProducts.groupingByTaxId", query
             = "SELECT new entities.GroupByTaxId(p.taxId.taxKey, SUM(p.nettoPrice), SUM(p.taxId.multiplier*p.nettoPrice), "
-            + "AVG(p.nettoPrice), SUM(p.quantity)) FROM PerishableProducts p GROUP BY p.taxId")
+            + "AVG(p.nettoPrice), SUM(p.quantity)) FROM PerishableProducts p GROUP BY p.taxId"),
+    @NamedQuery(name = "PerishableProducts.selectByCriticalQuantity", query
+            = "SELECT new entities.SelectByCriticalQuantity(p.articleNumber,p.criticalQuantity,p.quantity) FROM PerishableProducts p WHERE p.quantity<p.criticalQuantity")
 })
-public class PerishableProducts implements Serializable, GrossPriceCalculator, ProductEntity {
+public class PerishableProducts implements Serializable, GrossPriceCalculator, ProductEntity, quantityEditAble {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -263,6 +266,26 @@ public class PerishableProducts implements Serializable, GrossPriceCalculator, P
     public double calculateGrossPrice() {
         return this.getNettoPrice() * this.getTaxId().
                 getMultiplier();
+    }
+
+    @Override
+    public void quantityAdd(int addAmount) {
+        if (quantity > 0) {
+            this.setQuantity(this.getQuantity() + quantity);
+        } else {
+            throw new IllegalArgumentException(
+                    "Can't add minus to perishable amount.");
+        }
+    }
+
+    @Override
+    public void quantitySubstract(int minusAmount) {
+        if (this.getQuantity() - quantity >= 0) {
+            this.setQuantity(this.getQuantity() - quantity);
+        } else {
+            throw new IllegalArgumentException(
+                    "Perishable quantity must greater or equals with zero.");
+        }
     }
 
 }

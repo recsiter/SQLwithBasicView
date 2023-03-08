@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import oop.persistance.controller.quantityEditAble;
 
 /**
  * @author G
@@ -52,9 +53,11 @@ import javax.persistence.Table;
             = "DurableProducts.findByGrossWeight", query
             = "SELECT d FROM DurableProducts d WHERE d.grossWeight = :grossWeight"),
     @NamedQuery(name = "DurableProducts.searchByIdPart", query
-            = "SELECT d FROM DurableProducts d WHERE d.articleNumber LIKE CONCAT('%',:wordPiece,'%')")
+            = "SELECT d FROM DurableProducts d WHERE d.articleNumber LIKE CONCAT('%',:wordPiece,'%')"),
+    @NamedQuery(name = "DurableProducts.selectByCriticalQuantity", query
+            = "SELECT new entities.SelectByCriticalQuantity(d.articleNumber,d.criticalQuantity,d.quantity) FROM DurableProducts d WHERE d.quantity<d.criticalQuantity")
 })
-public class DurableProducts implements Serializable, GrossPriceCalculator, ProductEntity {
+public class DurableProducts implements Serializable, GrossPriceCalculator, ProductEntity, quantityEditAble {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -231,6 +234,27 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
     public double calculateGrossPrice() {
         return this.getNettoPrice() * this.getTaxId().
                 getMultiplier();
+    }
+
+    @Override
+    public void quantityAdd(int addAmount) {
+        if (quantity > 0) {
+            this.setQuantity(this.getQuantity() + quantity);
+        } else {
+            throw new IllegalArgumentException(
+                    "Can't add minus to durable amount.");
+        }
+
+    }
+
+    @Override
+    public void quantitySubstract(int minusAmount) {
+        if (this.getQuantity() - quantity >= 0) {
+            this.setQuantity(this.getQuantity() - quantity);
+        } else {
+            throw new IllegalArgumentException(
+                    "Can't add minus to durable amount.");
+        }
     }
 
 }

@@ -9,6 +9,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import entities.DurableProducts;
+import entities.PerishableProducts;
+import entities.SelectByCriticalQuantity;
 import entities.StateSalesTax;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -191,9 +193,20 @@ public class DurableProductsJpaController implements Serializable, CreateAble<Du
         }
     }
 
+    public List<SelectByCriticalQuantity> selectByCriticalQuantity() {
+        Query query = getEntityManager().
+                createNamedQuery("DurableProducts.selectByCriticalQuantity");
+        List<SelectByCriticalQuantity> result
+                = (List<SelectByCriticalQuantity>) query.
+                        getResultList();
+        return result;
+    }
+
     @Override
-    public void createAndMakeFK(DurableProducts product, int tax) {
-        StateSalesTaxJpaController sstc = new StateSalesTaxJpaController(emf);
+    public void createAndMakeFK(DurableProducts product, int tax
+    ) {
+        StateSalesTaxJpaController sstc
+                = new StateSalesTaxJpaController(emf);
 //       Controller sstc= (StateSalesTaxJpaController)ControllerFactory.createController(ControllerName.StateSales);
         if (sstc.findStateSalesTax(tax) != null) {
             try {
@@ -208,8 +221,9 @@ public class DurableProductsJpaController implements Serializable, CreateAble<Du
 
         } else {
             try {
-                sstc.create(new StateSalesTax(tax, String.valueOf(tax) + "%",
-                        (tax / 100.0) + 1));
+                sstc.create(
+                        new StateSalesTax(tax, String.valueOf(tax) + "%",
+                                (tax / 100.0) + 1));
                 product.setTaxId(sstc.findStateSalesTax(tax));
                 create(product);
             } catch (Exception ex) {
