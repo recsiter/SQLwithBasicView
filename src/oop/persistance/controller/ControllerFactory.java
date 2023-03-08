@@ -9,10 +9,10 @@ import javax.persistence.Persistence;
  */
 public class ControllerFactory {
 
-    static PerishableProductsJpaController PC;
-    static DurableProductsJpaController DC;
-    static StateSalesTaxJpaController SC;
-    static EntityManagerFactory emf;
+    public static PerishableProductsJpaController PC;
+    public static DurableProductsJpaController DC;
+    public static StateSalesTaxJpaController SC;
+    public static EntityManagerFactory emf;
 
     static {
         emf = Persistence.createEntityManagerFactory("Exam2023-03-06PU");

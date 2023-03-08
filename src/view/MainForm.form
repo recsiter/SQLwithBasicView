@@ -25,22 +25,24 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jTabbedPane3" min="-2" pref="744" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
                       <Component id="btAddPP" min="-2" pref="133" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Component id="btAddDP" min="-2" pref="135" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                      <Component id="btSearch" min="-2" pref="172" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btSearch" min="-2" pref="95" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                      <Component id="btStat" min="-2" pref="132" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="jTabbedPane3" min="-2" pref="744" max="-2" attributes="0"/>
-                      <EmptySpace pref="79" max="32767" attributes="0"/>
+                      <Component id="btSearch1" min="-2" pref="175" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace pref="79" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="btStat" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="361" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -53,10 +55,12 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btAddPP" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                   <Component id="btSearch" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
-                  <Component id="btStat" alignment="3" min="-2" pref="47" max="-2" attributes="0"/>
                   <Component id="btAddDP" alignment="3" min="-2" pref="47" max="-2" attributes="0"/>
+                  <Component id="btSearch1" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="32" max="32767" attributes="0"/>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
+              <Component id="btStat" min="-2" pref="47" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -144,17 +148,22 @@
     </Component>
     <Component class="javax.swing.JButton" name="btSearch">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Search"/>
+        <Property name="text" type="java.lang.String" value="Search in Perishable"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btStat">
       <Properties>
-        <Property name="text" type="java.lang.String" value="StatisticByTaxId"/>
+        <Property name="text" type="java.lang.String" value="Statistics by id in Parishable"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btAddDP">
       <Properties>
         <Property name="text" type="java.lang.String" value="Add to Durable"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btSearch1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Search in Perishable"/>
       </Properties>
     </Component>
   </SubComponents>

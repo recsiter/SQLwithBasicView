@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import oop.persistance.controller.quantityEditAble;
+import oop.persistance.controller.QuantityEditAble;
 
 /**
  * @author G
@@ -57,7 +57,7 @@ import oop.persistance.controller.quantityEditAble;
     @NamedQuery(name = "DurableProducts.selectByCriticalQuantity", query
             = "SELECT new entities.SelectByCriticalQuantity(d.articleNumber,d.criticalQuantity,d.quantity) FROM DurableProducts d WHERE d.quantity<d.criticalQuantity")
 })
-public class DurableProducts implements Serializable, GrossPriceCalculator, ProductEntity, quantityEditAble {
+public class DurableProducts implements Serializable, GrossPriceCalculator, ProductEntity, QuantityEditAble {
 
     private static final long serialVersionUID = 1L;
     @Id

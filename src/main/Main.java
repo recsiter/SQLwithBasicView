@@ -57,9 +57,9 @@ public class Main {
 //                = new DurableProducts("DP00000000", "Babkonzerv", "konzerv",
 //                        2100, 20, "kg", 4, 23, new BigDecimal(2.3));
 //        DP.createAndMakeFK(product, 27);
-//        System.out.println(DP.searchByIdPart("k").
+//        System.out.println(DP.searchByNamePart("k").
 //                get(0));
-//        System.out.println(PP.searchByIdPart("sdf").
+//        System.out.println(PP.searchByNamePart("sdf").
 //                get(0));
 //        List<GroupByTaxId> group = PP.groupingByTaxId();
 //

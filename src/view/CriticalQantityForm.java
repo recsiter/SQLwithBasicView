@@ -1,10 +1,22 @@
 package view;
 
+import entities.SelectByCriticalQuantity;
+import java.util.List;
+
 /**
  *
  * @author --G--
  */
 public class CriticalQantityForm extends javax.swing.JFrame {
+
+    private List<SelectByCriticalQuantity> listPP;
+    private List<SelectByCriticalQuantity> listDP;
+
+    public CriticalQantityForm(List<SelectByCriticalQuantity> listPP,
+            List<SelectByCriticalQuantity> listDP) {
+        this.listPP = listPP;
+        this.listDP = listDP;
+    }
 
     /**
      * Creates new form CriticalQantityForm

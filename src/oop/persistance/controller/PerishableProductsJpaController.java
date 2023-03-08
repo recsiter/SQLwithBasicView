@@ -20,7 +20,7 @@ import oop.persistance.exceptions.PreexistingEntityException;
 /**
  * @author G
  */
-public class PerishableProductsJpaController implements Serializable, CreateAble<PerishableProducts>, Controller {
+class PerishableProductsJpaController implements Serializable, CreateAble<PerishableProducts>, Controller {
 
     public PerishableProductsJpaController(EntityManagerFactory emf) {
         this.emf = emf;
@@ -194,7 +194,7 @@ public class PerishableProductsJpaController implements Serializable, CreateAble
         }
     }
 
-    public List<PerishableProducts> searchByIdPart(String namePart) {
+    public List<PerishableProducts> searchByNamePart(String namePart) {
         Query query = getEntityManager().
                 createNamedQuery("PerishableProducts.searchByNamePart");
         query.setParameter("namePart", namePart);

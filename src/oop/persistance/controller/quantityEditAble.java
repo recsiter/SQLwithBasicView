@@ -6,7 +6,7 @@ import entities.ProductEntity;
  *
  * @author --G--
  */
-public interface quantityEditAble {
+public interface QuantityEditAble {
 
     void quantityAdd(int addAmount);
 

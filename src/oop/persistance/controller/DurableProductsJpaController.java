@@ -20,7 +20,7 @@ import oop.persistance.exceptions.PreexistingEntityException;
 /**
  * @author G
  */
-public class DurableProductsJpaController implements Serializable, CreateAble<DurableProducts>, Controller {
+class DurableProductsJpaController implements Serializable, CreateAble<DurableProducts>, Controller {
 
     public DurableProductsJpaController(EntityManagerFactory emf) {
         this.emf = emf;
