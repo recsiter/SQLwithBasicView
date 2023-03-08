@@ -2,6 +2,7 @@ package view;
 
 import entities.DurableProducts;
 import entities.PerishableProducts;
+import entities.StateSalesTax;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,6 +66,7 @@ public class SaveFormDP extends javax.swing.JFrame {
         jtWaranty = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jtGrossWeight.setText("40.32");
 
@@ -228,12 +230,15 @@ public class SaveFormDP extends javax.swing.JFrame {
         DurableProducts result = new DurableProducts(jtArticleNum.
                 getText(), jtName.getText(),
                 jtFamily.getText(), Integer.parseInt(jtNettoPrice.getText()),
-                Integer.parseInt(jtTaxId.getText()), jtAmountUnit.getText(),
+                Integer.parseInt(jtQantity.getText()), jtAmountUnit.getText(),
                 Integer.parseInt(jtCriticalQuantity.getText()), Integer.
                 parseInt(jtWaranty.getText()),
                 BigDecimal.valueOf(Double.parseDouble(jtGrossWeight.getText())));
         result.setBrand(jtBrand.getText());
-
+        StateSalesTax sst = new StateSalesTax(Integer.
+                parseInt(jtTaxId.getText()));
+        result.setTaxId(
+                sst);
         return result;
     }
 }

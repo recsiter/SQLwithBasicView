@@ -1,10 +1,12 @@
 package view;
 
 import entities.DurableProducts;
+import entities.GroupByTaxId;
 import entities.PerishableProducts;
 import entities.SelectByCriticalQuantity;
 import java.nio.channels.Pipe;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.table.AbstractTableModel;
 import oop.persistance.controller.Controller;
 import oop.persistance.controller.ControllerFactory;
@@ -18,7 +20,7 @@ import oop.persistance.controller.PerishableHandler;
  * @author --G--
  */
 public class MainForm extends javax.swing.JFrame {
-    
+
     static PerishableHandler PH;
     static DurableHandler DH;
     private List<PerishableProducts> perishableList;
@@ -29,7 +31,7 @@ public class MainForm extends javax.swing.JFrame {
     private ProductEventListener Dlistener;
     private SaveFormPP PerishableSaveForm;
     private SaveFormDP DurableSaveForm;
-    
+
     static {
         PH = (PerishableHandler) HandlerFactory.createHandler(
                 ControllerName.Perishable);
@@ -69,13 +71,14 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tbDurable = new javax.swing.JTable();
         btAddPP = new javax.swing.JButton();
-        btSearch = new javax.swing.JButton();
+        btSearchP = new javax.swing.JButton();
         btStat = new javax.swing.JButton();
         btAddDP = new javax.swing.JButton();
-        btSearch1 = new javax.swing.JButton();
+        btSearchD = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Storage");
+        setResizable(false);
 
         tbPerishable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -116,18 +119,33 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        btSearch.setText("Search in Perishable");
-
-        btStat.setText("Statistics by id in Parishable");
-
-        btAddDP.setText("Add to Durable");
-        btAddDP.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentMoved(java.awt.event.ComponentEvent evt) {
-                btAddDPComponentMoved(evt);
+        btSearchP.setText("Search in Perishable");
+        btSearchP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSearchPActionPerformed(evt);
             }
         });
 
-        btSearch1.setText("Search in Perishable");
+        btStat.setText("Statistics by id in Parishable");
+        btStat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btStatActionPerformed(evt);
+            }
+        });
+
+        btAddDP.setText("Add to Durable");
+        btAddDP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddDPActionPerformed(evt);
+            }
+        });
+
+        btSearchD.setText("Search in Durable");
+        btSearchD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSearchDActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,20 +156,19 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(btStat)
                 .addGap(361, 361, 361))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(btAddPP, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(btAddDP, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55)
-                        .addComponent(btSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(btSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 869, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(93, 93, 93)
+                .addComponent(btAddPP, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(btAddDP, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(btSearchP, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btSearchD, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane3)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,9 +178,9 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btAddPP, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSearchP, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btAddDP, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btSearchD, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(btStat, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
@@ -174,18 +191,41 @@ public class MainForm extends javax.swing.JFrame {
 
     private void btAddPPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddPPActionPerformed
         PerishableSaveForm = new SaveFormPP();
+        PerishableSaveForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         PerishableSaveForm.addListener(Plistener);
         PerishableSaveForm.setVisible(true);
         PerishableSaveForm.setAlwaysOnTop(true);
     }//GEN-LAST:event_btAddPPActionPerformed
-    
-    private void btAddDPComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_btAddDPComponentMoved
+
+    private void btAddDPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddDPActionPerformed
         DurableSaveForm = new SaveFormDP();
+        DurableSaveForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         DurableSaveForm.addListener(Dlistener);
         DurableSaveForm.setVisible(true);
         DurableSaveForm.setAlwaysOnTop(true);
-        
-    }//GEN-LAST:event_btAddDPComponentMoved
+    }//GEN-LAST:event_btAddDPActionPerformed
+
+    private void btStatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStatActionPerformed
+        List<GroupByTaxId> list = (List<GroupByTaxId>) PH.groupByTaxId();
+        StatisticForm statForm = new StatisticForm(list);
+        statForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        statForm.setVisible(true);
+        statForm.setAlwaysOnTop(true);
+    }//GEN-LAST:event_btStatActionPerformed
+
+    private void btSearchPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchPActionPerformed
+        SearchFormPP form = new SearchFormPP();
+        form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        form.setVisible(true);
+        form.setAlwaysOnTop(true);
+    }//GEN-LAST:event_btSearchPActionPerformed
+
+    private void btSearchDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchDActionPerformed
+        SearchFormDP form = new SearchFormDP();
+        form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        form.setVisible(true);
+        form.setAlwaysOnTop(true);
+    }//GEN-LAST:event_btSearchDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -225,9 +265,9 @@ public class MainForm extends javax.swing.JFrame {
                 new MainForm().setVisible(true);
             }
         });
-        
+
     }
-    
+
     private void criticalQantityCheck() {
         List<SelectByCriticalQuantity> critQuant
                 = (List<SelectByCriticalQuantity>) PH.selectByCriticalQuantity();
@@ -240,35 +280,39 @@ public class MainForm extends javax.swing.JFrame {
             critForm.setAlwaysOnTop(true);
             critForm.getContentPane().
                     requestFocus();
-            
+
         }
     }
-    
+
     private class PerishableListener implements ProductEventListener<PerishableProducts> {
-        
+
         @Override
         public void productCreated(PerishableProducts product) {
-            perishableList.add(product);
-            perishableTable.fireTableDataChanged();
+            if (!perishableList.contains(product)) {
+                perishableList.add(product);
+                perishableTable.fireTableDataChanged();
+            }
         }
-        
+
     }
 
     private class DurableListener implements ProductEventListener<DurableProducts> {
-        
+
         @Override
         public void productCreated(DurableProducts product) {
-            dureableList.add(product);
+            if (!dureableList.contains(product)) {
+                dureableList.add(product);
+            }
             durableTable.fireTableDataChanged();
         }
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddDP;
     private javax.swing.JButton btAddPP;
-    private javax.swing.JButton btSearch;
-    private javax.swing.JButton btSearch1;
+    private javax.swing.JButton btSearchD;
+    private javax.swing.JButton btSearchP;
     private javax.swing.JButton btStat;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;

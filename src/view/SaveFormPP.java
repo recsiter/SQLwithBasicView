@@ -1,6 +1,7 @@
 package view;
 
 import entities.PerishableProducts;
+import entities.StateSalesTax;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class SaveFormPP extends javax.swing.JFrame {
         btSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jtArticleNum.setText("PP12345678");
 
@@ -230,10 +232,14 @@ public class SaveFormPP extends javax.swing.JFrame {
         PerishableProducts result = new PerishableProducts(jtArticleNum.
                 getText(), jtName.getText(),
                 jtFamily.getText(), Integer.parseInt(jtNettoPrice.getText()),
-                Integer.parseInt(jtTaxId.getText()), jtAmountUnit.getText(),
+                Integer.parseInt(jtQantity.getText()), jtAmountUnit.getText(),
                 Integer.parseInt(jtCriticalQuantity.getText()),
                 expDate, prodDate);
         result.setBrand(jtBrand.getText());
+        StateSalesTax sst = new StateSalesTax(Integer.
+                parseInt(jtTaxId.getText()));
+        result.setTaxId(
+                sst);
 
         return result;
     }

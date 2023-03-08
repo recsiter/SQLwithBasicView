@@ -1,5 +1,6 @@
 package view;
 
+import entities.GroupByTaxId;
 import entities.SelectByCriticalQuantity;
 import java.util.List;
 
@@ -9,9 +10,20 @@ import java.util.List;
  */
 public class StatisticForm extends javax.swing.JFrame {
 
+    private List<GroupByTaxId> list;
+    private GroupByIdTable table;
+
     /**
      * Creates new form StatisticForm
      */
+    public StatisticForm(List<GroupByTaxId> list) {
+        initComponents();
+        this.list = list;
+        table = new GroupByIdTable(list);
+        jTable1.setModel(table);
+
+    }
+
     public StatisticForm() {
         initComponents();
     }
@@ -29,6 +41,8 @@ public class StatisticForm extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Group by perishable products tax id");
+        setResizable(false);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

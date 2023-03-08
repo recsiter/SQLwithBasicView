@@ -20,6 +20,26 @@ public class GroupByTaxId {
         this.quantitySum = quantitySum;
     }
 
+    public int getTaxId() {
+        return taxId;
+    }
+
+    public long getNettoSum() {
+        return nettoSum;
+    }
+
+    public double getBruttoSum() {
+        return bruttoSum;
+    }
+
+    public double getAvgNetto() {
+        return avgNetto;
+    }
+
+    public long getQuantitySum() {
+        return quantitySum;
+    }
+
     @Override
     public String toString() {
         return "taxId=" + taxId + ", nettoSum=" + nettoSum + ", bruttoSum=" + bruttoSum + ", avgNetto=" + avgNetto + ", quantitySum=" + quantitySum + '}';

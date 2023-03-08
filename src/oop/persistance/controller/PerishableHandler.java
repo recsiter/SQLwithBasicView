@@ -1,5 +1,6 @@
 package oop.persistance.controller;
 
+import entities.GroupByTaxId;
 import oop.persistance.controller.Handler;
 import entities.PerishableProducts;
 import entities.PerishableProducts;
@@ -40,8 +41,8 @@ public class PerishableHandler implements Handler {
         PP.groupingByTaxId();
     }
 
-    public static void searchByNamePart(String namePart) {
-        PP.searchByNamePart(namePart);
+    public static List<PerishableProducts> searchByNamePart(String namePart) {
+        return PP.searchByNamePart(namePart);
     }
 
     public static List<SelectByCriticalQuantity> selectByCriticalQuantity() {
@@ -51,5 +52,9 @@ public class PerishableHandler implements Handler {
 
     public static List<PerishableProducts> findAll() {
         return PP.findPerishableProductsEntities();
+    }
+
+    public static List<GroupByTaxId> groupByTaxId() {
+        return PP.groupingByTaxId();
     }
 }

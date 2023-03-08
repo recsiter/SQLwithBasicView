@@ -55,6 +55,8 @@ public class StateSalesTax implements Serializable {
 
     public StateSalesTax(Integer taxKey) {
         this.taxKey = taxKey;
+        this.description = descriptionmaker();
+        this.multiplier = multipliermaker();
     }
 
     public StateSalesTax(Integer taxKey, String description, double multiplier) {
@@ -81,6 +83,14 @@ public class StateSalesTax implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    private double multipliermaker() {
+        return (double) this.taxKey / 100 + 1;
+    }
+
+    private String descriptionmaker() {
+        return this.getTaxKey() + "%";
     }
 
     public double getMultiplier() {

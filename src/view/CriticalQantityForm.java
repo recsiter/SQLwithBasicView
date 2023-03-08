@@ -9,17 +9,17 @@ import javax.swing.table.AbstractTableModel;
  * @author --G--
  */
 public class CriticalQantityForm extends javax.swing.JFrame {
-    
+
     private List<SelectByCriticalQuantity> list;
     private AbstractTableModel underCriticalTable;
-    
+
     public CriticalQantityForm(List<SelectByCriticalQuantity> list) {
         initComponents();
         this.list = list;
-        
+
         underCriticalTable = new CriticalQuantityTable(list);
         jTable.setModel(underCriticalTable);
-        
+
     }
 
     /**
@@ -43,6 +43,7 @@ public class CriticalQantityForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("!CRITICAL QUANTITY!");
+        setResizable(false);
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
