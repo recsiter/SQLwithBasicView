@@ -10,4 +10,6 @@ public interface ProductCreateEventListener<T extends ProductEntity> {
 
     void productCreated(T product);
 
+    void createTransactionData(T product);
+
 }

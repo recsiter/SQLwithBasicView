@@ -67,6 +67,7 @@ public class EditFormPP extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Perishable product editor");
+        setResizable(false);
 
         jTProductField.setEditable(false);
         jScrollPane1.setViewportView(jTProductField);

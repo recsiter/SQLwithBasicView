@@ -65,6 +65,7 @@ public class EditFormDP extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dureable products editor");
+        setResizable(false);
 
         btIncrease.setText("+ Increase Quantity");
         btIncrease.addActionListener(new java.awt.event.ActionListener() {

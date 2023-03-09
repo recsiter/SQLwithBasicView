@@ -13,26 +13,26 @@ import oop.persistance.controller.Controller;
 import oop.persistance.controller.ControllerFactory;
 import oop.persistance.controller.ControllerName;
 import oop.persistance.controller.DurableProductsJpaController;
-import static oop.persistance.controller.PerishableHandler.PP;
+import static oop.persistance.controller.PerishableHandler.PC;
 
 /**
  * @author G
  */
 public class DurableHandler implements Handler {
 
-    private static final DurableProductsJpaController DH;
+    private static final DurableProductsJpaController DC;
+
+    static {
+        DC = (DurableProductsJpaController) ControllerFactory.createController(
+                ControllerName.Durable);
+    }
 
     private DurableHandler() {
     }
 
-    static {
-        DH = (DurableProductsJpaController) ControllerFactory.createController(
-                ControllerName.Durable);
-    }
-
     public static void create(DurableProducts product, int tax) {
         try {
-            DH.createAndMakeFK(product, tax);
+            DC.createAndMakeFK(product, tax);
         } catch (Exception ex) {
             Logger.getLogger(DurableHandler.class.getName()).
                     log(Level.SEVERE, null, ex);
@@ -41,7 +41,7 @@ public class DurableHandler implements Handler {
 
     public static void update(DurableProducts product) {
         try {
-            DH.edit(product);
+            DC.edit(product);
         } catch (Exception ex) {
             Logger.getLogger(PerishableHandler.class.getName()).
                     log(Level.SEVERE, null, ex);
@@ -50,18 +50,18 @@ public class DurableHandler implements Handler {
     }
 
     public static List<DurableProducts> searchByIdPart(String idPart) {
-        return DH.searchByIdPart(idPart);
+        return DC.searchByIdPart(idPart);
     }
 
     public static List<SelectByCriticalQuantity> selectByCriticalQuantity() {
-        return DH.selectByCriticalQuantity();
+        return DC.selectByCriticalQuantity();
     }
 
     public static List<DurableProducts> findAll() {
-        return DH.findDurableProductsEntities();
+        return DC.findDurableProductsEntities();
     }
 
-    public List<DurableProducts> orderByColumnName(String columnName) {
-        return DH.orderByQuery(columnName);
+    public static List<DurableProducts> orderByColumnName(String columnName) {
+        return DC.orderByQuery(columnName);
     }
 }

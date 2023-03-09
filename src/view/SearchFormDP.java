@@ -35,6 +35,7 @@ public class SearchFormDP extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Durable search by artifical number part");
+        setResizable(false);
 
         btSearch.setText("Search");
         btSearch.addActionListener(new java.awt.event.ActionListener() {
