@@ -3,12 +3,23 @@ package view;
 import entities.DurableProducts;
 import entities.GroupByTaxId;
 import entities.PerishableProducts;
+import entities.ProductEntity;
 import entities.SelectByCriticalQuantity;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.nio.channels.Pipe;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import oop.persistance.controller.Controller;
 import oop.persistance.controller.ControllerFactory;
 import oop.persistance.controller.ControllerName;
@@ -25,12 +36,12 @@ public class MainForm extends javax.swing.JFrame {
     static PerishableHandler PH;
     static DurableHandler DH;
     private List<PerishableProducts> perishableList;
-    private List<DurableProducts> dureableList;
+    private List<DurableProducts> durableList;
     private AbstractTableModel perishableTableAbs;
     private AbstractTableModel durableTableAbs;
     private ProductCreateEventListener Plistener;
     private ProductCreateEventListener Dlistener;
-    private ProductQuantityChangeListener PQlistener;
+    private QuantityChangeListener updateListener;
     private SaveFormPP PerishableSaveForm;
     private SaveFormDP DurableSaveForm;
     private EditFormDP DpEditorForm;
@@ -50,14 +61,19 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         criticalQantityCheck();
         perishableList = PH.findAll();
-        dureableList = DH.findAll();
+        durableList = DH.findAll();
         perishableTableAbs = new PerishableTableModel(perishableList);
-        durableTableAbs = new DurableTableModel(dureableList);
+        durableTableAbs = new DurableTableModel(durableList);
+        JTableHeader Pheader = tbPerishable.getTableHeader();
+        JTableHeader Dheader = tbDurable.getTableHeader();
+        makeMouseAction(Dheader, Pheader);
+
         tbPerishable.setModel(perishableTableAbs);
+
         tbDurable.setModel(durableTableAbs);
         Plistener = new PerishableListener();
         Dlistener = new DurableListener();
-        PQlistener = new PerishableQuantityChangeListener();
+        updateListener = new ProductQuantityChangeListener();
     }
 
     /**
@@ -87,15 +103,24 @@ public class MainForm extends javax.swing.JFrame {
 
         tbPerishable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "id", "name", "brand", "family", "nettoPrice", "taxId", "quantity", "amountUnits", "criticalQuantity", "expDate", "prodDate"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbPerishable.getTableHeader().setReorderingAllowed(false);
         tbPerishable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbPerishableMouseClicked(evt);
@@ -116,6 +141,7 @@ public class MainForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbDurable.getTableHeader().setReorderingAllowed(false);
         tbDurable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbDurableMouseClicked(evt);
@@ -246,7 +272,7 @@ public class MainForm extends javax.swing.JFrame {
         if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() > 1) {
             int index = tbPerishable.getSelectedRow();
             PpEditorForm = new EditFormPP(perishableList.get(index));
-            PpEditorForm.addListener(PQlistener);
+            PpEditorForm.addListener(updateListener);
             PpEditorForm.setVisible(true);
             PpEditorForm.setAlwaysOnTop(true);
             PpEditorForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -254,7 +280,15 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_tbPerishableMouseClicked
 
     private void tbDurableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDurableMouseClicked
-        EditFormDP form = new EditFormDP();
+        if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() > 1) {
+            int index = tbDurable.getSelectedRow();
+            EditFormDP form = new EditFormDP(durableList.get(index));
+            form.addListener(updateListener);
+            form.setVisible(true);
+            form.setAlwaysOnTop(true);
+            form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        }
     }//GEN-LAST:event_tbDurableMouseClicked
 
     /**
@@ -314,6 +348,16 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
+    private void makeMouseAction(JTableHeader Pheader, JTableHeader Pheader1) {
+        Pheader.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int columnIndex = Pheader.columnAtPoint(e.getPoint());
+                PH.orderByColumnName(perishableTableAbs.getColumnName(
+                        columnIndex));
+            }
+        });
+    }
+
     private class PerishableListener implements ProductCreateEventListener<PerishableProducts> {
 
         @Override
@@ -330,27 +374,35 @@ public class MainForm extends javax.swing.JFrame {
 
         @Override
         public void productCreated(DurableProducts product) {
-            if (!dureableList.contains(product)) {
-                dureableList.add(product);
+            if (!durableList.contains(product)) {
+                durableList.add(product);
             }
             durableTableAbs.fireTableDataChanged();
         }
 
     }
 
-    private class PerishableQuantityChangeListener implements ProductQuantityChangeListener<PerishableProducts> {
+    private class ProductQuantityChangeListener implements QuantityChangeListener {
 
         @Override
-        public void changeQuantity(PerishableProducts product) {
+        public void changeQuantity(ProductEntity product) {
             int counter = 0;
-            while (product != perishableList.get(counter) && counter < perishableList.
-                    size()) {
-                counter++;
-
+            if (product instanceof PerishableProducts pP) {
+                while (pP != perishableList.get(counter) && counter < perishableList.
+                        size()) {
+                    counter++;
+                }
+                perishableList.set(counter, pP);
+                perishableTableAbs.fireTableDataChanged();
+            } else if (product instanceof DurableProducts dP) {
+                while (dP != durableList.get(counter) && counter < durableList.
+                        size()) {
+                    counter++;
+                }
+                durableList.set(counter, dP);
+                durableTableAbs.fireTableDataChanged();
             }
-            System.out.println("lefut");
-            perishableList.set(counter, product);
-            perishableTableAbs.fireTableDataChanged();
+
         }
 
     }

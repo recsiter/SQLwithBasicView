@@ -237,8 +237,8 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
 
     @Override
     public void quantityAdd(int addAmount) {
-        if (quantity > 0) {
-            this.setQuantity(this.getQuantity() + quantity);
+        if (quantity >= 0) {
+            quantity += addAmount;
         } else {
             throw new IllegalArgumentException(
                     "Can't add minus to durable amount.");
@@ -248,9 +248,10 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
 
     @Override
     public void quantitySubstract(int minusAmount) {
-        if (this.getQuantity() - quantity >= 0) {
-            this.setQuantity(this.getQuantity() - quantity);
+        if (this.getQuantity() - minusAmount >= 0) {
+            quantity -= minusAmount;
         } else {
+            quantity = 0;
             throw new IllegalArgumentException(
                     "Can't add minus to durable amount.");
         }

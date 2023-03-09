@@ -12,8 +12,8 @@ import oop.persistance.controller.PerishableHandler;
  * @author --G--
  */
 public class EditFormPP extends javax.swing.JFrame {
-    
-    private List<ProductQuantityChangeListener> listeners;
+
+    private List<QuantityChangeListener> listeners;
     private PerishableProducts product;
 
     /**
@@ -24,19 +24,22 @@ public class EditFormPP extends javax.swing.JFrame {
         this.product = product;
         jTProductField.setText(product.toString());
         listeners = new ArrayList<>();
+        jTBruttoPrice.setText(String.valueOf(product.calculateGrossPrice()));
+        jTDayToPerish.setText(String.valueOf(product.getDaysLeftToPerishing()));
+
     }
-    
+
     private EditFormPP() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     private void notifyListeners(PerishableProducts product) {
-        for (ProductQuantityChangeListener listener : listeners) {
+        for (QuantityChangeListener listener : listeners) {
             listener.changeQuantity(product);
         }
     }
-    
-    public void addListener(ProductQuantityChangeListener listener) {
+
+    public void addListener(QuantityChangeListener listener) {
         listeners.add(listener);
     }
 
@@ -65,6 +68,7 @@ public class EditFormPP extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Perishable product editor");
 
+        jTProductField.setEditable(false);
         jScrollPane1.setViewportView(jTProductField);
 
         btIncrease.setText("+ Increase Quantity");
@@ -81,9 +85,10 @@ public class EditFormPP extends javax.swing.JFrame {
             }
         });
 
+        jTBruttoPrice.setEditable(false);
         jScrollPane2.setViewportView(jTBruttoPrice);
 
-        jLabel1.setText("BruttoPrice:");
+        jLabel1.setText("Gross price:");
 
         jtSubstractAmount.setText("- Amount");
 
@@ -91,6 +96,7 @@ public class EditFormPP extends javax.swing.JFrame {
 
         jLabel2.setText("Number of days till perishing:");
 
+        jTDayToPerish.setEditable(false);
         jScrollPane3.setViewportView(jTDayToPerish);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -146,7 +152,7 @@ public class EditFormPP extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btIncreaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncreaseActionPerformed
-        jTProductField.setText(product.toString());
+
         PerishableHandler handler = (PerishableHandler) HandlerFactory.
                 createHandler(ControllerName.Perishable);
         product.quantityAdd(Integer.parseInt(jTAddAmount.getText()));
@@ -154,9 +160,9 @@ public class EditFormPP extends javax.swing.JFrame {
         notifyListeners(product);
         this.dispose();
     }//GEN-LAST:event_btIncreaseActionPerformed
-    
+
     private void btDecreaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDecreaseActionPerformed
-        jTProductField.setText(product.toString());
+
         PerishableHandler handler = (PerishableHandler) HandlerFactory.
                 createHandler(ControllerName.Perishable);
         product.quantitySubstract(Integer.parseInt(jtSubstractAmount.getText()));

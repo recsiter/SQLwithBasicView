@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/main/Main.java</file>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/entities/GroupByTaxId.java</file>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/entities/DurableProducts.java</file>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/oop/persistance/controller/DurableProductsJpaController.java</file>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/entities/PerishableProducts.java</file>
+            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/view/EditFormPP.java</file>
+            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/view/CriticalQantityForm.java</file>
+            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/view/MainForm.java</file>
+            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/oop/persistance/controller/PerishableProductsJpaController.java</file>
         </group>
     </open-files>
 </project-private>

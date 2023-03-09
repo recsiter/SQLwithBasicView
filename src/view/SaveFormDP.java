@@ -228,13 +228,21 @@ public class SaveFormDP extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private DurableProducts productcreator() {
-        DurableProducts result = new DurableProducts(jtArticleNum.
-                getText(), jtName.getText(),
-                jtFamily.getText(), Integer.parseInt(jtNettoPrice.getText()),
-                Integer.parseInt(jtQantity.getText()), jtAmountUnit.getText(),
-                Integer.parseInt(jtCriticalQuantity.getText()), Integer.
-                parseInt(jtWaranty.getText()),
-                BigDecimal.valueOf(Double.parseDouble(jtGrossWeight.getText())));
+        DurableProducts result = new DurableProducts();
+        result.setArticleNumber(jtArticleNum.
+                getText());
+        result.setName(jtName.getText());
+
+        result.setFamily(jtFamily.getText());
+        result.setNettoPrice(Integer.parseInt(jtNettoPrice.getText()));
+        result.setQuantity(Integer.parseInt(jtQantity.getText()));
+        result.setAmountUnits(jtAmountUnit.getText());
+        result.setCriticalQuantity(Integer.
+                parseInt(jtCriticalQuantity.getText()));
+        result.setWarantyPeriod(Integer.parseInt(jtWaranty.getText()));
+        result.setGrossWeight(BigDecimal.valueOf(Double.parseDouble(
+                jtGrossWeight.getText()))
+        );
         result.setBrand(jtBrand.getText());
         StateSalesTax sst = new StateSalesTax(Integer.
                 parseInt(jtTaxId.getText()));

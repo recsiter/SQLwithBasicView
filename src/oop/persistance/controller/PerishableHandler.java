@@ -17,17 +17,17 @@ import oop.persistance.controller.PerishableProductsJpaController;
  * @author G
  */
 public class PerishableHandler implements Handler {
-
+    
     static final PerishableProductsJpaController PP;
-
+    
     static {
         PP = (PerishableProductsJpaController) ControllerFactory.
                 createController(ControllerName.Perishable);
     }
-
+    
     private PerishableHandler() {
     }
-
+    
     public static void create(PerishableProducts product, int tax) {
         try {
             PP.createAndMakeFK(product, tax);
@@ -36,7 +36,7 @@ public class PerishableHandler implements Handler {
                     log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public static void update(PerishableProducts product) {
         try {
             PP.edit(product);
@@ -44,27 +44,32 @@ public class PerishableHandler implements Handler {
             Logger.getLogger(PerishableHandler.class.getName()).
                     log(Level.SEVERE, null, ex);
         }
-
+        
     }
-
+    
     public static void statsByTax() {
         PP.groupingByTaxId();
     }
-
+    
     public static List<PerishableProducts> searchByNamePart(String namePart) {
         return PP.searchByNamePart(namePart);
     }
-
+    
     public static List<SelectByCriticalQuantity> selectByCriticalQuantity() {
-
+        
         return PP.selectByCriticalQuantity();
     }
-
+    
     public static List<PerishableProducts> findAll() {
         return PP.findPerishableProductsEntities();
     }
-
+    
     public static List<GroupByTaxId> groupByTaxId() {
         return PP.groupingByTaxId();
     }
+    
+    public static void orderByColumnName(String columnName) {
+        PP.orderByColumnName(columnName);
+    }
+    
 }

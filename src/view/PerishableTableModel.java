@@ -1,6 +1,8 @@
 package view;
 
 import entities.PerishableProducts;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.sound.sampled.DataLine;
 import javax.swing.table.AbstractTableModel;
@@ -15,9 +17,9 @@ public class PerishableTableModel extends AbstractTableModel {
 
     public PerishableTableModel(List<PerishableProducts> data) {
         this.data = data;
-        columnNames = new String[]{"Article Number", "Name", "Brand", "Family",
-            "Netto Price", "Tax Id", "Quantity", "Amount Units", "CriticalQuantity",
-            "Expiration Date", "Production Date"};
+        columnNames = new String[]{"article_number", "ame", "brand", "family",
+            "netto_rice", "ax_id", "quantity", "amount_units", "critical_quantity",
+            "expiration_date", "production_date"};
 
     }
 
@@ -40,6 +42,11 @@ public class PerishableTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         PerishableProducts temp = data.get(rowIndex);
         String result = temp.getArticleNumber();
+
+        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
+        String expdate = formatter1.format(temp.getExpirationDate());
+        String proddate = formatter1.format(temp.getProductionDate());
+
         switch (columnIndex) {
             case 0:
                 result = String.valueOf(temp.getArticleNumber());
@@ -70,10 +77,10 @@ public class PerishableTableModel extends AbstractTableModel {
                 result = String.valueOf(temp.getCriticalQuantity());
                 break;
             case 9:
-                result = String.valueOf(temp.getExpirationDate());
+                result = expdate;
                 break;
             case 10:
-                result = String.valueOf(temp.getProductionDate());
+                result = proddate;
                 break;
             default:
                 throw new AssertionError();

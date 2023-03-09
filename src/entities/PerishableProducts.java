@@ -63,7 +63,9 @@ import javax.persistence.TemporalType;
             = "SELECT new entities.GroupByTaxId(p.taxId.taxKey, SUM(p.nettoPrice), SUM(p.taxId.multiplier*p.nettoPrice), "
             + "AVG(p.nettoPrice), SUM(p.quantity)) FROM PerishableProducts p GROUP BY p.taxId"),
     @NamedQuery(name = "PerishableProducts.selectByCriticalQuantity", query
-            = "SELECT new entities.SelectByCriticalQuantity(p.articleNumber,p.criticalQuantity,p.quantity) FROM PerishableProducts p WHERE p.quantity<p.criticalQuantity")
+            = "SELECT new entities.SelectByCriticalQuantity(p.articleNumber,p.criticalQuantity,p.quantity) FROM PerishableProducts p WHERE p.quantity<p.criticalQuantity"),
+    @NamedQuery(name = "PerishableProducts.orderBy", query
+            = "SELECT p FROM PerishableProducts p ORDER BY p.{columnName}")
 })
 public class PerishableProducts implements Serializable, GrossPriceCalculator, ProductEntity, QuantityEditAble {
 
@@ -269,8 +271,8 @@ public class PerishableProducts implements Serializable, GrossPriceCalculator, P
 
     @Override
     public void quantityAdd(int addAmount) {
-        if (quantity > 0) {
-            this.setQuantity(this.getQuantity() + quantity);
+        if (quantity >= 0) {
+            quantity += addAmount;
         } else {
             throw new IllegalArgumentException(
                     "Can't add minus to perishable amount.");
@@ -279,11 +281,11 @@ public class PerishableProducts implements Serializable, GrossPriceCalculator, P
 
     @Override
     public void quantitySubstract(int minusAmount) {
-        if (this.getQuantity() - quantity >= 0) {
-            this.setQuantity(this.getQuantity() - quantity);
+        if (this.getQuantity() - minusAmount >= 0) {
+            quantity -= minusAmount;
         } else {
-            throw new IllegalArgumentException(
-                    "Perishable quantity must greater or equals with zero.");
+            quantity = 0;
+
         }
     }
 

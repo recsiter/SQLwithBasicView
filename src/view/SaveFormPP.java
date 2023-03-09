@@ -2,6 +2,7 @@ package view;
 
 import entities.PerishableProducts;
 import entities.StateSalesTax;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import oop.persistance.controller.PerishableHandler;
  * @author --G--
  */
 public class SaveFormPP extends javax.swing.JFrame {
-
+    
     List<ProductCreateEventListener> listeners;
 
     /**
@@ -28,13 +29,13 @@ public class SaveFormPP extends javax.swing.JFrame {
         initComponents();
         listeners = new ArrayList<>();
     }
-
+    
     private void notifyListeners(PerishableProducts product) {
         for (ProductCreateEventListener listener : listeners) {
             listener.productCreated(product);
         }
     }
-
+    
     public void addListener(ProductCreateEventListener listener) {
         listeners.add(listener);
     }
@@ -226,22 +227,30 @@ public class SaveFormPP extends javax.swing.JFrame {
 
     private PerishableProducts productcreator() throws ParseException {
         SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
-
+        
         Date expDate = formatter1.parse(jtExpDate.getText());
         Date prodDate = formatter1.parse(jtProdDate.getText());
-
-        PerishableProducts result = new PerishableProducts(jtArticleNum.
-                getText(), jtName.getText(),
-                jtFamily.getText(), Integer.parseInt(jtNettoPrice.getText()),
-                Integer.parseInt(jtQantity.getText()), jtAmountUnit.getText(),
-                Integer.parseInt(jtCriticalQuantity.getText()),
-                expDate, prodDate);
+        
+        PerishableProducts result = new PerishableProducts();
+        result.setArticleNumber(jtArticleNum.
+                getText());
+        result.setName(jtName.getText());
+        
+        result.setFamily(jtFamily.getText());
+        result.setNettoPrice(Integer.parseInt(jtNettoPrice.getText()));
+        result.setQuantity(Integer.parseInt(jtQantity.getText()));
+        result.setAmountUnits(jtAmountUnit.getText());
+        result.setCriticalQuantity(Integer.
+                parseInt(jtCriticalQuantity.getText()));
+        
+        result.setExpirationDate(expDate);
+        result.setProductionDate(prodDate);
         result.setBrand(jtBrand.getText());
         StateSalesTax sst = new StateSalesTax(Integer.
                 parseInt(jtTaxId.getText()));
         result.setTaxId(
                 sst);
-
+        
         return result;
     }
 }

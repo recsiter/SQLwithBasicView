@@ -1,16 +1,47 @@
 package view;
 
+import entities.DurableProducts;
+import entities.PerishableProducts;
+import java.util.ArrayList;
+import java.util.List;
+import oop.persistance.controller.ControllerName;
+import oop.persistance.controller.DurableHandler;
+import oop.persistance.controller.HandlerFactory;
+import oop.persistance.controller.PerishableHandler;
+
 /**
  *
  * @author --G--
  */
 public class EditFormDP extends javax.swing.JFrame {
 
+    private DurableProducts product;
+    private List<QuantityChangeListener> listeners;
+
     /**
      * Creates new form EditForm
      */
-    public EditFormDP() {
+    public EditFormDP(DurableProducts product) {
         initComponents();
+        this.product = product;
+        listeners = new ArrayList<>();
+        jTProductField.setText(product.toString());
+        jTBruttoPrice.setText(String.valueOf(product.calculateGrossPrice()));
+
+    }
+
+    private EditFormDP() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    private void notifyListeners(DurableProducts product) {
+        for (QuantityChangeListener listener : listeners) {
+            listener.changeQuantity(product);
+        }
+    }
+
+    public void addListener(QuantityChangeListener listener) {
+        listeners.add(listener);
     }
 
     /**
@@ -23,7 +54,7 @@ public class EditFormDP extends javax.swing.JFrame {
     private void initComponents() {
 
         btIncrease = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jBdecrease = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTBruttoPrice = new javax.swing.JTextPane();
         jLabel1 = new javax.swing.JLabel();
@@ -36,15 +67,27 @@ public class EditFormDP extends javax.swing.JFrame {
         setTitle("Dureable products editor");
 
         btIncrease.setText("+ Increase Quantity");
+        btIncrease.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btIncreaseActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("- Decrease Quantity");
+        jBdecrease.setText("- Decrease Quantity");
+        jBdecrease.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBdecreaseActionPerformed(evt);
+            }
+        });
 
+        jTBruttoPrice.setEditable(false);
         jScrollPane2.setViewportView(jTBruttoPrice);
 
-        jLabel1.setText("BruttoPrice:");
+        jLabel1.setText("Gross price:");
 
         jtSubstractAmount.setText("- Amount");
 
+        jTProductField.setEditable(false);
         jScrollPane1.setViewportView(jTProductField);
 
         jTAddAmount1.setText("+ Amount");
@@ -67,7 +110,7 @@ public class EditFormDP extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jtSubstractAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton2))
+                                .addComponent(jBdecrease))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(82, Short.MAX_VALUE))
         );
@@ -87,12 +130,30 @@ public class EditFormDP extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btIncrease)
-                    .addComponent(jButton2))
+                    .addComponent(jBdecrease))
                 .addGap(35, 35, 35))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btIncreaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncreaseActionPerformed
+        DurableHandler handler = (DurableHandler) HandlerFactory.
+                createHandler(ControllerName.Durable);
+        product.quantityAdd(Integer.parseInt(jTAddAmount1.getText()));
+        handler.update(product);
+        notifyListeners(product);
+        this.dispose();
+    }//GEN-LAST:event_btIncreaseActionPerformed
+
+    private void jBdecreaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBdecreaseActionPerformed
+        DurableHandler handler = (DurableHandler) HandlerFactory.
+                createHandler(ControllerName.Durable);
+        product.quantitySubstract(Integer.parseInt(jtSubstractAmount.getText()));
+        handler.update(product);
+        notifyListeners(product);
+        this.dispose();
+    }//GEN-LAST:event_jBdecreaseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,7 +200,7 @@ public class EditFormDP extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btIncrease;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jBdecrease;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

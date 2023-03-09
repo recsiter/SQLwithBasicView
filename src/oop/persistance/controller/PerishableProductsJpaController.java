@@ -250,4 +250,11 @@ class PerishableProductsJpaController implements Serializable, CreateAble<Perish
         }
     }
 
+    public void orderByColumnName(String columnName) {
+        Query query = getEntityManager().
+                createNamedQuery("PerishableProducts.orderBy");
+        query.setParameter("columnName", columnName);
+
+    }
+
 }
