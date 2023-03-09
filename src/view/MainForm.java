@@ -413,7 +413,7 @@ public class MainForm extends javax.swing.JFrame {
             builder.append(now).
                     append(" ");
             builder.append("Perishable created");
-            FileHandler.writeToFile(builder.toString(), path);
+            FileHandler.writeToFile(builder.toString(), PATH);
 
         }
 
