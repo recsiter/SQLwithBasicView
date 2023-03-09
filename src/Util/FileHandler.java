@@ -74,7 +74,7 @@ public class FileHandler {
         }
     }
 
-    private static void writeToFile(String writeable, String path) {
+    public static void writeToFile(String writeable, String path) {
 
         try ( FileWriter writer = new FileWriter(path)) {
             writer.write(writeable);

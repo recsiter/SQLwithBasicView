@@ -25,61 +25,105 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jtName" min="-2" pref="229" max="-2" attributes="0"/>
-                          <Component id="jtBrand" min="-2" pref="229" max="-2" attributes="0"/>
-                          <Component id="jtFamily" min="-2" pref="229" max="-2" attributes="0"/>
-                          <Component id="jtNettoPrice" min="-2" pref="229" max="-2" attributes="0"/>
-                          <Component id="jtTaxId" min="-2" pref="229" max="-2" attributes="0"/>
-                          <Component id="jtQantity" min="-2" pref="229" max="-2" attributes="0"/>
-                          <Component id="jtAmountUnit" min="-2" pref="229" max="-2" attributes="0"/>
-                          <Component id="jtCriticalQuantity" min="-2" pref="229" max="-2" attributes="0"/>
-                          <Component id="jtExpDate" min="-2" pref="229" max="-2" attributes="0"/>
-                          <Component id="jtProdDate" min="-2" pref="229" max="-2" attributes="0"/>
-                          <Component id="jtArticleNum" min="-2" pref="229" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
-                      <Component id="btSave" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jLabel11" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                  <Component id="jLabel3" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                  <Component id="jLabel1" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                  <Component id="jLabel4" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                  <Component id="jLabel5" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                  <Component id="jLabel6" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                  <Component id="jLabel7" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                  <Component id="jLabel8" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                  <Component id="jLabel9" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                  <Component id="jLabel10" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="175" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jtName" min="-2" pref="229" max="-2" attributes="0"/>
+                  <Component id="jtBrand" min="-2" pref="229" max="-2" attributes="0"/>
+                  <Component id="jtFamily" min="-2" pref="229" max="-2" attributes="0"/>
+                  <Component id="jtNettoPrice" min="-2" pref="229" max="-2" attributes="0"/>
+                  <Component id="jtTaxId" min="-2" pref="229" max="-2" attributes="0"/>
+                  <Component id="jtQantity" min="-2" pref="229" max="-2" attributes="0"/>
+                  <Component id="jtAmountUnit" min="-2" pref="229" max="-2" attributes="0"/>
+                  <Component id="jtCriticalQuantity" min="-2" pref="229" max="-2" attributes="0"/>
+                  <Component id="jtExpDate" min="-2" pref="229" max="-2" attributes="0"/>
+                  <Component id="jtProdDate" min="-2" pref="229" max="-2" attributes="0"/>
+                  <Component id="jtArticleNum" min="-2" pref="229" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="159" max="-2" attributes="0"/>
+              <Component id="btSave" min="-2" pref="153" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace pref="19" max="32767" attributes="0"/>
-              <Component id="jtArticleNum" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtArticleNum" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jtName" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jtBrand" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtBrand" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jtFamily" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtFamily" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jtNettoPrice" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtNettoPrice" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jtTaxId" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtTaxId" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jtQantity" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtQantity" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jtAmountUnit" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtAmountUnit" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jtCriticalQuantity" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtCriticalQuantity" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jtExpDate" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtExpDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jtProdDate" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jtProdDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="61" max="32767" attributes="0"/>
               <Component id="btSave" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -147,6 +191,61 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSaveActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Name"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Article Number (eg.:PP12345678)"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Brand"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Family"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Netto Price"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tax Id"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Quantity"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel8">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Amount Units (eg.: kg,l...)"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel9">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Critical Amount"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel10">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Expiration Date (eg.: 2025-01-30)"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel11">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Production Date (eg.: 2025-01-01)"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
