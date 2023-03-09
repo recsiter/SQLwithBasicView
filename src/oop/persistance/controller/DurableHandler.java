@@ -20,19 +20,19 @@ import static oop.persistance.controller.PerishableHandler.PP;
  */
 public class DurableHandler implements Handler {
 
-    private static final DurableProductsJpaController DP;
+    private static final DurableProductsJpaController DH;
 
     private DurableHandler() {
     }
 
     static {
-        DP = (DurableProductsJpaController) ControllerFactory.createController(
+        DH = (DurableProductsJpaController) ControllerFactory.createController(
                 ControllerName.Durable);
     }
 
     public static void create(DurableProducts product, int tax) {
         try {
-            DP.createAndMakeFK(product, tax);
+            DH.createAndMakeFK(product, tax);
         } catch (Exception ex) {
             Logger.getLogger(DurableHandler.class.getName()).
                     log(Level.SEVERE, null, ex);
@@ -41,7 +41,7 @@ public class DurableHandler implements Handler {
 
     public static void update(DurableProducts product) {
         try {
-            DP.edit(product);
+            DH.edit(product);
         } catch (Exception ex) {
             Logger.getLogger(PerishableHandler.class.getName()).
                     log(Level.SEVERE, null, ex);
@@ -50,14 +50,18 @@ public class DurableHandler implements Handler {
     }
 
     public static List<DurableProducts> searchByIdPart(String idPart) {
-        return DP.searchByIdPart(idPart);
+        return DH.searchByIdPart(idPart);
     }
 
     public static List<SelectByCriticalQuantity> selectByCriticalQuantity() {
-        return DP.selectByCriticalQuantity();
+        return DH.selectByCriticalQuantity();
     }
 
     public static List<DurableProducts> findAll() {
-        return DP.findDurableProductsEntities();
+        return DH.findDurableProductsEntities();
+    }
+
+    public List<DurableProducts> orderByColumnName(String columnName) {
+        return DH.orderByQuery(columnName);
     }
 }

@@ -14,6 +14,7 @@ import entities.SelectByCriticalQuantity;
 import entities.StateSalesTax;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.criteria.CriteriaBuilder;
 import oop.persistance.exceptions.NonexistentEntityException;
 import oop.persistance.exceptions.PreexistingEntityException;
 
@@ -250,11 +251,16 @@ class PerishableProductsJpaController implements Serializable, CreateAble<Perish
         }
     }
 
-    public void orderByColumnName(String columnName) {
-        Query query = getEntityManager().
-                createNamedQuery("PerishableProducts.orderBy");
-        query.setParameter("columnName", columnName);
-
+    public List<PerishableProducts> orderByQuery(String columnName) {
+        EntityManager em = emf.createEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<PerishableProducts> cq = cb.createQuery(
+                PerishableProducts.class);
+        Root<PerishableProducts> root = cq.from(PerishableProducts.class);
+        cq.orderBy(cb.asc(root.get(columnName)));
+        List<PerishableProducts> list;
+        return list = em.createQuery(cq).
+                getResultList();
     }
 
 }

@@ -13,9 +13,9 @@ public class DurableTableModel extends AbstractTableModel {
     private List<DurableProducts> data;
 
     public DurableTableModel(List<DurableProducts> data) {
-        columnNames = new String[]{"Article Number", "Name", "Brand", "Family",
-            "Netto Price", "Tax Id", "Quantity", "Amount Units", "CriticalQuantity",
-            "Waranty Period", "Gross Weight"};
+        columnNames = new String[]{"articleNumber", "name", "brand", "family",
+            "nettoPrice", "taxId", "quantity", "amountUnits", "criticalQuantity",
+            "warantyPeriod", "grossWeight"};
         this.data = data;
 
     }

@@ -142,7 +142,7 @@ public class StateSalesTax implements Serializable {
 
     @Override
     public String toString() {
-        return "oop.persistance.StateSalesTax[ taxKey=" + taxKey + " ]";
+        return "taxKey=" + taxKey;
     }
 
 }

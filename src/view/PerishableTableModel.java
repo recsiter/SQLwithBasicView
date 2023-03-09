@@ -17,9 +17,9 @@ public class PerishableTableModel extends AbstractTableModel {
 
     public PerishableTableModel(List<PerishableProducts> data) {
         this.data = data;
-        columnNames = new String[]{"article_number", "ame", "brand", "family",
-            "netto_rice", "ax_id", "quantity", "amount_units", "critical_quantity",
-            "expiration_date", "production_date"};
+        columnNames = new String[]{"articleNumber", "name", "brand", "family",
+            "nettoPrice", "taxId", "quantity", "amountUnits", "criticalQuantity",
+            "expirationDate", "productionDate"};
 
     }
 

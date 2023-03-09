@@ -14,6 +14,7 @@ import entities.SelectByCriticalQuantity;
 import entities.StateSalesTax;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.criteria.CriteriaBuilder;
 import oop.persistance.exceptions.NonexistentEntityException;
 import oop.persistance.exceptions.PreexistingEntityException;
 
@@ -242,6 +243,18 @@ class DurableProductsJpaController implements Serializable, CreateAble<DurablePr
                 createNamedQuery("DurableProducts.searchByIdPart");
         query.setParameter("wordPiece", idPart);
         return query.getResultList();
+    }
+
+    public List<DurableProducts> orderByQuery(String columnName) {
+        EntityManager em = emf.createEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<DurableProducts> cq = cb.createQuery(
+                DurableProducts.class);
+        Root<DurableProducts> root = cq.from(DurableProducts.class);
+        cq.orderBy(cb.asc(root.get(columnName)));
+        List<DurableProducts> list;
+        return list = em.createQuery(cq).
+                getResultList();
     }
 
 }
