@@ -1,6 +1,8 @@
 package view;
 
 import entities.SelectByCriticalQuantity;
+import java.awt.Color;
+import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.AbstractTableModel;
@@ -10,18 +12,21 @@ import javax.swing.table.AbstractTableModel;
  * @author --G--
  */
 public class CriticalQantityForm extends javax.swing.JFrame {
-    
+
     private List<SelectByCriticalQuantity> list;
     private AbstractTableModel underCriticalTable;
-    
+
     public CriticalQantityForm(List<SelectByCriticalQuantity> list) {
         initComponents();
         this.list = list;
-        
+        Toolkit.getDefaultToolkit().
+                beep();
+        getRootPane().
+                setBackground(Color.RED);
         underCriticalTable = new CriticalQuantityTable(list);
         jTable.setModel(underCriticalTable);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+
     }
 
     /**
@@ -65,7 +70,7 @@ public class CriticalQantityForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
