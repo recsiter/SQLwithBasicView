@@ -9,6 +9,7 @@ import entities.SelectByCriticalQuantity;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileWriter;
 import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -41,7 +42,8 @@ public class MainForm extends javax.swing.JFrame {
     private SaveFormDP DurableSaveForm;
     private EditFormDP DpEditorForm;
     private EditFormPP PpEditorForm;
-    public static String PATH;
+    public static String PATH
+            = "C:\\Users\\csomo\\Documents\\NetBeansProjects\\CsomósVince_Exam\\java_backend_exam_230306\\transactions.log";
 
     static {
         PH = (PerishableHandler) HandlerFactory.createHandler(
@@ -146,7 +148,6 @@ public class MainForm extends javax.swing.JFrame {
 
         jTabbedPane3.addTab("Durables", jScrollPane4);
 
-        btAddPP.setBackground(new java.awt.Color(0, 102, 51));
         btAddPP.setText("Add to Perishable");
         btAddPP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,7 +155,6 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        btSearchP.setForeground(new java.awt.Color(153, 255, 204));
         btSearchP.setText("Search in Perishable");
         btSearchP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,7 +170,6 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        btAddDP.setBackground(new java.awt.Color(0, 102, 51));
         btAddDP.setText("Add to Durable");
         btAddDP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,7 +177,6 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        btSearchD.setForeground(new java.awt.Color(153, 255, 204));
         btSearchD.setText("Search in Durable");
         btSearchD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,6 +185,11 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         btlogPath.setText("Change .log path");
+        btlogPath.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btlogPathActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -296,6 +299,13 @@ public class MainForm extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_tbDurableMouseClicked
+
+    private void btlogPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btlogPathActionPerformed
+        changePathForm form = new changePathForm();
+        form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        form.setAlwaysOnTop(true);
+        form.setVisible(true);
+    }//GEN-LAST:event_btlogPathActionPerformed
 
     /**
      * @param args the command line arguments
@@ -408,11 +418,13 @@ public class MainForm extends javax.swing.JFrame {
             LocalDateTime now = LocalDateTime.now();
 
             StringBuilder builder = new StringBuilder();
+            builder.append(FileHandler.createStringFromRead(PATH));
             builder.append(product.getArticleNumber()).
                     append(" ");
             builder.append(now).
                     append(" ");
             builder.append("Perishable created");
+            builder.append("\n");
             FileHandler.writeToFile(builder.toString(), PATH);
 
         }
@@ -457,6 +469,10 @@ public class MainForm extends javax.swing.JFrame {
                 durableTableAbs.fireTableDataChanged();
             }
 
+        }
+
+        private static void writeToLocalLogFile() {
+            FileHandler.createStringFromRead(PATH);
         }
 
     }

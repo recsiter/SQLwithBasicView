@@ -245,9 +245,6 @@
     </Container>
     <Component class="javax.swing.JButton" name="btAddPP">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="66" red="0" type="rgb"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Add to Perishable"/>
       </Properties>
       <Events>
@@ -256,9 +253,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="btSearchP">
       <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="ff" red="99" type="rgb"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Search in Perishable"/>
       </Properties>
       <Events>
@@ -278,9 +272,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="btAddDP">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="66" red="0" type="rgb"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Add to Durable"/>
       </Properties>
       <Events>
@@ -289,9 +280,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="btSearchD">
       <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="ff" red="99" type="rgb"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Search in Durable"/>
       </Properties>
       <Events>
@@ -302,6 +290,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Change .log path"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btlogPathActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -2,6 +2,7 @@ package Util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.DoubleStream;
 
 /**
  * @author G
@@ -82,5 +84,35 @@ public class FileHandler {
             ex.printStackTrace();
         }
 
+    }
+
+    public static void createTxtInFolder(String pathToCreate,
+            String pathReadFrom, String fileName) {
+
+        createStringFromRead(pathReadFrom);
+        File file = new File(pathToCreate + "\\" + fileName + ".txt");
+        System.out.println(pathToCreate + "\\" + fileName + ".txt");
+        try ( FileWriter writer = new FileWriter(file);) {
+            writer.write(createStringFromRead(pathReadFrom));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public static String createStringFromRead(String pathReadFrom) {
+        FileReader reader;
+        StringBuilder builder = new StringBuilder();
+        try ( BufferedReader br = new BufferedReader(
+                new FileReader(pathReadFrom))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                builder.append(line);
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return builder.toString();
     }
 }

@@ -1,17 +1,23 @@
 package view;
 
+import Util.FileHandler;
+import java.io.File;
+
 /**
  *
  * @author --G--
  */
 public class changePathForm extends javax.swing.JFrame {
 
+    private String localPath;
+
     /**
      * Creates new form changePathForm
      */
     public changePathForm() {
         initComponents();
-        jlPath.setText(MainForm.PATH);
+        jFolderPath.setText(MainForm.PATH);
+
     }
 
     /**
@@ -23,51 +29,102 @@ public class changePathForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jlPath = new javax.swing.JLabel();
         btSave = new javax.swing.JButton();
+        jFolderChooser = new javax.swing.JFileChooser();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jFileName = new javax.swing.JTextPane();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jFolderPath = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jlPath.setText("jLabel1");
-
-        btSave.setText("Save");
+        btSave.setText("create .txt file in folder");
         btSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSaveActionPerformed(evt);
             }
         });
 
+        jFolderChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        jFolderChooser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFolderChooserSave(evt);
+                jFolderChooserCancel(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(jFileName);
+
+        jLabel1.setText("Enter file name here:");
+
+        jFolderPath.setEditable(false);
+        jScrollPane2.setViewportView(jFolderPath);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(232, 232, 232))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jlPath, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(156, 156, 156)
-                        .addComponent(btSave)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(97, 97, 97)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(20, 20, 20)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(46, 46, 46)
+                            .addComponent(jFolderChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(jlPath)
-                .addGap(89, 89, 89)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jFolderChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
                 .addComponent(btSave)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
-        MainForm.PATH = jlPath.getText();
+        FileHandler.createTxtInFolder(localPath, MainForm.PATH, jFileName.
+                getText());
         this.dispose();
     }//GEN-LAST:event_btSaveActionPerformed
+
+    private void jFolderChooserSave(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFolderChooserSave
+        if (evt.getActionCommand().
+                equals(jFolderChooser.APPROVE_SELECTION)) {
+            File selectedFolder = jFolderChooser.getSelectedFile();
+            localPath = selectedFolder.getAbsolutePath();
+            jFolderPath.setText(localPath);
+//            jFolderPath.setText(folderPath);
+//            FileHandler.createTxtInFolder(folderPath, MainForm.PATH,);
+        }
+    }//GEN-LAST:event_jFolderChooserSave
+
+    private void jFolderChooserCancel(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFolderChooserCancel
+        if (evt.getActionCommand().
+                equals(jFolderChooser.CANCEL_SELECTION)) {
+            this.dispose();
+        }
+    }//GEN-LAST:event_jFolderChooserCancel
 
     /**
      * @param args the command line arguments
@@ -111,6 +168,11 @@ public class changePathForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSave;
-    private javax.swing.JLabel jlPath;
+    private javax.swing.JTextPane jFileName;
+    private javax.swing.JFileChooser jFolderChooser;
+    private javax.swing.JTextPane jFolderPath;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
