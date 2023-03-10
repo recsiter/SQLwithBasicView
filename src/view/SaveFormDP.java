@@ -233,6 +233,7 @@ public class SaveFormDP extends javax.swing.JFrame {
         DurableHandler handler = (DurableHandler) HandlerFactory.
                 createHandler(ControllerName.Durable);
         DurableProducts product = productcreator();
+
         handler.create(product, Integer.parseInt(jtTaxId.getText()));
         notifyListeners(product);
 

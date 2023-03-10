@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import oop.persistance.controller.ControllerName;
 import oop.persistance.controller.HandlerFactory;
 import oop.persistance.controller.PerishableHandler;
@@ -305,10 +306,12 @@ public class SaveFormPP extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private PerishableProducts productcreator() throws ParseException {
-        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
+        Date expDate;
+        Date prodDate;
 
-        Date expDate = formatter1.parse(jtExpDate.getText());
-        Date prodDate = formatter1.parse(jtProdDate.getText());
+        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
+        expDate = formatter1.parse(jtExpDate.getText());
+        prodDate = formatter1.parse(jtProdDate.getText());
 
         PerishableProducts result = new PerishableProducts();
         result.setArticleNumber(jtArticleNum.
@@ -329,7 +332,8 @@ public class SaveFormPP extends javax.swing.JFrame {
                 parseInt(jtTaxId.getText()));
         result.setTaxId(
                 sst);
-
+        System.out.println(result.getExpirationDate().
+                toString());
         return result;
     }
 }

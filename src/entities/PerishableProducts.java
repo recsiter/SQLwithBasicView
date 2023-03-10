@@ -1,9 +1,12 @@
 package entities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.regex.Pattern;
 import javax.persistence.Basic;
@@ -172,7 +175,7 @@ public class PerishableProducts implements Serializable, GrossPriceCalculator, P
     }
 
     public void setNettoPrice(int nettoPrice) {
-        if (nettoPrice >= 0) {
+        if (nettoPrice > 0) {
             this.nettoPrice = nettoPrice;
         } else {
             throw new IllegalArgumentException("Must be a positive number!");
@@ -184,7 +187,11 @@ public class PerishableProducts implements Serializable, GrossPriceCalculator, P
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        if (quantity >= 0) {
+            this.quantity = quantity;
+        } else {
+            throw new IllegalArgumentException("Quantity cant be negative!");
+        }
     }
 
     public String getAmountUnits() {
@@ -200,7 +207,13 @@ public class PerishableProducts implements Serializable, GrossPriceCalculator, P
     }
 
     public void setCriticalQuantity(int criticalQuantity) {
-        this.criticalQuantity = criticalQuantity;
+        if (criticalQuantity >= 0) {
+            this.criticalQuantity = criticalQuantity;
+        } else {
+            throw new IllegalArgumentException(
+                    "Critical quantity cant be negative!");
+        }
+
     }
 
     public Date getExpirationDate() {
@@ -208,7 +221,19 @@ public class PerishableProducts implements Serializable, GrossPriceCalculator, P
     }
 
     public void setExpirationDate(Date expirationDate) {
+//itt kellene ellenőrizzni a dátum formátumot, de nem találtam rá eszközt
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        LocalDate date = LocalDate.parse(formatter.format(
+//                expirationDate), formatter);
+//        if (expirationDate.getYear() == date.getYear()
+//                && expirationDate.getMonth() == date.getMonthValue()
+//                && expirationDate.getDate() == date.getDayOfMonth()) {
         this.expirationDate = expirationDate;
+
+//         else {
+//            throw new IllegalArgumentException(
+//                    "Date must be formatted like: YYYY-MM-DD");
+//        }
     }
 
     public Date getProductionDate() {
@@ -224,7 +249,11 @@ public class PerishableProducts implements Serializable, GrossPriceCalculator, P
     }
 
     public void setTaxId(StateSalesTax taxId) {
-        this.taxId = taxId;
+        if (taxId.getTaxKey() > 0 && taxId.getTaxKey() < 101) {
+            this.taxId = taxId;
+        } else {
+            throw new IllegalArgumentException("Tax key must be between 0-100!");
+        }
     }
 
     public int getDaysLeftToPerishing() {

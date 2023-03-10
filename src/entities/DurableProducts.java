@@ -121,7 +121,7 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
     }
 
     public void setArticleNumber(String articleNumber) {
-        if (Pattern.matches("^DP[0-9]{8}", articleNumber)) {
+        if (Pattern.matches("DP[0-9]{8}", articleNumber)) {
             this.articleNumber = articleNumber;
         } else {
             throw new IllegalArgumentException(
@@ -159,7 +159,11 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
     }
 
     public void setNettoPrice(int nettoPrice) {
-        this.nettoPrice = nettoPrice;
+        if (nettoPrice > 0) {
+            this.nettoPrice = nettoPrice;
+        } else {
+            throw new IllegalArgumentException("Must be a positive number!");
+        }
     }
 
     public int getQuantity() {
@@ -167,7 +171,11 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        if (quantity >= 0) {
+            this.quantity = quantity;
+        } else {
+            throw new IllegalArgumentException("Quantity cant be negative!");
+        }
     }
 
     public String getAmountUnits() {
@@ -183,7 +191,12 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
     }
 
     public void setCriticalQuantity(int criticalQuantity) {
-        this.criticalQuantity = criticalQuantity;
+        if (criticalQuantity >= 0) {
+            this.criticalQuantity = criticalQuantity;
+        } else {
+            throw new IllegalArgumentException(
+                    "Critical quantity cant be negative!");
+        }
     }
 
     public int getWarantyPeriod() {
@@ -199,7 +212,12 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
     }
 
     public void setGrossWeight(BigDecimal grossWeight) {
-        this.grossWeight = grossWeight;
+        if ((long) grossWeight > 0) {
+            this.grossWeight = grossWeight;
+        } else {
+            throw new IllegalArgumentException(
+                    "Critical quantity cant be negative!");
+        }
     }
 
     public StateSalesTax getTaxId() {
@@ -207,7 +225,11 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
     }
 
     public void setTaxId(StateSalesTax taxId) {
-        this.taxId = taxId;
+        if (taxId.getTaxKey() > 0 && taxId.getTaxKey() < 101) {
+            this.taxId = taxId;
+        } else {
+            throw new IllegalArgumentException("Tax key must be between 0-100!");
+        }
     }
 
     @Override
