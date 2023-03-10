@@ -8,7 +8,7 @@ import java.io.File;
  * @author --G--
  */
 public class changePathForm extends javax.swing.JFrame {
-    
+
     private String localPath;
 
     /**
@@ -17,7 +17,7 @@ public class changePathForm extends javax.swing.JFrame {
     public changePathForm() {
         initComponents();
         jFolderPath.setText(MainForm.PATH);
-        
+
     }
 
     /**
@@ -38,6 +38,7 @@ public class changePathForm extends javax.swing.JFrame {
         jFolderPath = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         btSave.setText("create .txt file in folder");
         btSave.addActionListener(new java.awt.event.ActionListener() {
@@ -107,7 +108,7 @@ public class changePathForm extends javax.swing.JFrame {
         FileHandler.clearFile(MainForm.PATH);
         this.dispose();
     }//GEN-LAST:event_btSaveActionPerformed
-    
+
     private void jFolderChooserSave(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFolderChooserSave
         if (evt.getActionCommand().
                 equals(jFolderChooser.APPROVE_SELECTION)) {
@@ -118,7 +119,7 @@ public class changePathForm extends javax.swing.JFrame {
 //            FileHandler.createTxtInFolder(folderPath, MainForm.PATH,);
         }
     }//GEN-LAST:event_jFolderChooserSave
-    
+
     private void jFolderChooserCancel(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFolderChooserCancel
         if (evt.getActionCommand().
                 equals(jFolderChooser.CANCEL_SELECTION)) {

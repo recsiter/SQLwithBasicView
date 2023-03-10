@@ -34,8 +34,7 @@ public class MainForm extends javax.swing.JFrame {
     private List<DurableProducts> durableList;
     private AbstractTableModel perishableTableAbs;
     private AbstractTableModel durableTableAbs;
-    private final ProductCreateEventListener Plistener;
-    private final ProductCreateEventListener Dlistener;
+    private final ProductCreatedEventListener creationListenerInt;
     private final QuantityChangeListener updateListener;
     private SaveFormPP PerishableSaveForm;
     private SaveFormDP DurableSaveForm;
@@ -56,8 +55,7 @@ public class MainForm extends javax.swing.JFrame {
         tbDurable.setModel(durableTableAbs);
         addMouseListenerToPHeader();
         addMouseListenerToDheader();
-        Plistener = new PerishableListener();
-        Dlistener = new DurableListener();
+        creationListenerInt = new productCreatedImpl();
         updateListener = new ProductQuantityChangeListener();
 
     }
@@ -173,7 +171,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        btlogPath.setText("Change .log path");
+        btlogPath.setText("Create copy from .log");
         btlogPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btlogPathActionPerformed(evt);
@@ -226,7 +224,7 @@ public class MainForm extends javax.swing.JFrame {
     private void btAddPPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddPPActionPerformed
         PerishableSaveForm = new SaveFormPP();
         PerishableSaveForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        PerishableSaveForm.addListener(Plistener);
+        PerishableSaveForm.addListener(creationListenerInt);
         PerishableSaveForm.setVisible(true);
         PerishableSaveForm.setAlwaysOnTop(true);
     }//GEN-LAST:event_btAddPPActionPerformed
@@ -234,7 +232,7 @@ public class MainForm extends javax.swing.JFrame {
     private void btAddDPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddDPActionPerformed
         DurableSaveForm = new SaveFormDP();
         DurableSaveForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        DurableSaveForm.addListener(Dlistener);
+        DurableSaveForm.addListener(creationListenerInt);
         DurableSaveForm.setVisible(true);
         DurableSaveForm.setAlwaysOnTop(true);
     }//GEN-LAST:event_btAddDPActionPerformed
@@ -384,7 +382,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 //---------------------------------------------------------------------------------
 
-    private class PerishableListener implements ProductCreateEventListener {
+    private class productCreatedImpl implements ProductCreatedEventListener {
 
         @Override
         public void productCreated(ProductEntity product) {
@@ -407,24 +405,6 @@ public class MainForm extends javax.swing.JFrame {
 
     }
 
-//    private class DurableListener implements ProductCreateEventListener<DurableProducts> {
-//
-//        @Override
-//        public void productCreated(DurableProducts product) {
-//            if (!durableList.contains(product)) {
-//                durableList.add(product);
-//            }
-//            durableTableAbs.fireTableDataChanged();
-//        }
-//
-//        @Override
-//        public void createTransactionData(DurableProducts product) {
-//            FileHandler.writeToFile(createWriteable(product).
-//                    toString(), PATH);
-//
-//        }
-//
-//    }
     private class ProductQuantityChangeListener implements QuantityChangeListener {
 
         @Override
@@ -456,30 +436,30 @@ public class MainForm extends javax.swing.JFrame {
             PerishableProducts product) {
         StringBuilder builder = new StringBuilder();
         LocalDateTime now = LocalDateTime.now();
-        builder.append(FileHandler.createStringFromRead(PATH));
         builder.append("Perishable Product amount changed: ");
         builder.append(((PerishableProducts) product).getArticleNumber()).
                 append(" ");
         builder.append("new amount: ").
-                append(((PerishableProducts) product).getQuantity());
+                append(((PerishableProducts) product).getQuantity()).
+                append(" ");
         builder.append(now).
                 append(" ");
-        builder.append("\\n");
+        builder.append(System.lineSeparator());
         return builder;
     }
 
     private static StringBuilder quantityChangedBuilderD(DurableProducts product) {
         StringBuilder builder = new StringBuilder();
         LocalDateTime now = LocalDateTime.now();
-        builder.append(FileHandler.createStringFromRead(PATH));
         builder.append("Durable Product amount changed: ");
         builder.append(((DurableProducts) product).getArticleNumber()).
                 append(" ");
         builder.append("new amount: ").
-                append(((DurableProducts) product).getQuantity());
+                append(((DurableProducts) product).getQuantity()).
+                append("  ");
         builder.append(now).
                 append(" ");
-        builder.append("\\n");
+        builder.append(System.lineSeparator());
         return builder;
     }
 
@@ -499,13 +479,12 @@ public class MainForm extends javax.swing.JFrame {
             PerishableProducts product) {
         StringBuilder builder = new StringBuilder();
         LocalDateTime now = LocalDateTime.now();
-        builder.append(FileHandler.createStringFromRead(PATH));
         builder.append("Perishable created: ");
         builder.append(((PerishableProducts) product).getArticleNumber()).
                 append(" ");
         builder.append(now).
                 append(" ");
-        builder.append("\\n");
+        builder.append(System.lineSeparator());
         return builder;
     }
 
@@ -513,13 +492,12 @@ public class MainForm extends javax.swing.JFrame {
             DurableProducts product) {
         StringBuilder builder = new StringBuilder();
         LocalDateTime now = LocalDateTime.now();
-        builder.append(FileHandler.createStringFromRead(PATH));
         builder.append("Durable created: ");
         builder.append(((DurableProducts) product).getArticleNumber()).
                 append(" ");
         builder.append(now).
                 append(" ");
-        builder.append("\\n");
+        builder.append(System.lineSeparator());
         return builder;
     }
 

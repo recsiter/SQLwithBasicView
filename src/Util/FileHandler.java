@@ -18,10 +18,10 @@ import java.util.stream.DoubleStream;
  * @author G
  */
 public class FileHandler {
-    
+
     private static final String DELIMITER = ",";
     private static final String[] DELIMITER_PATTERN = {DELIMITER, ""};
-    
+
     private FileHandler() {
     }
 
@@ -39,77 +39,61 @@ public class FileHandler {
         }
         return result;
     }
-    
+
     private static List<String> readRow(String rawRow) {
         List<String> result = new ArrayList<>();
         String[] rowArray = rawRow.split(DELIMITER);
         fillList(result, rowArray);
         return result;
     }
-    
+
     private static void fillList(List<String> result, String[] rowArray) {
         for (String string : rowArray) {
             result.add(string);
         }
     }
-// Innentől mentés, fileBA BELEÍRÁS
 
-    public static void writeOut(List<List<String>> rows, String path) {
-        String writeable = createWriteable(rows);
-        writeToFile(writeable, path);
-    }
-    
-    private static String createWriteable(List<List<String>> rows) {
-        StringBuilder builder = new StringBuilder();
-        String[] lineEndPattern = {System.lineSeparator(), ""};
-        for (int i = 0; i < rows.size(); i++) {
-            addRow(rows.get(i), builder);
-            builder.append(lineEndPattern[(i + 1) / rows.size()]);
-        }
-        return builder.toString();
-    }
-    
     private static void addRow(List<String> data, StringBuilder builder) {
         for (int i = 0; i < data.size(); i++) {
             builder.append(data.get(i));
             builder.append(DELIMITER_PATTERN[(i + 1) / data.size()]);
-            
+
         }
     }
-    
+
     public static void writeToFile(String writeable, String path) {
-        
-        try ( FileWriter writer = new FileWriter(path)) {
+
+        try ( FileWriter writer = new FileWriter(path, true)) {
             writer.write(writeable);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
+
     }
-    
+
     public static void createTxtInFolder(String pathToCreate,
             String pathReadFrom, String fileName) {
-        
+
         createStringFromRead(pathReadFrom);
         File file = new File(pathToCreate + "\\" + fileName + ".txt");
         try {
             Scanner scanner = new Scanner(file);
-            
+
         } catch (FileNotFoundException e) {
             // file was not found
             System.out.println("File not found");
         } catch (Exception e) {
-            
+
             System.out.println("Error reading file");
         }
-        try ( FileWriter writer = new FileWriter(file);) {
+        try ( FileWriter writer = new FileWriter(file, true);) {
             writer.write(createStringFromRead(pathReadFrom));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
+
     }
-    
+
     public static String createStringFromRead(String pathReadFrom) {
         FileReader reader;
         StringBuilder builder = new StringBuilder();
@@ -119,15 +103,15 @@ public class FileHandler {
             while ((line = br.readLine()) != null) {
                 builder.append(line);
             }
-            
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         return builder.toString();
     }
-    
+
     public static void clearFile(String path) {
-        
+
         try {
             FileWriter writer = new FileWriter(path);
             writer.write("");
@@ -135,6 +119,6 @@ public class FileHandler {
             Logger.getLogger(FileHandler.class.getName()).
                     log(Level.SEVERE, null, ex);
         }
-        
+
     }
 }

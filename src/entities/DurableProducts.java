@@ -121,7 +121,7 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
     }
 
     public void setArticleNumber(String articleNumber) {
-        if (Pattern.matches("[DP][0-9]{8}", articleNumber)) {
+        if (Pattern.matches("^DP[0-9]{8}", articleNumber)) {
             this.articleNumber = articleNumber;
         } else {
             throw new IllegalArgumentException(
