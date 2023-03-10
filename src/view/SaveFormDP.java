@@ -21,7 +21,7 @@ import oop.persistance.controller.PerishableHandler;
  * @author --G--
  */
 public class SaveFormDP extends javax.swing.JFrame {
-
+    
     List<ProductCreateEventListener> listeners;
 
     /**
@@ -30,15 +30,16 @@ public class SaveFormDP extends javax.swing.JFrame {
     public SaveFormDP() {
         initComponents();
         listeners = new ArrayList<>();
-
+        
     }
-
+    
     private void notifyListeners(DurableProducts product) {
         for (ProductCreateEventListener listener : listeners) {
             listener.productCreated(product);
+            listener.createTransactionData(product);
         }
     }
-
+    
     public void addListener(ProductCreateEventListener listener) {
         listeners.add(listener);
     }
@@ -228,7 +229,7 @@ public class SaveFormDP extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
-
+        
         DurableHandler handler = (DurableHandler) HandlerFactory.
                 createHandler(ControllerName.Durable);
         DurableProducts product = productcreator();
@@ -252,24 +253,24 @@ public class SaveFormDP extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(SaveFormDP.class
                     .getName()).
                     log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(SaveFormDP.class
                     .getName()).
                     log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(SaveFormDP.class
                     .getName()).
                     log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(SaveFormDP.class
                     .getName()).
@@ -316,7 +317,7 @@ public class SaveFormDP extends javax.swing.JFrame {
         result.setArticleNumber(jtArticleNum.
                 getText());
         result.setName(jtName.getText());
-
+        
         result.setFamily(jtFamily.getText());
         result.setNettoPrice(Integer.parseInt(jtNettoPrice.getText()));
         result.setQuantity(Integer.parseInt(jtQantity.getText()));

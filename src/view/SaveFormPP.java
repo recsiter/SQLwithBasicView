@@ -19,7 +19,7 @@ import oop.persistance.controller.PerishableHandler;
  * @author --G--
  */
 public class SaveFormPP extends javax.swing.JFrame {
-
+    
     List<ProductCreateEventListener> listeners;
 
     /**
@@ -29,13 +29,14 @@ public class SaveFormPP extends javax.swing.JFrame {
         initComponents();
         listeners = new ArrayList<>();
     }
-
+    
     private void notifyListeners(PerishableProducts product) {
         for (ProductCreateEventListener listener : listeners) {
             listener.productCreated(product);
+            listener.createTransactionData(product);
         }
     }
-
+    
     public void addListener(ProductCreateEventListener listener) {
         listeners.add(listener);
     }
@@ -305,22 +306,22 @@ public class SaveFormPP extends javax.swing.JFrame {
 
     private PerishableProducts productcreator() throws ParseException {
         SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
-
+        
         Date expDate = formatter1.parse(jtExpDate.getText());
         Date prodDate = formatter1.parse(jtProdDate.getText());
-
+        
         PerishableProducts result = new PerishableProducts();
         result.setArticleNumber(jtArticleNum.
                 getText());
         result.setName(jtName.getText());
-
+        
         result.setFamily(jtFamily.getText());
         result.setNettoPrice(Integer.parseInt(jtNettoPrice.getText()));
         result.setQuantity(Integer.parseInt(jtQantity.getText()));
         result.setAmountUnits(jtAmountUnit.getText());
         result.setCriticalQuantity(Integer.
                 parseInt(jtCriticalQuantity.getText()));
-
+        
         result.setExpirationDate(expDate);
         result.setProductionDate(prodDate);
         result.setBrand(jtBrand.getText());
@@ -328,7 +329,7 @@ public class SaveFormPP extends javax.swing.JFrame {
                 parseInt(jtTaxId.getText()));
         result.setTaxId(
                 sst);
-
+        
         return result;
     }
 }

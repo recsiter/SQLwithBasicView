@@ -416,7 +416,6 @@ public class MainForm extends javax.swing.JFrame {
         @Override
         public void createTransactionData(PerishableProducts product) {
             LocalDateTime now = LocalDateTime.now();
-
             StringBuilder builder = new StringBuilder();
             builder.append(FileHandler.createStringFromRead(PATH));
             builder.append(product.getArticleNumber()).
@@ -443,6 +442,16 @@ public class MainForm extends javax.swing.JFrame {
 
         @Override
         public void createTransactionData(DurableProducts product) {
+            LocalDateTime now = LocalDateTime.now();
+            StringBuilder builder = new StringBuilder();
+            builder.append(FileHandler.createStringFromRead(PATH));
+            builder.append(product.getArticleNumber()).
+                    append(" ");
+            builder.append(now).
+                    append(" ");
+            builder.append("Durable created");
+            builder.append("\n");
+            FileHandler.writeToFile(builder.toString(), PATH);
 
         }
 
