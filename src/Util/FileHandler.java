@@ -1,5 +1,7 @@
 package Util;
 
+import entities.DurableProducts;
+import entities.PerishableProducts;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -120,5 +123,62 @@ public class FileHandler {
                     log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public static StringBuilder quantityChangedBuilderP(
+            PerishableProducts product) {
+        StringBuilder builder = new StringBuilder();
+        LocalDateTime now = LocalDateTime.now();
+        builder.append("Perishable Product amount changed: ");
+        builder.append(((PerishableProducts) product).getArticleNumber()).
+                append(" ");
+        builder.append("new amount: ").
+                append(((PerishableProducts) product).getQuantity()).
+                append(" ");
+        builder.append(now).
+                append(" ");
+        builder.append(System.lineSeparator());
+        return builder;
+    }
+
+    public static StringBuilder quantityChangedBuilderD(DurableProducts product) {
+        StringBuilder builder = new StringBuilder();
+        LocalDateTime now = LocalDateTime.now();
+        builder.append("Durable Product amount changed: ");
+        builder.append(((DurableProducts) product).getArticleNumber()).
+                append(" ");
+        builder.append("new amount: ").
+                append(((DurableProducts) product).getQuantity()).
+                append("  ");
+        builder.append(now).
+                append(" ");
+        builder.append(System.lineSeparator());
+        return builder;
+    }
+
+    public static StringBuilder productCreatedBuilderP(
+            PerishableProducts product) {
+        StringBuilder builder = new StringBuilder();
+        LocalDateTime now = LocalDateTime.now();
+        builder.append("Perishable created: ");
+        builder.append(((PerishableProducts) product).getArticleNumber()).
+                append(" ");
+        builder.append(now).
+                append(" ");
+        builder.append(System.lineSeparator());
+        return builder;
+    }
+
+    public static StringBuilder productCreatedBuilderD(
+            DurableProducts product) {
+        StringBuilder builder = new StringBuilder();
+        LocalDateTime now = LocalDateTime.now();
+        builder.append("Durable created: ");
+        builder.append(((DurableProducts) product).getArticleNumber()).
+                append(" ");
+        builder.append(now).
+                append(" ");
+        builder.append(System.lineSeparator());
+        return builder;
     }
 }

@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import oop.persistance.controller.StateSalesTaxJpaController;
+import view.MainForm;
 
 /**
  * @author --G--
@@ -34,49 +35,7 @@ public class Main {
         //        System.out.println(numberChecker("12345678"));
 //        LocalDate exp = LocalDate.of(2023, Month.MARCH, 20);
 //        System.out.println(getDaysTillPerishing(exp));
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory(
-                "Exam2023-03-06PU");
+        MainForm form = new MainForm();
 
-//        List<PerishableProduct> employees = PP.findPerishableProductsEntities();
-//        employees.forEach(e -> {
-//            System.out.println(e.calculateGrossPrice());
-//        });
-//        PerishableProducts product = new PerishableProducts("PP00000001",
-//                "Tarja", "Hentesáru",
-//                2800,
-//                11, "kg", 3, new Date(123, 03, 14), new Date(123, 03,
-//                        07));
-//        StateSalesTaxJpaController sstc
-//                = new StateSalesTaxJpaController(factory);
-//        PP.createAndMakeFK(product, 28);
-//        DurableProducts product
-//                = new DurableProducts("DP00000000", "Babkonzerv", "konzerv",
-//                        2100, 20, "kg", 4, 23, new BigDecimal(2.3));
-//        DP.createAndMakeFK(product, 27);
-//        System.out.println(DP.searchByNamePart("k").
-//                get(0));
-//        System.out.println(PP.searchByNamePart("sdf").
-//                get(0));
-//        List<GroupByTaxId> group = PP.groupingByTaxId();
-//
-//        for (GroupByTaxId g : group) {
-//            System.out.println(g.toString());
-//
-//        }
-//        List<SelectByCriticalQuantity> cq = PP.selectByCriticalQuantity();
-//        for (SelectByCriticalQuantity selectByC : cq) {
-//            System.out.println(selectByC);
-//        }
-//        List<SelectByCriticalQuantity> list = DP.selectByCriticalQuantity();
-//        for (SelectByCriticalQuantity selectByCr : list) {
-//            System.out.println(selectByCr);
-//        }
     }
-
-    public static int getDaysTillPerishing(LocalDate exp) {
-        return exp.
-                getDayOfYear() - LocalDate.now().
-                        getDayOfYear();
-    }
-
 }

@@ -23,13 +23,13 @@ import oop.persistance.controller.PerishableHandler;
  * @author --G--
  */
 public class MainForm extends javax.swing.JFrame {
-
+    
     static PerishableHandler PH = (PerishableHandler) HandlerFactory.
             createHandler(
                     ControllerName.Perishable);
     static DurableHandler DH = (DurableHandler) HandlerFactory.createHandler(
             ControllerName.Durable);
-
+    
     private List<PerishableProducts> perishableList;
     private List<DurableProducts> durableList;
     private AbstractTableModel perishableTableAbs;
@@ -46,6 +46,8 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();
+        this.setAlwaysOnTop(true);
+        this.setVisible(true);
         criticalQantityCheck();
         perishableList = PH.findAll();
         durableList = DH.findAll();
@@ -57,7 +59,7 @@ public class MainForm extends javax.swing.JFrame {
         addMouseListenerToDheader();
         creationListenerInt = new productCreatedImpl();
         updateListener = new ProductQuantityChangeListener();
-
+        
     }
 
     /**
@@ -192,13 +194,15 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btSearchP, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btSearchD, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(113, 113, 113)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btlogPath, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(143, 143, 143)
                         .addComponent(btStat)
-                        .addGap(35, 35, 35)))
-                .addGap(36, 36, 36))
+                        .addGap(71, 71, 71))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btlogPath, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,12 +212,12 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btAddPP, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSearchP, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSearchP, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btStat, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btAddDP, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSearchD, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSearchD, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btlogPath))
                 .addGap(20, 20, 20))
         );
@@ -228,7 +232,7 @@ public class MainForm extends javax.swing.JFrame {
         PerishableSaveForm.setVisible(true);
         PerishableSaveForm.setAlwaysOnTop(true);
     }//GEN-LAST:event_btAddPPActionPerformed
-
+    
     private void btAddDPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddDPActionPerformed
         DurableSaveForm = new SaveFormDP();
         DurableSaveForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -236,7 +240,7 @@ public class MainForm extends javax.swing.JFrame {
         DurableSaveForm.setVisible(true);
         DurableSaveForm.setAlwaysOnTop(true);
     }//GEN-LAST:event_btAddDPActionPerformed
-
+    
     private void btStatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStatActionPerformed
         List<GroupByTaxId> list = (List<GroupByTaxId>) PH.groupByTaxId();
         StatisticForm statForm = new StatisticForm(list);
@@ -244,21 +248,21 @@ public class MainForm extends javax.swing.JFrame {
         statForm.setVisible(true);
         statForm.setAlwaysOnTop(true);
     }//GEN-LAST:event_btStatActionPerformed
-
+    
     private void btSearchPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchPActionPerformed
         SearchFormPP form = new SearchFormPP();
         form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         form.setVisible(true);
         form.setAlwaysOnTop(true);
     }//GEN-LAST:event_btSearchPActionPerformed
-
+    
     private void btSearchDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchDActionPerformed
         SearchFormDP form = new SearchFormDP();
         form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         form.setVisible(true);
         form.setAlwaysOnTop(true);
     }//GEN-LAST:event_btSearchDActionPerformed
-
+    
     private void tbPerishableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPerishableMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() > 1) {
             int index = tbPerishable.getSelectedRow();
@@ -267,10 +271,10 @@ public class MainForm extends javax.swing.JFrame {
             PpEditorForm.setVisible(true);
             PpEditorForm.setAlwaysOnTop(true);
             PpEditorForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+            
         }
     }//GEN-LAST:event_tbPerishableMouseClicked
-
+    
     private void tbDurableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDurableMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() > 1) {
             int index = tbDurable.getSelectedRow();
@@ -279,10 +283,10 @@ public class MainForm extends javax.swing.JFrame {
             form.setVisible(true);
             form.setAlwaysOnTop(true);
             form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+            
         }
     }//GEN-LAST:event_tbDurableMouseClicked
-
+    
     private void btlogPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btlogPathActionPerformed
         changePathForm form = new changePathForm();
         form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -326,9 +330,9 @@ public class MainForm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new MainForm().setVisible(true);
         });
-
+        
     }
-
+    
     private void criticalQantityCheck() {
         List<SelectByCriticalQuantity> critQuantP
                 = (List<SelectByCriticalQuantity>) PH.selectByCriticalQuantity();
@@ -341,10 +345,10 @@ public class MainForm extends javax.swing.JFrame {
             critForm.setAlwaysOnTop(true);
             critForm.getContentPane().
                     requestFocus();
-
+            
         }
     }
-
+    
     private void addMouseListenerToPHeader() {
         JTableHeader Pheader = tbPerishable.getTableHeader();
         Pheader.addMouseListener(new MouseAdapter() {
@@ -362,7 +366,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
     }
-
+    
     private void addMouseListenerToDheader() {
         JTableHeader Dheader = tbDurable.getTableHeader();
         Dheader.addMouseListener(new MouseAdapter() {
@@ -377,36 +381,38 @@ public class MainForm extends javax.swing.JFrame {
                     tbDurable.setModel(durableTableAbs);
                 }
             }
-
+            
         });
     }
 //---------------------------------------------------------------------------------
 
     private class productCreatedImpl implements ProductCreatedEventListener {
-
+        
         @Override
         public void productCreated(ProductEntity product) {
             if (product instanceof PerishableProducts pP) {
                 if (!perishableList.contains(pP)) {
                     perishableList.add(pP);
                     perishableTableAbs.fireTableDataChanged();
-                    FileHandler.writeToFile(productCreatedBuilderP(pP).
+                    FileHandler.writeToFile(FileHandler.productCreatedBuilderP(
+                            pP).
                             toString(), PATH);
                 }
             } else if (product instanceof DurableProducts dP) {
                 if (!durableList.contains(dP)) {
                     durableList.add(dP);
                     durableTableAbs.fireTableDataChanged();
-                    FileHandler.writeToFile(productCreatedBuilderD(dP).
+                    FileHandler.writeToFile(FileHandler.productCreatedBuilderD(
+                            dP).
                             toString(), PATH);
                 }
             }
         }
-
+        
     }
-
+    
     private class ProductQuantityChangeListener implements QuantityChangeListener {
-
+        
         @Override
         public void changeQuantity(ProductEntity product) {
             int counter = 0;
@@ -417,7 +423,7 @@ public class MainForm extends javax.swing.JFrame {
                 }
                 perishableList.set(counter, pP);
                 perishableTableAbs.fireTableDataChanged();
-                FileHandler.writeToFile(quantityChangedBuilderP(pP).
+                FileHandler.writeToFile(FileHandler.quantityChangedBuilderP(pP).
                         toString(), PATH);
             } else if (product instanceof DurableProducts dP) {
                 while (dP != durableList.get(counter) && counter < durableList.
@@ -426,93 +432,12 @@ public class MainForm extends javax.swing.JFrame {
                 }
                 durableList.set(counter, dP);
                 durableTableAbs.fireTableDataChanged();
-                FileHandler.writeToFile(quantityChangedBuilderD(dP).
+                FileHandler.writeToFile(FileHandler.quantityChangedBuilderD(dP).
                         toString(), PATH);
             }
         }
     }
 
-    private static StringBuilder quantityChangedBuilderP(
-            PerishableProducts product) {
-        StringBuilder builder = new StringBuilder();
-        LocalDateTime now = LocalDateTime.now();
-        builder.append("Perishable Product amount changed: ");
-        builder.append(((PerishableProducts) product).getArticleNumber()).
-                append(" ");
-        builder.append("new amount: ").
-                append(((PerishableProducts) product).getQuantity()).
-                append(" ");
-        builder.append(now).
-                append(" ");
-        builder.append(System.lineSeparator());
-        return builder;
-    }
-
-    private static StringBuilder quantityChangedBuilderD(DurableProducts product) {
-        StringBuilder builder = new StringBuilder();
-        LocalDateTime now = LocalDateTime.now();
-        builder.append("Durable Product amount changed: ");
-        builder.append(((DurableProducts) product).getArticleNumber()).
-                append(" ");
-        builder.append("new amount: ").
-                append(((DurableProducts) product).getQuantity()).
-                append("  ");
-        builder.append(now).
-                append(" ");
-        builder.append(System.lineSeparator());
-        return builder;
-    }
-
-//    private static void createWriteableD(StringBuilder builder,
-//            DurableProducts product) {
-//        LocalDateTime now = LocalDateTime.now();
-//        builder.append(FileHandler.createStringFromRead(PATH)).
-//                append("\\n");
-//        builder.append(product.getArticleNumber()).
-//                append(" ");
-//        builder.append(now).
-//                append(" ");
-//        builder.append("Durable created");
-//        builder.append("\\n");
-//    }
-    private static StringBuilder productCreatedBuilderP(
-            PerishableProducts product) {
-        StringBuilder builder = new StringBuilder();
-        LocalDateTime now = LocalDateTime.now();
-        builder.append("Perishable created: ");
-        builder.append(((PerishableProducts) product).getArticleNumber()).
-                append(" ");
-        builder.append(now).
-                append(" ");
-        builder.append(System.lineSeparator());
-        return builder;
-    }
-
-    private static StringBuilder productCreatedBuilderD(
-            DurableProducts product) {
-        StringBuilder builder = new StringBuilder();
-        LocalDateTime now = LocalDateTime.now();
-        builder.append("Durable created: ");
-        builder.append(((DurableProducts) product).getArticleNumber()).
-                append(" ");
-        builder.append(now).
-                append(" ");
-        builder.append(System.lineSeparator());
-        return builder;
-    }
-
-//    private static void createWriteableP(StringBuilder builder,
-//            PerishableProducts product) {
-//        LocalDateTime now = LocalDateTime.now();
-//        builder.append(FileHandler.createStringFromRead(PATH)).
-//                append("\\n");
-//        builder.append(product.getArticleNumber()).
-//                append(" ");
-//        builder.append(now).
-//                append(" ");
-//        builder.append("Perishable created");
-//        builder.append("\\n");
-//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddDP;
     private javax.swing.JButton btAddPP;
