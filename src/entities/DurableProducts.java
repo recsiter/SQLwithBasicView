@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.regex.Pattern;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -120,7 +121,13 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
     }
 
     public void setArticleNumber(String articleNumber) {
-        this.articleNumber = articleNumber;
+        if (Pattern.matches("[DP][0-9]{8}", articleNumber)) {
+            this.articleNumber = articleNumber;
+        } else {
+            throw new IllegalArgumentException(
+                    "Article number must start DP, than 8 digit comes!");
+
+        }
     }
 
     public String getName() {

@@ -36,6 +36,7 @@ public class EditFormPP extends javax.swing.JFrame {
     private void notifyListeners(PerishableProducts product) {
         for (QuantityChangeListener listener : listeners) {
             listener.changeQuantity(product);
+
         }
     }
 

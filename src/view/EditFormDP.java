@@ -14,7 +14,7 @@ import oop.persistance.controller.PerishableHandler;
  * @author --G--
  */
 public class EditFormDP extends javax.swing.JFrame {
-
+    
     private DurableProducts product;
     private List<QuantityChangeListener> listeners;
 
@@ -27,19 +27,20 @@ public class EditFormDP extends javax.swing.JFrame {
         listeners = new ArrayList<>();
         jTProductField.setText(product.toString());
         jTBruttoPrice.setText(String.valueOf(product.calculateGrossPrice()));
-
+        
     }
-
+    
     private EditFormDP() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     private void notifyListeners(DurableProducts product) {
         for (QuantityChangeListener listener : listeners) {
             listener.changeQuantity(product);
+            listener.changeQuantity(product);
         }
     }
-
+    
     public void addListener(QuantityChangeListener listener) {
         listeners.add(listener);
     }
@@ -146,7 +147,7 @@ public class EditFormDP extends javax.swing.JFrame {
         notifyListeners(product);
         this.dispose();
     }//GEN-LAST:event_btIncreaseActionPerformed
-
+    
     private void jBdecreaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBdecreaseActionPerformed
         DurableHandler handler = (DurableHandler) HandlerFactory.
                 createHandler(ControllerName.Durable);

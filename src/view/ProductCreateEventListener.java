@@ -6,10 +6,8 @@ import entities.ProductEntity;
  *
  * @author --G--
  */
-public interface ProductCreateEventListener<T extends ProductEntity> {
+public interface ProductCreateEventListener {
 
-    void productCreated(T product);
-
-    void createTransactionData(T product);
+    void productCreated(ProductEntity product);
 
 }

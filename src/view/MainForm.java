@@ -384,45 +384,47 @@ public class MainForm extends javax.swing.JFrame {
     }
 //---------------------------------------------------------------------------------
 
-    private class PerishableListener implements ProductCreateEventListener<PerishableProducts> {
+    private class PerishableListener implements ProductCreateEventListener {
 
         @Override
-        public void productCreated(PerishableProducts product) {
-            if (!perishableList.contains(product)) {
-                perishableList.add(product);
-                perishableTableAbs.fireTableDataChanged();
+        public void productCreated(ProductEntity product) {
+            if (product instanceof PerishableProducts pP) {
+                if (!perishableList.contains(pP)) {
+                    perishableList.add(pP);
+                    perishableTableAbs.fireTableDataChanged();
+                    FileHandler.writeToFile(productCreatedBuilderP(pP).
+                            toString(), PATH);
+                }
+            } else if (product instanceof DurableProducts dP) {
+                if (!durableList.contains(dP)) {
+                    durableList.add(dP);
+                    durableTableAbs.fireTableDataChanged();
+                    FileHandler.writeToFile(productCreatedBuilderD(dP).
+                            toString(), PATH);
+                }
             }
-        }
-
-        @Override
-        public void createTransactionData(PerishableProducts product) {
-            FileHandler.writeToFile(createWriteable(product).
-                    toString(), PATH);
-
         }
 
     }
 
-    private class DurableListener implements ProductCreateEventListener<DurableProducts> {
-
-        @Override
-        public void productCreated(DurableProducts product) {
-            if (!durableList.contains(product)) {
-                durableList.add(product);
-            }
-            durableTableAbs.fireTableDataChanged();
-        }
-
-        @Override
-        public void createTransactionData(DurableProducts product) {
-            StringBuilder builder = new StringBuilder();
-            createWriteableD(builder, product);
-            FileHandler.writeToFile(builder.toString(), PATH);
-
-        }
-
-    }
-
+//    private class DurableListener implements ProductCreateEventListener<DurableProducts> {
+//
+//        @Override
+//        public void productCreated(DurableProducts product) {
+//            if (!durableList.contains(product)) {
+//                durableList.add(product);
+//            }
+//            durableTableAbs.fireTableDataChanged();
+//        }
+//
+//        @Override
+//        public void createTransactionData(DurableProducts product) {
+//            FileHandler.writeToFile(createWriteable(product).
+//                    toString(), PATH);
+//
+//        }
+//
+//    }
     private class ProductQuantityChangeListener implements QuantityChangeListener {
 
         @Override
@@ -435,6 +437,8 @@ public class MainForm extends javax.swing.JFrame {
                 }
                 perishableList.set(counter, pP);
                 perishableTableAbs.fireTableDataChanged();
+                FileHandler.writeToFile(quantityChangedBuilderP(pP).
+                        toString(), PATH);
             } else if (product instanceof DurableProducts dP) {
                 while (dP != durableList.get(counter) && counter < durableList.
                         size()) {
@@ -442,8 +446,41 @@ public class MainForm extends javax.swing.JFrame {
                 }
                 durableList.set(counter, dP);
                 durableTableAbs.fireTableDataChanged();
+                FileHandler.writeToFile(quantityChangedBuilderD(dP).
+                        toString(), PATH);
             }
         }
+    }
+
+    private static StringBuilder quantityChangedBuilderP(
+            PerishableProducts product) {
+        StringBuilder builder = new StringBuilder();
+        LocalDateTime now = LocalDateTime.now();
+        builder.append(FileHandler.createStringFromRead(PATH));
+        builder.append("Perishable Product amount changed: ");
+        builder.append(((PerishableProducts) product).getArticleNumber()).
+                append(" ");
+        builder.append("new amount: ").
+                append(((PerishableProducts) product).getQuantity());
+        builder.append(now).
+                append(" ");
+        builder.append("\\n");
+        return builder;
+    }
+
+    private static StringBuilder quantityChangedBuilderD(DurableProducts product) {
+        StringBuilder builder = new StringBuilder();
+        LocalDateTime now = LocalDateTime.now();
+        builder.append(FileHandler.createStringFromRead(PATH));
+        builder.append("Durable Product amount changed: ");
+        builder.append(((DurableProducts) product).getArticleNumber()).
+                append(" ");
+        builder.append("new amount: ").
+                append(((DurableProducts) product).getQuantity());
+        builder.append(now).
+                append(" ");
+        builder.append("\\n");
+        return builder;
     }
 
 //    private static void createWriteableD(StringBuilder builder,
@@ -458,38 +495,32 @@ public class MainForm extends javax.swing.JFrame {
 //        builder.append("Durable created");
 //        builder.append("\\n");
 //    }
-    private static StringBuilder createWriteable(ProductEntity product) {
+    private static StringBuilder productCreatedBuilderP(
+            PerishableProducts product) {
         StringBuilder builder = new StringBuilder();
-        if (product instanceof PerishableProducts) {
-            fillBuilderP(builder, product);
-        } else {
-            fillBuilderD(builder, product);
-        }
-        return builder;
-    }
-
-    private static void fillBuilderP(StringBuilder builder,
-            ProductEntity product) {
         LocalDateTime now = LocalDateTime.now();
         builder.append(FileHandler.createStringFromRead(PATH));
+        builder.append("Perishable created: ");
         builder.append(((PerishableProducts) product).getArticleNumber()).
                 append(" ");
         builder.append(now).
                 append(" ");
-        builder.append("Perishable created: ");
         builder.append("\\n");
+        return builder;
     }
 
-    private static void fillBuilderD(StringBuilder builder,
-            ProductEntity product) {
+    private static StringBuilder productCreatedBuilderD(
+            DurableProducts product) {
+        StringBuilder builder = new StringBuilder();
         LocalDateTime now = LocalDateTime.now();
         builder.append(FileHandler.createStringFromRead(PATH));
+        builder.append("Durable created: ");
         builder.append(((DurableProducts) product).getArticleNumber()).
                 append(" ");
         builder.append(now).
                 append(" ");
-        builder.append("Durable created: ");
         builder.append("\\n");
+        return builder;
     }
 
 //    private static void createWriteableP(StringBuilder builder,
