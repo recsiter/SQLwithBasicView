@@ -39,16 +39,13 @@ public class CriticalQuantityTable extends AbstractTableModel {
         SelectByCriticalQuantity temp = data.get(rowIndex);
         String result = temp.getId();
         switch (columnIndex) {
-            case 0:
+            case 0 ->
                 result = temp.getId();
-                break;
-            case 1:
+            case 1 ->
                 result = String.valueOf(temp.getCriticalQuantity());
-                break;
-            case 2:
+            case 2 ->
                 result = String.valueOf(temp.getQuantity());
-                break;
-            default:
+            default ->
                 throw new AssertionError();
         }
         return result;

@@ -1,9 +1,6 @@
 package oop.persistance.controller;
 
-import oop.persistance.controller.Handler;
-import oop.persistance.controller.Controller;
-import oop.persistance.controller.ControllerFactory;
-import oop.persistance.controller.ControllerName;
+import Util.ControllerName;
 
 /**
  * @author G

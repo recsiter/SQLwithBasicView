@@ -1,19 +1,11 @@
 package oop.persistance.controller;
 
-import oop.persistance.controller.Handler;
 import entities.DurableProducts;
-import entities.DurableProducts;
-import entities.PerishableProducts;
 import entities.SelectByCriticalQuantity;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.criteria.CriteriaQuery;
-import oop.persistance.controller.Controller;
-import oop.persistance.controller.ControllerFactory;
-import oop.persistance.controller.ControllerName;
-import oop.persistance.controller.DurableProductsJpaController;
-import static oop.persistance.controller.PerishableHandler.PC;
+import Util.ControllerName;
 
 /**
  * @author G

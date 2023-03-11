@@ -32,40 +32,16 @@ CREATE TABLE `storage`.`state-sales_tax` (
   `multiplier` DOUBLE NOT NULL,
   PRIMARY KEY (`tax_key`));
 
+mok adatokhoz insert:
+INSERT INTO perishable_products (article_number, name, brand, family, netto_price,tax_id, quantity, amount_units, critical_quantity, expiration_date, production_date)
+VALUES
+('PP00000000', 'Tejföl', 'Magyar', 'Tejtermék', 388, 27, 8, 'kg', 1, '2024-03-13', '2023-03-01'),
+('PP00000001', 'Tarja', NULL, 'Hentesáru', 2800, 28, 13, 'kg', 3, '2023-04-14', '2023-04-07'),
+('PP00000002', 'Paradicsom', 'Parigyár', 'Zöldség', 1400, 27, 10, 'kg', 4, '2023-03-24', '2023-02-03'),
+('PP12345688', 'Kenyér', 'Toronyi', 'Pékáru', 1020, 29, 15, 'kg', 4, '2023-04-20', '2023-03-10');
 
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_product`(
-  IN article_number VARCHAR(10),
-  IN prod_name VARCHAR(150),
-  IN brand VARCHAR(50),
-  IN family VARCHAR(50),
-  IN netto_price INT,
-  IN tax_id INT,
-  IN quantity INT,
-  IN amount_units VARCHAR(10),
-  IN critical_quantity INT,
-  IN waranty_period INT,
-  IN gross_weight DECIMAL(4,1)
-  )
-BEGIN
-  DECLARE local_tax_id INT;
-  DECLARE tax_description VARCHAR(20);
-  DECLARE tax_multiplier DOUBLE;
-  SELECT id,_description,multiplier INTO local_tax_id ,tax_multiplier,tax_description FROM state_sales_tax 
-  WHERE tax_key = tax_id;
-
-  IF local_tax_id IS NULL THEN
-    INSERT INTO state_sales_tax (tax_key,_description,multiplier) VALUES (tax_id,concat(tax_id,' %'),(tax_id/100)+1);
-    SET local_tax_id= tax_id;
-    SET tax_description=concat(tax_id,' %');
-    SET tax_multiplier=(tax_id/100)+1;
-  END IF;
-
-  INSERT INTO durable_products(article_number,`name`,brand,family,
-  nett_price,tax_id,quantity,amount_units,critical_quantity,
-  waranty_period,gross_weight) 
-  VALUES (artical_number,prod_name,brand,family,netto_price,tax_id,quantity,amount_units,
-  critical_quantity,waranty_period,gross_weight);
-
-  SELECT 1 AS success;
-END
+INSERT INTO durable_products (article_number, `name`, brand, family, netto_price,tax_id, quantity, amount_units, critical_quantity, waranty_period, gross_weight)
+VALUES
+('DP00000000', 'Babkonzerv', NULL, 'konzerv', 2100, 27, 11, 'kg', 4, '23', '2.3'),
+('DP00112233', 'Rizs', 'Gyermei', 'Gabona', 1230, 27, 27, 'kg', 10, '12', '40.3'),
+('DP22334455', 'Meggy befőtt', 'sBudget', 'Befőtt', 1190, 33, 30, 'dl', 12, '20', '3.4');

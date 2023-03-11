@@ -3,7 +3,7 @@ package view;
 import entities.PerishableProducts;
 import java.util.ArrayList;
 import java.util.List;
-import oop.persistance.controller.ControllerName;
+import Util.ControllerName;
 import oop.persistance.controller.HandlerFactory;
 import oop.persistance.controller.PerishableHandler;
 
@@ -18,6 +18,8 @@ public class EditFormPP extends javax.swing.JFrame {
 
     /**
      * Creates new form EditFormPP
+     *
+     * @param product
      */
     public EditFormPP(PerishableProducts product) {
         initComponents();

@@ -1,7 +1,6 @@
 package oop.persistance.controller;
 
-import oop.persistance.controller.Controller;
-import oop.persistance.controller.ControllerName;
+import Util.ControllerName;
 
 /**
  * @author G
@@ -16,17 +15,14 @@ public class HandlerFactory {
 
         Handler resultHandler;
         switch (name) {
-            case Perishable:
+            case Perishable ->
                 resultHandler = PH;
-                break;
-            case Durable:
+            case Durable ->
                 resultHandler = DH;
-                break;
-            case StateSales:
+            case StateSales ->
                 resultHandler = SSH;
-                break;
 
-            default:
+            default ->
                 throw new AssertionError();
         }
         return resultHandler;

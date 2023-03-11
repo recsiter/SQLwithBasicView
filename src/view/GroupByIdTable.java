@@ -9,8 +9,8 @@ import javax.swing.table.AbstractTableModel;
  */
 public class GroupByIdTable extends AbstractTableModel {
 
-    private String[] columnNames;
-    private List<GroupByTaxId> data;
+    private final String[] columnNames;
+    private final List<GroupByTaxId> data;
 
     public GroupByIdTable(List<GroupByTaxId> data) {
         this.data = data;
@@ -39,23 +39,18 @@ public class GroupByIdTable extends AbstractTableModel {
         GroupByTaxId temp = data.get(rowIndex);
         String result = String.valueOf(temp.getTaxId());
         switch (columnIndex) {
-            case 0:
+            case 0 ->
                 result = String.valueOf(temp.getTaxId());
-                break;
-            case 1:
+            case 1 ->
                 result = String.valueOf(temp.getNettoSum());
-                break;
-            case 2:
+            case 2 ->
                 result = String.valueOf(temp.getBruttoSum());
-                break;
-            case 3:
+            case 3 ->
                 result = String.valueOf(temp.getAvgNetto());
-                break;
-            case 4:
+            case 4 ->
                 result = String.valueOf(temp.getQuantitySum());
-                break;
 
-            default:
+            default ->
                 throw new AssertionError();
         }
         return result;

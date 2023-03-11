@@ -12,8 +12,8 @@ import javax.swing.table.AbstractTableModel;
  */
 public class PerishableTableModel extends AbstractTableModel {
 
-    private String[] columnNames;
-    private List<PerishableProducts> data;
+    private final String[] columnNames;
+    private final List<PerishableProducts> data;
 
     public PerishableTableModel(List<PerishableProducts> data) {
         this.data = data;
@@ -48,41 +48,30 @@ public class PerishableTableModel extends AbstractTableModel {
         String proddate = formatter1.format(temp.getProductionDate());
 
         switch (columnIndex) {
-            case 0:
+            case 0 ->
                 result = String.valueOf(temp.getArticleNumber());
-                break;
-            case 1:
+            case 1 ->
                 result = String.valueOf(temp.getName());
-                break;
-            case 2:
+            case 2 ->
                 result = String.valueOf(temp.getBrand());
-                break;
-            case 3:
+            case 3 ->
                 result = String.valueOf(temp.getFamily());
-                break;
-            case 4:
+            case 4 ->
                 result = String.valueOf(temp.getNettoPrice());
-                break;
-            case 5:
+            case 5 ->
                 result = String.valueOf(temp.getTaxId().
                         getTaxKey());
-                break;
-            case 6:
+            case 6 ->
                 result = String.valueOf(temp.getQuantity());
-                break;
-            case 7:
+            case 7 ->
                 result = String.valueOf(temp.getAmountUnits());
-                break;
-            case 8:
+            case 8 ->
                 result = String.valueOf(temp.getCriticalQuantity());
-                break;
-            case 9:
+            case 9 ->
                 result = expdate;
-                break;
-            case 10:
+            case 10 ->
                 result = proddate;
-                break;
-            default:
+            default ->
                 throw new AssertionError();
         }
         return result;

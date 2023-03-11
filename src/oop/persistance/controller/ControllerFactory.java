@@ -1,6 +1,6 @@
 package oop.persistance.controller;
 
-import entities.ProductEntity;
+import Util.ControllerName;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -28,17 +28,14 @@ public class ControllerFactory {
     public static Controller createController(ControllerName name) {
         Controller resultController;
         switch (name) {
-            case Perishable:
+            case Perishable ->
                 resultController = PC;
-                break;
-            case Durable:
+            case Durable ->
                 resultController = DC;
-                break;
-            case StateSales:
+            case StateSales ->
                 resultController = SC;
-                break;
 
-            default:
+            default ->
                 throw new AssertionError();
         }
         return resultController;

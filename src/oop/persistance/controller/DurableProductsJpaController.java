@@ -9,12 +9,10 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import entities.DurableProducts;
-import entities.PerishableProducts;
 import entities.SelectByCriticalQuantity;
 import entities.StateSalesTax;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.StoredProcedureQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import oop.persistance.exceptions.NonexistentEntityException;
 import oop.persistance.exceptions.PreexistingEntityException;
@@ -208,9 +206,9 @@ class DurableProductsJpaController implements Serializable, CreateAble<DurablePr
     public void createAndMakeFK(DurableProducts product) {
         StateSalesTaxJpaController sstc
                 = new StateSalesTaxJpaController(emf);
+//       Controller sstc= (StateSalesTaxJpaController)ControllerFactory.createController(ControllerName.StateSales);
         int tax = product.getTaxId().
                 getTaxKey();
-//       Controller sstc= (StateSalesTaxJpaController)ControllerFactory.createController(ControllerName.StateSales);
         if (sstc.findStateSalesTax(tax) != null) {
             try {
                 product.setTaxId(sstc.findStateSalesTax(tax));

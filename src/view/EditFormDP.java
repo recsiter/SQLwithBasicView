@@ -4,7 +4,7 @@ import entities.DurableProducts;
 import entities.PerishableProducts;
 import java.util.ArrayList;
 import java.util.List;
-import oop.persistance.controller.ControllerName;
+import Util.ControllerName;
 import oop.persistance.controller.DurableHandler;
 import oop.persistance.controller.HandlerFactory;
 import oop.persistance.controller.PerishableHandler;
@@ -20,6 +20,8 @@ public class EditFormDP extends javax.swing.JFrame {
 
     /**
      * Creates new form EditForm
+     *
+     * @param product
      */
     public EditFormDP(DurableProducts product) {
         initComponents();

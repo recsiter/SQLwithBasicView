@@ -1,11 +1,10 @@
 package oop.persistance.controller;
 
-import entities.PerishableProducts;
 import entities.ProductEntity;
-import entities.StateSalesTax;
 
 /**
  * @author G
+ * @param <T>
  */
 public interface CreateAble<T extends ProductEntity> {
 
