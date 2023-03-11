@@ -30,9 +30,9 @@ public class DurableHandler implements Handler {
     private DurableHandler() {
     }
 
-    public static void create(DurableProducts product, int tax) {
+    public static void create(DurableProducts product) {
         try {
-            DC.createAndMakeFK(product, tax);
+            DC.createAndMakeFK(product);
         } catch (Exception ex) {
             Logger.getLogger(DurableHandler.class.getName()).
                     log(Level.SEVERE, null, ex);

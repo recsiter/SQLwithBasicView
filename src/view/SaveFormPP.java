@@ -227,7 +227,7 @@ public class SaveFormPP extends javax.swing.JFrame {
             PerishableHandler handler = (PerishableHandler) HandlerFactory.
                     createHandler(ControllerName.Perishable);
             PerishableProducts product = productcreator();
-            handler.create(product, Integer.parseInt(jtTaxId.getText()));
+            handler.create(product);
             notifyListeners(product);
         } catch (ParseException ex) {
             Logger.getLogger(SaveFormPP.class.getName()).

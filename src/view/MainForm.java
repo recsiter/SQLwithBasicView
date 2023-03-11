@@ -394,7 +394,7 @@ public class MainForm extends javax.swing.JFrame {
                 if (!perishableList.contains(pP)) {
                     perishableList.add(pP);
                     perishableTableAbs.fireTableDataChanged();
-                    FileHandler.writeToFile(FileHandler.productCreatedBuilderP(
+                    FileHandler.writeToFile(FileHandler.logStringCreatorP(
                             pP).
                             toString(), PATH);
                 }
@@ -402,7 +402,7 @@ public class MainForm extends javax.swing.JFrame {
                 if (!durableList.contains(dP)) {
                     durableList.add(dP);
                     durableTableAbs.fireTableDataChanged();
-                    FileHandler.writeToFile(FileHandler.productCreatedBuilderD(
+                    FileHandler.writeToFile(FileHandler.logStringCreatorD(
                             dP).
                             toString(), PATH);
                 }

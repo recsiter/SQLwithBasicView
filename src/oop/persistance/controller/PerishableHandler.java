@@ -28,9 +28,9 @@ public class PerishableHandler implements Handler {
     private PerishableHandler() {
     }
 
-    public static void create(PerishableProducts product, int tax) {
+    public static void create(PerishableProducts product) {
         try {
-            PC.createAndMakeFK(product, tax);
+            PC.createAndMakeFK(product);
         } catch (Exception ex) {
             Logger.getLogger(PerishableHandler.class.getName()).
                     log(Level.SEVERE, null, ex);

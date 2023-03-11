@@ -220,10 +220,10 @@ class PerishableProductsJpaController implements Serializable, CreateAble<Perish
     }
 
     @Override
-    public void createAndMakeFK(PerishableProducts product, int tax) {
+    public void createAndMakeFK(PerishableProducts product) {
         StateSalesTaxJpaController sstc = new StateSalesTaxJpaController(emf);
-//        Controller sstc = (StateSalesTaxJpaController) ControllerFactory.
-//                createController(ControllerName.StateSales);
+        int tax = product.getTaxId().
+                getTaxKey();
         if (sstc.findStateSalesTax(tax) != null) {
             try {
                 product.setTaxId(sstc.findStateSalesTax(tax));

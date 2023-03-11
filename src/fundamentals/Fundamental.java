@@ -34,7 +34,6 @@ public class Fundamental {
                 result = result + Character.toUpperCase(actualChar);
             }
         }
-//        System.out.println(result);
         return result;
     }
 
@@ -56,8 +55,6 @@ public class Fundamental {
             result += charArray[i];
 
         }
-
-//        System.out.println(result);
         return result;
     }
 
@@ -85,7 +82,6 @@ public class Fundamental {
                 counter++;
             }
         }
-        System.out.println(counter);
         return counter;
     }
 
@@ -98,13 +94,11 @@ public class Fundamental {
         }
         while (abs > 0 && result == false) {
             temp = abs % 10;
-
             if (temp == digit) {
                 result = true;
             }
             abs /= 10;
         }
-//        System.out.println(result);
         return result;
     }
 

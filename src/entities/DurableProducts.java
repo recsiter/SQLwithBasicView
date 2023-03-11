@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
 /**
@@ -19,6 +22,34 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "durable_products")
+@NamedStoredProcedureQuery(name = "insertProduct", procedureName
+        = "insert_product",
+        parameters = {
+            @StoredProcedureParameter(mode = ParameterMode.IN, name
+                    = "article_number", type = String.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name
+                    = "prod_name", type = String.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "brand", type
+                    = String.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "family", type
+                    = String.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name
+                    = "netto_price", type = Integer.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "tax_id", type
+                    = Integer.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "quantity", type
+                    = Integer.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name
+                    = "amount_units", type = String.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name
+                    = "critical_quantity", type = Integer.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name
+                    = "waranty_period", type = Integer.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name
+                    = "gross_weight", type = Double.class),
+            @StoredProcedureParameter(mode = ParameterMode.OUT, name = "success", type
+                    = Integer.class)
+        })
 @NamedQueries({
     @NamedQuery(name = "DurableProducts.findAll", query
             = "SELECT d FROM DurableProducts d"),
@@ -212,11 +243,11 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
     }
 
     public void setGrossWeight(BigDecimal grossWeight) {
-        if ((long) grossWeight > 0) {
+        if (grossWeight.compareTo(BigDecimal.valueOf(0.0)) > 0) {
             this.grossWeight = grossWeight;
         } else {
             throw new IllegalArgumentException(
-                    "Critical quantity cant be negative!");
+                    "Gross weight quantity cant be negative!");
         }
     }
 
@@ -281,8 +312,6 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
             quantity -= minusAmount;
         } else {
             quantity = 0;
-            throw new IllegalArgumentException(
-                    "Can't add minus to durable amount.");
         }
     }
 

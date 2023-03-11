@@ -7,7 +7,7 @@ public class SelectByCriticalQuantity {
 
     private final String id;
     private final int criticalQuantity;
-    private int quantity;
+    private final int quantity;
 
     public SelectByCriticalQuantity(String id, int criticalQuantity,
             int quantity) {
@@ -30,7 +30,7 @@ public class SelectByCriticalQuantity {
 
     @Override
     public String toString() {
-        return "SelectByCriticalQuantity{" + "id=" + id + ", criticalQuantity=" + criticalQuantity + ", quantity=" + quantity + '}';
+        return "id=" + id + ", criticalQuantity=" + criticalQuantity + ", quantity=" + quantity;
     }
 
 }

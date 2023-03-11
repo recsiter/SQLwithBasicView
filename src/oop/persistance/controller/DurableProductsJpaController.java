@@ -14,6 +14,7 @@ import entities.SelectByCriticalQuantity;
 import entities.StateSalesTax;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.StoredProcedureQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import oop.persistance.exceptions.NonexistentEntityException;
 import oop.persistance.exceptions.PreexistingEntityException;
@@ -204,10 +205,11 @@ class DurableProductsJpaController implements Serializable, CreateAble<DurablePr
     }
 
     @Override
-    public void createAndMakeFK(DurableProducts product, int tax
-    ) {
+    public void createAndMakeFK(DurableProducts product) {
         StateSalesTaxJpaController sstc
                 = new StateSalesTaxJpaController(emf);
+        int tax = product.getTaxId().
+                getTaxKey();
 //       Controller sstc= (StateSalesTaxJpaController)ControllerFactory.createController(ControllerName.StateSales);
         if (sstc.findStateSalesTax(tax) != null) {
             try {
@@ -237,6 +239,34 @@ class DurableProductsJpaController implements Serializable, CreateAble<DurablePr
         }
 
     }
+// próbálkozás a tárolt eljárás meghívásához:
+//    public int createAndMakeFKByStroderPr(DurableProducts product
+//    ) {
+//        EntityManager em = getEntityManager();
+//        StoredProcedureQuery query = em.createNamedStoredProcedureQuery(
+//                "insertProduct");
+//
+//        query.setParameter("article_number", product.getArticleNumber());
+//        query.setParameter("prod_name", product.getName());
+//        query.setParameter("brand", product.getBrand());
+//        query.setParameter("family", product.getFamily());
+//        query.setParameter("netto_price", product.getNettoPrice());
+//        query.setParameter("tax_id", product.getTaxId().
+//                getTaxKey());
+//        query.setParameter("quantity", product.getQuantity());
+//        query.setParameter("amount_units", product.getAmountUnits());
+//        query.setParameter("critical_quantity", product.getCriticalQuantity());
+//        query.setParameter("waranty_period", product.getWarantyPeriod());
+//        query.setParameter("gross_weight", product.getGrossWeight());
+//
+//        query.execute();
+//
+//        int success = (int) query.getOutputParameterValue("success");
+//        if (success != 1) {
+//            throw new IllegalArgumentException("Insert to mysql was unsuccess.");
+//        }
+//        return success;
+//    }
 
     public List<DurableProducts> searchByIdPart(String idPart) {
         Query query = getEntityManager().

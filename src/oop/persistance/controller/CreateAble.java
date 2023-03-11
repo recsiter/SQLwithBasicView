@@ -9,5 +9,5 @@ import entities.StateSalesTax;
  */
 public interface CreateAble<T extends ProductEntity> {
 
-    public void createAndMakeFK(T product, int tax);
+    public void createAndMakeFK(T product);
 }
