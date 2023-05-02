@@ -127,6 +127,7 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
     private StateSalesTax taxId;
 
     public DurableProducts() {
+
     }
 
     public DurableProducts(String articleNumber) {
@@ -137,7 +138,7 @@ public class DurableProducts implements Serializable, GrossPriceCalculator, Prod
             int nettoPrice, int quantity, String amountUnits,
             int criticalQuantity, int warantyPeriod, BigDecimal grossWeight) {
         this.articleNumber = articleNumber;
-        this.name = name;
+        setName(name);
         this.family = family;
         this.nettoPrice = nettoPrice;
         this.quantity = quantity;

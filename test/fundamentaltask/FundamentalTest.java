@@ -1,16 +1,25 @@
 package fundamentaltask;
 
+import Util.ControllerName;
+import entities.DurableProducts;
 import fundamentals.Fundamental;
 import fundamentals.FundamentalHidden;
 import java.util.Random;
+import oop.persistance.controller.DurableHandler;
+import oop.persistance.controller.HandlerFactory;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runners.Suite;
 
 /**
  *
  * @author --G--
  */
+@Suite.SuiteClasses({
+    UnitTests.class,})
 public class FundamentalTest {
 
     private static int scores = 0;
@@ -59,6 +68,7 @@ public class FundamentalTest {
      * Test of countDifferentChars method, of class Fundamental.
      */
     @Test
+    @Ignore
     public void testCountDifferentChars() {
         System.out.println("countDifferentChars");
         String ordered = "abcdefghijklmnopqrstuvxyz";

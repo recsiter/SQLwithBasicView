@@ -2,16 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/fundamentals/Fundamental.java</file>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/view/MainForm.java</file>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/oop/persistance/controller/PerishableProductsJpaController.java</file>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/Util/FileHandler.java</file>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/oop/persistance/controller/DurableHandler.java</file>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/entities/DurableProducts.java</file>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/view/changePathForm.java</file>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/view/SaveFormDP.java</file>
-            <file>file:/C:/Users/csomo/Documents/NetBeansProjects/CsomósVince_Exam/java_backend_exam_230306/src/oop/persistance/controller/DurableProductsJpaController.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
